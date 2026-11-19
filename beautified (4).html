@@ -1,0 +1,4024 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Baraqah Dropship – Korean Cosmetics Dropshipping in Bangladesh</title>
+    <style>
+    /* ================= BASE & RESET (100% OFFLINE VANILLA CSS) ================= */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --blue-dark: #1e3a8a;
+      --blue-main: #2563eb;
+      --cyan: #04C9F6;
+      --indigo: #6979F5;
+      --bg: #F8FAFC;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: rgba(226, 232, 240, 0.9);
+      --glass-bg: rgba(255, 255, 255, 0.74);
+      --glass-border: rgba(255, 255, 255, 0.88);
+      --radius: 16px;
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', 'Hind Siliguri', 'Noto Sans Bengali', 'Kalpurush', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--cyan);
+      outline-offset: 2px;
+    }
+
+    /* ================= THEME HELPERS ================= */
+    .grad {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue-main), var(--cyan));
+    }
+
+    .grad-text {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue-main), var(--cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 12px 32px -12px rgba(30, 64, 175, 0.16);
+      border-radius: 18px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 52%, #04C9F6 100%);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 11px 18px;
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.45);
+      transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-soft {
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.08), rgba(4, 201, 246, 0.15));
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: var(--blue-dark);
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 10px 16px;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all .18s ease;
+    }
+
+    .btn-soft:hover {
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.15), rgba(4, 201, 246, 0.25));
+    }
+
+    .btn-soft:active {
+      transform: scale(0.98);
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--blue-main);
+      font-weight: 800;
+      border-radius: 12px;
+      padding: 12px 22px;
+      min-height: 44px;
+      box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.22);
+      transition: transform .18s ease;
+    }
+
+    .btn-white:active {
+      transform: scale(0.98);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .view {
+      display: none;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    .view.active {
+      display: block;
+      animation: fadeIn .25s ease;
+    }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 10px 14px;
+      min-height: 42px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    .input:focus {
+      border-color: var(--blue-main);
+    }
+
+    /* ================= ANIMATIONS ================= */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes textFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes floaty {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -24;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(.9);
+        opacity: .7;
+      }
+
+      100% {
+        transform: scale(1.55);
+        opacity: 0;
+      }
+    }
+
+    @keyframes phoneFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-5deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(-2deg);
+      }
+    }
+
+    @keyframes bgDrift {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(16px, -14px) scale(1.07);
+      }
+    }
+
+    @keyframes barDance {
+
+      0%,
+      100% {
+        transform: scaleY(1);
+      }
+
+      50% {
+        transform: scaleY(.7);
+      }
+    }
+
+    @keyframes ringPulse {
+      0% {
+        transform: scale(.86);
+        opacity: .5;
+      }
+
+      70% {
+        transform: scale(1.14);
+        opacity: .14;
+      }
+
+      100% {
+        transform: scale(.86);
+        opacity: .5;
+      }
+    }
+
+    @keyframes pingDot {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      75%,
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    /* ================= HEADER ================= */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .brand-svg {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .nav-links a:hover {
+      color: var(--blue-main);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .lang-btn {
+      padding: 4px 8px;
+      border-radius: 8px;
+      color: #475569;
+      transition: all .15s;
+      min-height: 28px;
+    }
+
+    .lang-btn.active {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb, #04C9F6);
+      color: #fff;
+    }
+
+    .auth-area {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-login-desk {
+      display: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      padding: 6px 10px;
+    }
+
+    .btn-join-hdr {
+      padding: 7px 12px;
+      min-height: 34px;
+      font-size: 11px;
+      border-radius: 10px;
+    }
+
+    .lbl-desk {
+      display: none;
+    }
+
+    /* ================= HERO ================= */
+    .hero {
+      color: #fff;
+      overflow: hidden;
+      padding: 42px 0 54px;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.18;
+    }
+
+    .hero-kw {
+      background: linear-gradient(90deg, #ffffff, #a5f3fc, #fde68a, #67e8f9, #ffffff);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: textFlow 4.5s ease infinite;
+    }
+
+    .hero-kw-pill {
+      display: inline-block;
+      padding: 0 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    .hero p {
+      margin-top: 16px;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 15px;
+      max-width: 500px;
+    }
+
+    .hero-ctas {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 300px;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .orbit-outer {
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, .5);
+      animation: spin 50s linear infinite;
+    }
+
+    .orbit-inner {
+      position: absolute;
+      inset: 24%;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .3);
+    }
+
+    .orbit-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .ln {
+      stroke-dasharray: 6 6;
+      animation: dash 1.6s linear infinite;
+    }
+
+    .hub-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hub-pulse {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .6);
+      animation: pulse 2.4s ease-out infinite;
+    }
+
+    .hub-circle {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 35px rgba(15, 23, 42, .25);
+    }
+
+    .fl-card {
+      position: absolute;
+      width: 96px;
+      background: #fff;
+      color: #0f172a;
+      border-radius: 14px;
+      padding: 8px;
+      box-shadow: 0 14px 28px rgba(15, 23, 42, .18);
+      animation: floaty 5s ease-in-out infinite;
+    }
+
+    .fl-badge {
+      position: absolute;
+      background: #fff;
+      color: #0f172a;
+      border-radius: 14px;
+      padding: 6px 12px;
+      box-shadow: 0 14px 28px rgba(15, 23, 42, .18);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      animation: floaty 5s ease-in-out infinite;
+    }
+
+    .pill-green {
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 700;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 99px;
+    }
+
+    /* ================= SECTIONS (HOW, CATALOG, CALCULATOR, APP, FAQ, FOOTER) ================= */
+    .section {
+      padding: 56px 0;
+    }
+
+    .how-sec {
+      background: rgba(238, 242, 255, 0.7);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .sec-title {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .sec-sub {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .steps-grid {
+      margin-top: 36px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .step-card {
+      position: relative;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-bottom: 4px solid #c7d2fe;
+      border-radius: 18px;
+      padding: 26px 20px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, .04);
+    }
+
+    .step-icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #e0e7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, .08);
+    }
+
+    .step-card h3 {
+      margin-top: 16px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .step-card p {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    /* Catalog + Profit Calculator */
+    .cat-sec {
+      background: #fff;
+    }
+
+    .cat-controls {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill-btn {
+      padding: 8px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      min-height: 36px;
+      transition: all .15s;
+    }
+
+    .pill-btn.active {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb, #04C9F6);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .prod-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .prod-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, .04);
+      min-width: 0;
+    }
+
+    .prod-card.glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+    }
+
+    .prod-img {
+      position: relative;
+      background: #f8fafc;
+      padding: 8px;
+    }
+
+    .prod-cat-tag {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, .94);
+      border: 1px solid #e2e8f0;
+      border-radius: 99px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .prod-bottle {
+      height: 84px;
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .prod-body {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .prod-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .prod-brand {
+      font-weight: 700;
+      color: #334155;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .prod-title {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .prod-prices {
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .prod-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .prod-stock {
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .stock-ok {
+      color: #059669;
+    }
+
+    .stock-low {
+      color: #d97706;
+    }
+
+    .prod-actions {
+      margin-top: auto;
+      display: grid;
+      gap: 6px;
+      padding-top: 6px;
+    }
+
+    .prod-actions button {
+      min-height: 34px;
+      padding: 6px 8px;
+      font-size: 11px;
+      border-radius: 9px;
+    }
+
+    /* Margin Calculator */
+    .calc-box {
+      margin-top: 36px;
+      padding: 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(4, 201, 246, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      display: grid;
+      gap: 20px;
+    }
+
+    .slider-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .slider {
+      width: 100%;
+      accent-color: var(--blue-main);
+      height: 6px;
+      cursor: pointer;
+    }
+
+    .calc-results {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .calc-stat {
+      background: rgba(255, 255, 255, .85);
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .calc-stat span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .calc-stat b {
+      display: block;
+      font-size: 16px;
+      margin-top: 4px;
+      color: var(--blue-dark);
+    }
+
+    /* Get the App Section */
+    .app-sec {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fff, #eef2ff, #ecfeff);
+    }
+
+    .app-orb {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: .22;
+      pointer-events: none;
+      animation: bgDrift 9s ease-in-out infinite;
+    }
+
+    .app-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .app-features {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .app-feat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .app-feat-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, .08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .phone-stage {
+      position: relative;
+      height: 430px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ring-p {
+      position: absolute;
+      border-radius: 50%;
+      animation: ringPulse 4.5s ease-in-out infinite;
+    }
+
+    .phone-mock {
+      position: relative;
+      width: 215px;
+      height: 415px;
+      border-radius: 34px;
+      border: 7px solid #0f172a;
+      background: #0f172a;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, .45);
+      overflow: hidden;
+      animation: phoneFloat 5.5s ease-in-out infinite;
+    }
+
+    .phone-top {
+      padding: 18px 12px 12px;
+      border-radius: 0 0 22px 22px;
+      color: #fff;
+    }
+
+    .phone-kpis {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 12px;
+    }
+
+    .phone-kpi {
+      background: #1e293b;
+      border-radius: 10px;
+      padding: 8px;
+      color: #fff;
+    }
+
+    .phone-bars {
+      margin: 8px 12px 0;
+      height: 56px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .phone-bar {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      transform-origin: bottom;
+      animation: barDance 2.8s ease-in-out infinite;
+    }
+
+    /* FAQ & Footer */
+    .faq-sec {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(238, 242, 255, .7), rgba(255, 255, 255, .5), rgba(236, 254, 255, .7));
+    }
+
+    .faq-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 32px;
+    }
+
+    .faq-card {
+      background: rgba(255, 255, 255, .65);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, .85);
+      border-radius: 22px;
+      padding: 6px 18px;
+      box-shadow: 0 12px 30px rgba(99, 102, 241, .1);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 0;
+      font-weight: 600;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item p {
+      padding-bottom: 16px;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .site-footer {
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 48px 0 28px;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 32px;
+    }
+
+    .footer-bottom {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* ================= DASHBOARD SHELL & COMPONENTS ================= */
+    .dash-bg {
+      min-height: 100dvh;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(30, 64, 175, 0.14), transparent 42%),
+        radial-gradient(circle at 90% 15%, rgba(4, 201, 246, 0.16), transparent 40%),
+        radial-gradient(circle at 50% 95%, rgba(59, 130, 246, 0.12), transparent 45%),
+        #F8FAFC;
+    }
+
+    .dash-shell {
+      display: flex;
+      width: 100%;
+      min-height: 100dvh;
+      position: relative;
+    }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 50;
+      width: 270px;
+      max-width: 85vw;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, .85);
+      box-shadow: 0 20px 40px rgba(30, 58, 138, 0.15);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      font-size: 14px;
+    }
+
+    .sidebar.side-off {
+      display: none !important;
+    }
+
+    .side-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(3px);
+    }
+
+    .sb-label {
+      padding: 10px 10px 4px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .nav-i {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: #334155;
+      font-weight: 600;
+      min-height: 40px;
+      transition: background .15s;
+    }
+
+    .nav-i:hover {
+      background: rgba(239, 246, 255, 0.9);
+    }
+
+    .nav-i.sub {
+      padding-left: 36px;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .nav-i.dash-nav-active {
+      background: linear-gradient(135deg, #1e3a8a, #0284c7, #04C9F6);
+      color: #fff !important;
+      font-weight: 700;
+      box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.35);
+    }
+
+    .chev {
+      width: 16px;
+      height: 16px;
+      transition: transform .2s;
+      color: var(--blue-main);
+    }
+
+    .chev.rot {
+      transform: rotate(180deg);
+    }
+
+    .dash-main {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      padding: 12px;
+    }
+
+    .dash-topbar {
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .stats-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat-card {
+      position: relative;
+      padding: 14px;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .stat-emoji {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      background: rgba(37, 99, 235, 0.1);
+    }
+
+    .stat-lbl {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-right: 28px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stat-val {
+      margin-top: 6px;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .dash-row {
+      margin-top: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .mini-chart {
+      height: 150px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      padding-top: 16px;
+    }
+
+    .chart-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      height: 100%;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .chart-bar {
+      width: 100%;
+      max-width: 34px;
+      border-radius: 8px 8px 0 0;
+      background: linear-gradient(180deg, #04C9F6, #1e3a8a);
+    }
+
+    .qv-grid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 580px;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, .55);
+    }
+
+    td {
+      padding: 12px 14px;
+      border-top: 1px solid rgba(226, 232, 240, 0.65);
+    }
+
+    tr.clickable {
+      cursor: pointer;
+    }
+
+    tr.clickable:hover {
+      background: rgba(255, 255, 255, .65);
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 99px;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    .b-deliv {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .b-trans {
+      background: #cffafe;
+      color: #0e7490;
+    }
+
+    .b-pend {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .b-proc {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .tickets-grid {
+      margin-top: 16px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .ticket-btn {
+      width: 100%;
+      text-align: left;
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      background: rgba(255, 255, 255, .65);
+      transition: all .15s;
+    }
+
+    .ticket-btn.active {
+      background: #fff;
+      border-color: var(--blue-main);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, .12);
+    }
+
+    /* ================= MODALS, AI WIDGET & TOAST ================= */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid #fff;
+      border-radius: 22px;
+      width: 100%;
+      max-width: 430px;
+      padding: 22px;
+      max-height: 92dvh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(15, 23, 42, 0.35);
+    }
+
+    .ai-fab {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 55;
+      border-radius: 99px;
+      padding: 12px 18px;
+      box-shadow: 0 12px 28px rgba(30, 58, 138, 0.4);
+    }
+
+    .ai-box {
+      position: fixed;
+      bottom: 76px;
+      left: 12px;
+      right: 12px;
+      z-index: 55;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #bae6fd;
+      box-shadow: 0 24px 50px rgba(15, 23, 42, 0.25);
+    }
+
+    .ai-msgs {
+      padding: 14px;
+      height: 260px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: rgba(255, 255, 255, .6);
+      font-size: 13px;
+    }
+
+    .msg-bubble {
+      max-width: 88%;
+      padding: 10px 13px;
+      border-radius: 16px;
+      line-height: 1.45;
+    }
+
+    .msg-user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb, #04C9F6);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg-ai {
+      align-self: flex-start;
+      background: #fff;
+      border: 1px solid #bae6fd;
+      color: #0f172a;
+      border-bottom-left-radius: 4px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 70;
+      background: rgba(15, 23, 42, 0.95);
+      color: #fff;
+      font-size: 13px;
+      padding: 11px 20px;
+      border-radius: 12px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, .25);
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    /* ================= RESPONSIVE BREAKPOINTS ================= */
+    @media (min-width: 640px) {
+      .btn-login-desk {
+        display: inline-block;
+      }
+
+      .lbl-mob {
+        display: none;
+      }
+
+      .lbl-desk {
+        display: inline;
+      }
+
+      .btn-join-hdr {
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero-visual {
+        height: 380px;
+      }
+
+      .fl-card {
+        width: 120px;
+        padding: 10px;
+      }
+
+      .prod-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .calc-box {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+
+      .app-features {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .ai-box {
+        left: auto;
+        right: 20px;
+        width: 390px;
+      }
+
+      .dash-main {
+        padding: 20px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+      }
+
+      .hero h1 {
+        font-size: 46px;
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+      }
+
+      .cat-controls {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .app-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .faq-grid {
+        grid-template-columns: 2fr 3fr;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        box-shadow: none;
+      }
+
+      .side-backdrop {
+        display: none !important;
+      }
+
+      .dash-main {
+        padding: 28px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .dash-row {
+        grid-template-columns: 2fr 1fr;
+      }
+
+      .tickets-grid {
+        grid-template-columns: 5fr 7fr;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .prod-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .dash-prod-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .footer-grid {
+        grid-template-columns: 1.2fr 0.8fr 1fr 1.1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    </style>
+  </head>
+
+  <body>
+
+    <!-- REUSABLE BLUE CURSIVE B LOGO SYMBOL (MATCHES ATTACHED LOGO) -->
+    <svg style="display:none" aria-hidden="true">
+      <symbol id="bq-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="bqGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#5374ff" />
+            <stop offset="100%" stop-color="#1942f0" />
+          </linearGradient>
+        </defs>
+        <rect width="100" height="100" rx="22" fill="url(#bqGrad)" />
+        <path d="M50 32 L36 68 M33 67 C25 56 28 32 48 21 C64 14 75 23 70 36 C66 44 54 48 46 48 C63 48 73 55 70 65 C67 74 51 77 40 70 M64 49 L74 44" fill="none" stroke="#ffffff" stroke-width="7.8" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+    </svg>
+
+    <!-- ============ HEADER ============ -->
+    <header class="site-header" id="siteHeader">
+      <div class="container header-inner">
+        <a href="#" onclick="showView('landing');return false" class="brand">
+          <svg class="brand-svg">
+            <use href="#bq-logo" />
+          </svg>
+          <span>Baraqah <span class="grad-text">Dropship</span></span>
+        </a>
+        <nav class="nav-links" id="nav">
+          <a href="#catalog" onclick="goto('catalog')" data-i18n="navCatalog">Catalog</a>
+          <a href="#how" onclick="goto('how')" data-i18n="navHow">How It Works</a>
+          <a href="#app" onclick="goto('app')" data-i18n="navApp">Get the App</a>
+          <a href="#faq" onclick="goto('faq')" data-i18n="navFaq">FAQ</a>
+        </nav>
+        <div class="header-actions">
+          <div class="lang-switch" role="group" aria-label="Language switch">
+            <button type="button" onclick="setLang('en')" class="lang-btn lang-btn-en active">EN</button>
+            <button type="button" onclick="setLang('bn')" class="lang-btn lang-btn-bn">বাংলা</button>
+          </div>
+          <div class="auth-area" id="authArea">
+            <button onclick="openModal('login')" data-i18n="loginBtn" class="btn-login-desk">Login</button>
+            <button onclick="openModal('signup')" class="btn-primary btn-join-hdr">
+              <span class="lbl-mob" data-i18n="loginJoinShort">Join / Login</span>
+              <span class="lbl-desk" data-i18n="joinBtn">Join as Reseller</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============ LANDING VIEW ============ -->
+      <div id="view-landing" class="view active">
+        <section class="grad hero">
+          <div class="container hero-grid">
+            <div>
+              <h1 id="heroTitleEl">
+                Start Your <span class="hero-kw">Korean Cosmetics</span> Business in <span class="hero-kw">Bangladesh</span> With <span class="hero-kw-pill"><span class="hero-kw">Zero Inventory</span></span>
+              </h1>
+              <p data-i18n="heroSub">List authentic K-beauty on your Facebook page, set your own price, and we pack, ship with COD and send your profit to bKash or Nagad.</p>
+              <div class="hero-ctas">
+                <button onclick="openModal('signup')" data-i18n="heroCta1" class="btn-white">Start Dropshipping Free</button>
+                <button onclick="goto('catalog')" data-i18n="heroCta2" class="glass" style="color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;min-height:44px">Explore Catalog</button>
+              </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+              <div class="orbit-outer"></div>
+              <div class="orbit-inner"></div>
+              <svg class="orbit-lines" viewBox="0 0 400 440" preserveAspectRatio="none">
+                <g stroke="#fff" stroke-opacity=".7" stroke-width="2" fill="none">
+                  <line class="ln" x1="200" y1="220" x2="300" y2="105" />
+                  <line class="ln" x1="200" y1="220" x2="100" y2="335" />
+                  <line class="ln" x1="200" y1="220" x2="310" y2="340" />
+                  <line class="ln" x1="200" y1="220" x2="85" y2="135" />
+                </g>
+              </svg>
+              <div class="hub-center">
+                <span class="hub-pulse"></span>
+                <div class="hub-circle"><svg style="width:42px;height:42px">
+                    <use href="#bq-logo" />
+                  </svg></div>
+              </div>
+              <div class="fl-card" style="right:4%;top:16%;animation-delay:0s">
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="width:28px;height:28px;border-radius:8px;background:#e0e7ff"></div>
+                  <div style="flex:1">
+                    <div style="height:6px;background:#a5b4fc;border-radius:4px"></div>
+                    <div style="height:6px;width:65%;background:#e2e8f0;border-radius:4px;margin-top:4px"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="fl-card" style="left:4%;top:24%;animation-delay:1.2s">
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="width:28px;height:28px;border-radius:8px;background:#cffafe"></div>
+                  <div style="flex:1">
+                    <div style="height:6px;background:#67e8f9;border-radius:4px"></div>
+                    <div style="height:6px;width:65%;background:#e2e8f0;border-radius:4px;margin-top:4px"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="fl-card" style="left:6%;bottom:18%;animation-delay:2.1s">
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="width:28px;height:28px;border-radius:8px;background:#dcfce7"></div>
+                  <div style="flex:1">
+                    <div style="height:6px;background:#6ee7b7;border-radius:4px"></div>
+                    <div style="height:6px;width:65%;background:#e2e8f0;border-radius:4px;margin-top:4px"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="fl-card" style="right:4%;bottom:14%;animation-delay:0.6s">
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="width:28px;height:28px;border-radius:8px;background:#fef3c7"></div>
+                  <div style="flex:1">
+                    <div style="height:6px;background:#fcd34d;border-radius:4px"></div>
+                    <div style="height:6px;width:65%;background:#e2e8f0;border-radius:4px;margin-top:4px"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="fl-badge" style="right:4%;top:0;animation-delay:1.6s">
+                <span class="pill-green">+24.6%</span>
+                <div><span data-i18n="heroBadge1" style="display:block;font-size:9px;color:#64748b">Monthly profit growth</span><b>৳ 25,754,576</b></div>
+              </div>
+              <div class="fl-badge" style="left:4%;bottom:0;animation-delay:.3s">
+                <span style="font-size:16px">🌐</span>
+                <div><span data-i18n="heroBadge2" style="display:block;font-size:9px;color:#64748b">Cash on Delivery</span><b data-i18n="heroBadge2Val">All over Bangladesh</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section id="how" class="section how-sec">
+          <div class="container">
+            <h2 class="sec-title"><span data-i18n="howPre">Get started with</span><br><span class="grad-text">Baraqah Dropship</span> <span data-i18n="howPost">today</span></h2>
+            <div class="steps-grid">
+              <div class="step-card">
+                <span class="step-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 9l1.5-5h13L20 9" />
+                    <path d="M4 9h16v2a2.5 2.5 0 01-5 0 2.5 2.5 0 01-5 0 2.5 2.5 0 01-5 0z" />
+                    <path d="M5 13v7h14v-7" />
+                  </svg></span>
+                <h3 data-i18n="step1T">Open your store</h3>
+                <p data-i18n="step1D">No credit card needed. It is 100% risk free. Start by opening a free reseller account.</p>
+              </div>
+              <div class="step-card">
+                <span class="step-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                    <path d="M3 9h18" />
+                    <path d="M7 13h4M7 16h4" />
+                    <circle cx="16" cy="14.5" r="2" />
+                  </svg></span>
+                <h3 data-i18n="step2T">Account approval</h3>
+                <p data-i18n="step2D">Take your time to review our catalog with wholesale prices straight from our Dhaka hub.</p>
+              </div>
+              <div class="step-card">
+                <span class="step-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 7l9-4 9 4-9 4-9-4z" />
+                    <path d="M3 7v10l9 4 9-4V7" />
+                    <path d="M12 11v10" />
+                  </svg></span>
+                <h3 data-i18n="step3T">Start selling</h3>
+                <p data-i18n="step3D">List products on your page. Customer pays you on COD, we deliver, and you keep the profit.</p>
+              </div>
+            </div>
+            <button onclick="openModal('signup')" data-i18n="getStartedFree" class="btn-primary" style="margin-top:32px;padding:12px 30px">Get Started Free</button>
+          </div>
+        </section>
+
+        <!-- CATALOG & MARGIN CALCULATOR -->
+        <section id="catalog" class="section cat-sec">
+          <div class="container">
+            <div style="text-align:center;max-width:560px;margin:0 auto">
+              <h2 class="sec-title"><span data-i18n="catPre">High</span> <span data-i18n="catPost" class="grad-text">Profits.</span></h2>
+              <p data-i18n="catSub" class="sec-sub">Take your time to review our products with wholesale prices straight from the suppliers.</p>
+            </div>
+
+            <div class="cat-controls">
+              <div id="filters" class="filter-pills"></div>
+              <input id="search" type="search" data-i18n-ph="searchPh" placeholder="Search products or brands" class="input" style="max-width:290px">
+            </div>
+            <div id="grid" class="prod-grid"></div>
+
+            <!-- Profit & Margin Calculator Sliders -->
+            <div class="calc-box">
+              <div>
+                <h3 class="grad-text" style="font-size:20px;font-weight:800" data-i18n="calcTitle">Profit &amp; Margin Calculator</h3>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px" data-i18n="calcSub">Slide to estimate your profit per sale and monthly reseller earnings.</p>
+                <div style="margin-top:16px;display:grid;gap:14px">
+                  <div class="slider-group">
+                    <label><span data-i18n="calcSellLbl">Your Selling Price (COD)</span><b id="calcSellVal" style="color:var(--blue-main)">৳1,950</b></label>
+                    <input id="calcSell" type="range" min="1500" max="3200" step="50" value="1950" class="slider">
+                  </div>
+                  <div class="slider-group">
+                    <label><span data-i18n="calcQtyLbl">Monthly Orders</span><b id="calcQtyVal" style="color:var(--blue-main)">40</b></label>
+                    <input id="calcQty" type="range" min="5" max="200" step="5" value="40" class="slider">
+                  </div>
+                </div>
+              </div>
+              <div class="calc-results">
+                <div class="calc-stat"><span data-i18n="calcWhs">Wholesale</span><b id="calcWhsVal">৳1,450</b></div>
+                <div class="calc-stat"><span data-i18n="calcMargin">Profit / Order</span><b id="calcMarginVal" style="color:#059669">৳500</b></div>
+                <div class="calc-stat"><span data-i18n="calcMonthly">Monthly Profit</span><b id="calcMonthVal" class="grad-text">৳20,000</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GET THE APP -->
+        <section id="app" class="section app-sec">
+          <div class="app-orb grad" style="top:-60px;left:-60px"></div>
+          <div class="app-orb grad" style="bottom:-60px;right:-40px;animation-delay:3s"></div>
+          <div class="container app-grid">
+            <div>
+              <div class="brand">
+                <svg class="brand-svg">
+                  <use href="#bq-logo" />
+                </svg>
+                <span>Baraqah <span class="grad-text">Dropship</span></span>
+              </div>
+              <h2 class="sec-title" style="margin-top:20px"><span data-i18n="appPre">Download the</span> <span class="grad-text">Baraqah Dropship</span> <span data-i18n="appPost">App</span></h2>
+              <p data-i18n="appSub" class="sec-sub" style="max-width:420px">Manage products, orders, payouts and tickets, all from your phone.</p>
+              <p style="margin-top:14px;font-size:12px;font-weight:700;color:var(--blue-main);display:flex;align-items:center;gap:8px">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--cyan);animation:pingDot 1.6s infinite"></span>
+                <span data-i18n="appLive">Now live on Google Play</span>
+              </p>
+              <button onclick="toast(t('playToast'))" style="margin-top:16px;display:inline-flex;align-items:center;gap:12px;background:#0f172a;color:#fff;border-radius:12px;padding:12px 20px;box-shadow:0 12px 24px rgba(15,23,42,.2)">
+                <svg width="22" height="22" viewBox="0 0 24 24">
+                  <path d="M3 2l11 10L3 22z" fill="#04C9F6" />
+                  <path d="M14 12l3.5-3.5L21 10.5a1.8 1.8 0 010 3L17.5 15.5z" fill="#ffd27a" />
+                  <path d="M3 2l14.5 6.5L14 12z" fill="#34d399" />
+                  <path d="M3 22l14.5-6.5L14 12z" fill="#ff6b81" />
+                </svg>
+                <span style="text-align:left;line-height:1.15"><span style="display:block;font-size:9px">GET IT ON</span><span style="display:block;font-weight:700;font-size:15px">Google Play</span></span>
+              </button>
+              <div class="app-features">
+                <div class="app-feat"><span class="app-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8">
+                      <rect x="3" y="4" width="18" height="12" rx="2" />
+                      <path d="M8 20h8M12 16v4" />
+                    </svg></span><span data-i18n="appF1">Real-time Dashboard</span></div>
+                <div class="app-feat"><span class="app-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8">
+                      <path d="M6 7h12l1 13H5z" />
+                      <path d="M9 7a3 3 0 016 0" />
+                    </svg></span><span data-i18n="appF2">Product &amp; Order Management</span></div>
+                <div class="app-feat"><span class="app-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8">
+                      <rect x="3" y="6" width="18" height="12" rx="2" />
+                      <path d="M3 10h18" />
+                    </svg></span><span data-i18n="appF3">bKash, Nagad &amp; Card Take/Pay</span></div>
+                <div class="app-feat"><span class="app-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8">
+                      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                    </svg></span><span data-i18n="appF4">24/7 Support Tickets</span></div>
+              </div>
+            </div>
+
+            <div class="phone-stage" aria-hidden="true">
+              <div class="ring-p grad" style="width:320px;height:320px;opacity:.2"></div>
+              <div class="ring-p grad" style="width:240px;height:240px;opacity:.28;animation-delay:1.2s"></div>
+              <div style="position:absolute;width:300px;height:300px;border-radius:50%;border:1px dashed rgba(37,99,235,.35);animation:spin 50s linear infinite"></div>
+              <div class="phone-mock">
+                <div class="grad phone-top">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <p style="font-size:11px;font-weight:800">Baraqah's Dashboard</p>
+                    <span style="width:7px;height:7px;border-radius:50%;background:#6ee7b7"></span>
+                  </div>
+                  <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
+                    <svg style="width:26px;height:26px">
+                      <use href="#bq-logo" />
+                    </svg>
+                    <span style="font-size:10px;line-height:1.2;font-weight:700">Beauty Corner<br><span style="font-weight:400;opacity:.85">Authorized Reseller</span></span>
+                  </div>
+                </div>
+                <div class="phone-kpis">
+                  <div class="phone-kpi">
+                    <p style="font-size:8px;color:#94a3b8">Total Orders</p>
+                    <p style="font-size:14px;font-weight:800">248</p>
+                  </div>
+                  <div class="phone-kpi">
+                    <p style="font-size:8px;color:#94a3b8">Total Profit</p>
+                    <p style="font-size:14px;font-weight:800">৳38,420</p>
+                  </div>
+                  <div class="phone-kpi">
+                    <p style="font-size:8px;color:#94a3b8">Pending COD</p>
+                    <p style="font-size:14px;font-weight:800">27</p>
+                  </div>
+                  <div class="phone-kpi">
+                    <p style="font-size:8px;color:#94a3b8">Delivered</p>
+                    <p style="font-size:14px;font-weight:800">221</p>
+                  </div>
+                </div>
+                <p style="padding:0 12px;font-size:9px;font-weight:700;color:#cbd5e1">Monthly Sales</p>
+                <div class="phone-bars">
+                  <i class="phone-bar grad" style="height:38%;animation-delay:.1s"></i>
+                  <i class="phone-bar grad" style="height:58%;animation-delay:.3s"></i>
+                  <i class="phone-bar grad" style="height:44%;animation-delay:.5s"></i>
+                  <i class="phone-bar grad" style="height:74%;animation-delay:.2s"></i>
+                  <i class="phone-bar grad" style="height:52%;animation-delay:.6s"></i>
+                  <i class="phone-bar grad" style="height:88%;animation-delay:.4s"></i>
+                  <i class="phone-bar grad" style="height:68%;animation-delay:.7s"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="section faq-sec">
+          <div class="container faq-grid">
+            <div>
+              <h2 class="sec-title"><span data-i18n="faqPre">Got</span> <span data-i18n="faqHighlight" class="grad-text">Questions?</span><br><span data-i18n="faqPost">We've Got Answers.</span></h2>
+              <p data-i18n="faqSub" class="sec-sub">Quick answers to the most common questions about Baraqah Dropship.</p>
+              <a href="#contact" data-i18n="faqHelp" style="display:inline-block;margin-top:18px;font-size:14px;font-weight:700;color:var(--blue-main)">Still need help? Contact support →</a>
+            </div>
+            <div id="faqList" class="faq-card"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============ DASHBOARD VIEW ============ -->
+      <div id="view-dash" class="view dash-bg">
+        <div id="sideBackdrop" onclick="closeSide()" class="side-backdrop hidden"></div>
+
+        <div class="dash-shell">
+          <aside id="side" class="sidebar hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+              <a href="#" onclick="showView('landing');return false" class="brand">
+                <svg style="width:28px;height:28px">
+                  <use href="#bq-logo" />
+                </svg>
+                <span>Baraqah <span class="grad-text">Dropship</span></span>
+              </a>
+              <button onclick="toggleSide()" class="btn-soft" style="width:36px;height:36px;padding:0;min-height:36px" aria-label="Collapse menu">✕</button>
+            </div>
+
+            <p data-i18n="sbNav" class="sb-label">Navigation</p>
+            <button data-p="dash" onclick="panel('dash')" class="nav-i"><span>📊 <span data-i18n="sbDash">Dashboard</span></span></button>
+
+            <!-- Collapsible Products Dropdown -->
+            <button type="button" onclick="toggleSubmenu('prod')" class="nav-i">
+              <span>🛍️ <span data-i18n="sbProd">Products</span></span>
+              <svg id="chev-prod" class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div id="sub-prod" class="hidden">
+              <button data-p="allproducts" onclick="panel('allproducts')" class="nav-i sub" data-i18n="sbAllProd">All Products</button>
+              <button data-p="mystore" onclick="panel('mystore')" class="nav-i sub" data-i18n="sbMyStore">My Store Products</button>
+            </div>
+
+            <p data-i18n="sbMenu" class="sb-label">Menu</p>
+
+            <!-- Collapsible Orders Dropdown -->
+            <button type="button" onclick="toggleSubmenu('ord')" class="nav-i">
+              <span>🛒 <span data-i18n="sbOrders">Orders</span></span>
+              <svg id="chev-ord" class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div id="sub-ord" class="hidden">
+              <button data-p="list" onclick="panel('list')" class="nav-i sub" data-i18n="sbOrderList">List</button>
+              <button data-p="add" onclick="panel('add')" class="nav-i sub" data-i18n="sbOrderAdd">Add</button>
+            </div>
+
+            <button data-p="tickets" onclick="panel('tickets')" class="nav-i">
+              <span>🎫 <span data-i18n="sbTickets">Tickets</span></span>
+              <span id="openTicketBadge" class="badge grad" style="color:#fff;font-size:10px">0</span>
+            </button>
+
+            <p data-i18n="sbAccount" class="sb-label">Account</p>
+            <button data-p="notice" onclick="panel('notice')" class="nav-i"><span>🔔 <span data-i18n="sbNotice">Notice</span></span></button>
+            <button data-p="settings" onclick="panel('settings')" class="nav-i"><span>⚙️ <span data-i18n="sbSettings">Settings &amp; Take/Pay</span></span></button>
+
+            <div style="margin-top:auto;padding-top:20px">
+              <div class="glass-card" style="padding:12px">
+                <div style="display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid #e2e8f0">
+                  <span id="uInit" class="grad" style="width:38px;height:38px;border-radius:50%;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">R</span>
+                  <div style="min-width:0">
+                    <p id="uName" style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Reseller</p>
+                    <p id="uShop" style="font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></p>
+                  </div>
+                </div>
+                <button onclick="logout()" data-i18n="logoutBtn" class="btn-soft" style="width:100%;margin-top:10px">Log Out</button>
+              </div>
+            </div>
+          </aside>
+
+          <div class="dash-main">
+            <!-- Dashboard Top Bar -->
+            <div class="glass-card dash-topbar">
+              <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                <button onclick="toggleSide()" class="btn-soft" style="width:38px;height:38px;padding:0;min-height:38px" aria-label="Menu">☰</button>
+                <div style="min-width:0">
+                  <p style="font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span data-i18n="welcomeBack">Welcome back</span>, <b id="topUName" style="color:var(--text)">Reseller</b></p>
+                  <p style="font-size:11px;color:#059669;font-weight:600" data-i18n="hubStatus">● Dhaka Hub • Live COD</p>
+                </div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+                <div class="lang-switch">
+                  <button type="button" onclick="setLang('en')" class="lang-btn lang-btn-en active">EN</button>
+                  <button type="button" onclick="setLang('bn')" class="lang-btn lang-btn-bn">বাংলা</button>
+                </div>
+                <button onclick="toggleAI()" class="btn-soft" style="padding:7px 10px;min-height:36px;font-size:12px">✨ <span data-i18n="aiBtnLabel">Baraqah AI</span></button>
+                <button onclick="panel('settings');setSettingsTab('takepay')" class="btn-soft" style="padding:7px 10px;min-height:36px;font-size:12px">
+                  <span data-i18n="availBal">Avail:</span> <b id="balChip" class="grad-text">৳0</b>
+                </button>
+                <button onclick="panel('add')" data-i18n="addOrderBtn" class="btn-primary" style="padding:7px 12px;min-height:36px;font-size:12px">+ Add Order</button>
+              </div>
+            </div>
+
+            <!-- ===== PANEL: OVERVIEW ===== -->
+            <div id="panel-dash">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px">
+                <h2 data-i18n="overviewTitle" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Overview</h2>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <button onclick="panel('settings');setSettingsTab('takepay')" data-i18n="takePayQuick" class="btn-soft" style="font-size:12px;padding:8px 12px">Take &amp; Pay (bKash/Nagad/Card)</button>
+                  <button onclick="panel('tickets')" data-i18n="ticketsQuick" class="btn-soft" style="font-size:12px;padding:8px 12px">Support Tickets</button>
+                </div>
+              </div>
+
+              <div id="stats" class="stats-grid"></div>
+
+              <div class="dash-row">
+                <div class="glass-card" style="padding:18px;min-width:0">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+                    <div>
+                      <h3 data-i18n="perfTitle" style="font-weight:700;font-size:15px">7-Day Sales &amp; Profit Pulse</h3>
+                      <p data-i18n="perfSub" style="font-size:12px;color:var(--muted)">Live COD performance from your store orders</p>
+                    </div>
+                    <span class="badge b-proc">+24.6%</span>
+                  </div>
+                  <div id="miniChart" class="mini-chart"></div>
+                </div>
+
+                <div class="glass-card" style="padding:18px;display:flex;flex-direction:column;justify-content:space-between;min-width:0">
+                  <div>
+                    <h3 data-i18n="quickView" style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Quick View</h3>
+                    <div class="qv-grid">
+                      <button onclick="panel('add')" class="btn-soft" style="flex-direction:column;align-items:flex-start;padding:12px"><span style="font-size:18px">➕</span><span data-i18n="qvNewOrder" style="font-size:12px">New Order</span></button>
+                      <button onclick="panel('tickets')" class="btn-soft" style="flex-direction:column;align-items:flex-start;padding:12px"><span style="font-size:18px">🎫</span><span data-i18n="qvTickets" style="font-size:12px">Open Ticket</span></button>
+                      <button onclick="panel('settings');setSettingsTab('takepay')" class="btn-soft" style="flex-direction:column;align-items:flex-start;padding:12px"><span style="font-size:18px">💳</span><span data-i18n="qvTakePay" style="font-size:12px">Take &amp; Pay</span></button>
+                      <button onclick="panel('allproducts')" class="btn-soft" style="flex-direction:column;align-items:flex-start;padding:12px"><span style="font-size:18px">🛍️</span><span data-i18n="qvCatalog" style="font-size:12px">Catalog</span></button>
+                    </div>
+                  </div>
+                  <div style="margin-top:14px;padding-top:10px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">
+                    <span data-i18n="defaultMethodLbl">Default Payout</span>
+                    <b id="defaultMethodLabel" style="color:var(--blue-main)">bKash</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top:26px;display:flex;align-items:center;justify-content:space-between">
+                <h2 data-i18n="recentOrders" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Recent Orders</h2>
+                <button onclick="panel('list')" data-i18n="viewMore" class="btn-primary" style="font-size:12px;padding:8px 16px">View More</button>
+              </div>
+              <div class="glass-card table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th data-i18n="thOrderId">Order ID</th>
+                      <th data-i18n="thDate">Date</th>
+                      <th data-i18n="thCustomer">Customer</th>
+                      <th data-i18n="thQty">Qty</th>
+                      <th data-i18n="thAmount">Amount</th>
+                      <th data-i18n="thProfit">Profit</th>
+                      <th data-i18n="thStatus">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ordersRecent"></tbody>
+                </table>
+              </div>
+              <p style="margin-top:28px;text-align:center;font-size:11px;letter-spacing:.12em;color:#94a3b8">BARAQAH DROPSHIP • VERSION 2.0.0</p>
+            </div>
+
+            <!-- ===== PANEL: ALL PRODUCTS (IN-DASHBOARD CATALOG) ===== -->
+            <div id="panel-allproducts" class="hidden">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+                <div>
+                  <h2 data-i18n="dashCatalogTitle" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">All Products Catalog</h2>
+                  <p data-i18n="dashCatalogSub" style="font-size:12px;color:var(--muted);margin-top:4px">Browse wholesale prices, save to your store, or place orders directly inside your dashboard.</p>
+                </div>
+                <button onclick="panel('mystore')" data-i18n="sbMyStore" class="btn-soft" style="font-size:12px">My Store Products</button>
+              </div>
+              <div class="cat-controls">
+                <div id="dashFilters" class="filter-pills"></div>
+                <input id="dashSearch" type="search" data-i18n-ph="searchPh" placeholder="Search products or brands" class="input" style="max-width:290px">
+              </div>
+              <div id="dashGrid" class="prod-grid dash-prod-grid"></div>
+            </div>
+
+            <!-- ===== PANEL: MY STORE PRODUCTS ===== -->
+            <div id="panel-mystore" class="hidden">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+                <div>
+                  <h2 data-i18n="myStoreTitle" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">My Store Products</h2>
+                  <p data-i18n="myStoreSub" style="font-size:12px;color:var(--muted);margin-top:4px">Products you saved to promote on your Facebook page or WhatsApp.</p>
+                </div>
+                <button onclick="panel('allproducts')" data-i18n="browseMoreProd" class="btn-primary" style="font-size:12px">+ Add From Catalog</button>
+              </div>
+              <div id="myStoreGrid" style="margin-top:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px"></div>
+            </div>
+
+            <!-- ===== PANEL: ADD ORDER ===== -->
+            <div id="panel-add" class="hidden">
+              <h2 data-i18n="addOrderTitle" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Add Order</h2>
+              <form id="orderForm" class="glass-card" style="margin-top:16px;max-width:560px;padding:20px;display:grid;gap:12px">
+                <h3 data-i18n="addOrderSub" style="font-weight:700;font-size:17px">Submit new dropship order</h3>
+                <select id="oProd" required class="input"></select>
+                <div class="two-col" style="display:grid;gap:12px">
+                  <input id="oName" required data-i18n-ph="custNamePh" placeholder="Customer name" class="input">
+                  <input id="oPhone" required pattern="01[0-9]{9}" data-i18n-ph="custPhonePh" placeholder="Customer phone (01XXXXXXXXX)" class="input">
+                </div>
+                <textarea id="oAddr" required rows="2" data-i18n-ph="custAddrPh" placeholder="Delivery address" class="input"></textarea>
+                <div class="two-col" style="display:grid;gap:12px">
+                  <select id="oZone" class="input">
+                    <option value="70" data-i18n="zoneDhaka">Inside Dhaka – ৳70</option>
+                    <option value="130" data-i18n="zoneOutside">Outside Dhaka – ৳130</option>
+                  </select>
+                  <input id="oPrice" type="number" min="1" required data-i18n-ph="codPricePh" placeholder="Customer selling price (COD, ৳)" class="input">
+                </div>
+                <div style="background:rgba(255,255,255,.8);border:1px solid #e2e8f0;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;font-size:14px">
+                  <span data-i18n="netProfitLbl">Your net profit</span>
+                  <b id="oProfit" style="color:var(--blue-main);font-size:16px">৳0</b>
+                </div>
+                <button data-i18n="placeOrderSubmit" class="btn-primary" style="width:100%">Place Dropship Order</button>
+              </form>
+            </div>
+
+            <!-- ===== PANEL: ORDER LIST ===== -->
+            <div id="panel-list" class="hidden">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+                <h2 data-i18n="myOrdersTitle" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">My Orders</h2>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;width:100%;max-width:520px">
+                  <input id="orderSearch" type="search" data-i18n-ph="orderSearchPh" placeholder="Search order ID or customer" class="input" style="flex:1;min-width:160px">
+                  <select id="orderFilter" class="input" style="width:auto">
+                    <option value="All">All Status</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="In Transit">In Transit</option>
+                    <option value="Pending COD">Pending COD</option>
+                    <option value="Processing">Processing</option>
+                  </select>
+                  <button onclick="panel('add')" data-i18n="addOrderBtn" class="btn-primary" style="font-size:12px">+ Add Order</button>
+                </div>
+              </div>
+              <div class="glass-card table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th data-i18n="thOrderId">Order ID</th>
+                      <th data-i18n="thProduct">Product</th>
+                      <th data-i18n="thCustomer">Customer</th>
+                      <th data-i18n="thDate">Date</th>
+                      <th>COD</th>
+                      <th data-i18n="thProfit">Profit</th>
+                      <th data-i18n="thStatus">Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="ordersAll"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ===== PANEL: TICKETS SYSTEM ===== -->
+            <div id="panel-tickets" class="hidden">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+                <div>
+                  <h2 data-i18n="ticketsTitle" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Support Tickets</h2>
+                  <p data-i18n="ticketsSub" style="font-size:12px;color:var(--muted);margin-top:4px">Raise delivery, refund, product, or Take &amp; Pay support tickets.</p>
+                </div>
+                <button onclick="openTicketModal()" data-i18n="newTicketBtn" class="btn-primary" style="font-size:12px">+ Create Ticket</button>
+              </div>
+              <div id="ticketFilters" class="filter-pills" style="margin-top:16px"></div>
+              <div class="tickets-grid">
+                <div id="ticketList" class="glass-card" style="padding:14px;display:flex;flex-direction:column;gap:10px;max-height:480px;overflow-y:auto"></div>
+                <div id="ticketThread" class="glass-card" style="padding:18px;display:flex;flex-direction:column;min-height:360px"></div>
+              </div>
+            </div>
+
+            <!-- ===== PANEL: NOTICE ===== -->
+            <div id="panel-notice" class="hidden">
+              <h2 data-i18n="noticeTitle" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Hub Notices &amp; Updates</h2>
+              <div style="margin-top:16px;display:grid;gap:14px;max-width:720px">
+                <div class="glass-card" style="padding:18px">
+                  <div style="display:flex;justify-content:space-between;align-items:center"><span class="badge grad" style="color:#fff">NEW</span><span style="font-size:12px;color:var(--muted)">18 Nov 2026</span></div>
+                  <h3 style="margin-top:10px;font-weight:700">bKash, Nagad &amp; Card Take &amp; Pay Instant Settlement Live</h3>
+                  <p style="margin-top:6px;font-size:13px;color:#475569">Manage your bKash, Nagad, and Visa/Mastercard accounts directly inside Settings to withdraw profits (Take) or settle shipping/wholesale balances (Pay).</p>
+                </div>
+                <div class="glass-card" style="padding:18px">
+                  <div style="display:flex;justify-content:space-between;align-items:center"><span class="badge b-deliv">DHAKA HUB</span><span style="font-size:12px;color:var(--muted)">15 Nov 2026</span></div>
+                  <h3 style="margin-top:10px;font-weight:700">Same-Day Dispatch Cutoff Extended to 4:00 PM</h3>
+                  <p style="margin-top:6px;font-size:13px;color:#475569">All dropship orders submitted before 4:00 PM are packed and dispatched the same day from our Dhaka warehouse.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== PANEL: SETTINGS & TAKE/PAY SYSTEM ===== -->
+            <div id="panel-settings" class="hidden">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+                <div>
+                  <h2 data-i18n="settingsTitle" style="font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Settings &amp; Take/Pay</h2>
+                  <p data-i18n="settingsSub" style="font-size:12px;color:var(--muted);margin-top:4px">Manage your store profile, bKash / Nagad / Card accounts, payouts and payments.</p>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;background:rgba(255,255,255,.8);border:1px solid #bae6fd;border-radius:12px;padding:4px">
+                  <button onclick="setSettingsTab('profile')" id="stTabProfile" style="padding:8px 14px;border-radius:9px;font-size:12px;font-weight:700" data-i18n="tabProfile">Store Profile</button>
+                  <button onclick="setSettingsTab('takepay')" id="stTabTakepay" style="padding:8px 14px;border-radius:9px;font-size:12px;font-weight:700" data-i18n="tabTakePay">Take &amp; Pay (bKash / Nagad / Card)</button>
+                </div>
+              </div>
+
+              <div id="st-profile" style="margin-top:20px;display:grid;gap:16px">
+                <form id="profileForm" class="glass-card" style="padding:20px;display:grid;gap:14px;max-width:680px">
+                  <h3 data-i18n="profHeading" style="font-weight:700">Reseller &amp; Store Details</h3>
+                  <div class="two-col" style="display:grid;gap:12px">
+                    <div><label data-i18n="lblFullName" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Full Name</label><input id="setFullName" required class="input"></div>
+                    <div><label data-i18n="lblPhone" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Phone Number</label><input id="setPhone" required class="input"></div>
+                    <div><label data-i18n="lblShop" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Shop / Facebook Page</label><input id="setShop" required class="input"></div>
+                    <div><label data-i18n="lblCity" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Return / Hub City</label><input id="setCity" value="Dhaka, Bangladesh" class="input"></div>
+                  </div>
+                  <div><label data-i18n="lblBio" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Invoice Sender Note</label><input id="setSlipNote" value="Thank you for shopping authentic K-Beauty!" class="input"></div>
+                  <button data-i18n="saveProfileBtn" class="btn-primary" style="width:fit-content">Save Store Settings</button>
+                </form>
+              </div>
+
+              <div id="st-takepay" class="hidden" style="margin-top:20px;display:grid;gap:20px">
+                <div class="glass-card" style="padding:18px">
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">
+                    <div>
+                      <h3 data-i18n="savedMethodsTitle" style="font-weight:700">Linked bKash, Nagad &amp; Card Accounts</h3>
+                      <p data-i18n="savedMethodsSub" style="font-size:12px;color:var(--muted)">Use these accounts to Take (withdraw profit) or Pay (settle dues &amp; top-up).</p>
+                    </div>
+                    <button onclick="openAddMethodModal()" data-i18n="addMethodBtn" class="btn-primary" style="font-size:12px">+ Add Payment Method</button>
+                  </div>
+                  <div id="paymentMethodsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px"></div>
+                </div>
+
+                <div class="two-col" style="display:grid;gap:18px">
+                  <form id="takeForm" class="glass-card" style="padding:20px;display:grid;gap:14px">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+                      <div>
+                        <span class="badge b-deliv" data-i18n="takeTag">TAKE • WITHDRAW PROFIT</span>
+                        <h3 data-i18n="takeHeading" style="font-weight:800;font-size:16px;margin-top:8px">Take Profit to bKash / Nagad / Card</h3>
+                      </div>
+                      <div style="text-align:right">
+                        <p style="font-size:11px;color:var(--muted)" data-i18n="availBal">Available:</p>
+                        <p id="takeAvail" class="grad-text" style="font-size:18px;font-weight:800">৳0</p>
+                      </div>
+                    </div>
+                    <div><label data-i18n="selectMethodLbl" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Receive Via</label><select id="takeMethodSelect" required class="input"></select></div>
+                    <div><label data-i18n="takeAmtLbl" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Amount (৳, min 500)</label><input id="takeAmount" type="number" min="500" required placeholder="e.g. 1000" class="input"></div>
+                    <button data-i18n="takeSubmitBtn" class="btn-primary" style="width:100%">Take Profit Now</button>
+                  </form>
+
+                  <form id="payForm" class="glass-card" style="padding:20px;display:grid;gap:14px">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+                      <div>
+                        <span class="badge b-proc" data-i18n="payTag">PAY • SETTLE / TOP-UP</span>
+                        <h3 data-i18n="payHeading" style="font-weight:800;font-size:16px;margin-top:8px">Pay via bKash / Nagad / Card</h3>
+                      </div>
+                      <div style="text-align:right">
+                        <p style="font-size:11px;color:var(--muted)" data-i18n="duePlatformLbl">Platform Due:</p>
+                        <p id="payDueAmt" style="font-size:18px;font-weight:800">৳340</p>
+                      </div>
+                    </div>
+                    <div class="two-col" style="display:grid;gap:10px">
+                      <div>
+                        <label data-i18n="payTypeLbl" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Payment Purpose</label>
+                        <select id="payPurpose" class="input">
+                          <option value="Shipping / COD Fee">Shipping / Return Fee</option>
+                          <option value="Wholesale Pre-pay">Wholesale Wallet Top-up</option>
+                          <option value="Store Verification">Priority Hub Settlement</option>
+                        </select>
+                      </div>
+                      <div><label data-i18n="payViaLbl" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Pay Using</label><select id="payMethodSelect" required class="input"></select></div>
+                    </div>
+                    <div class="two-col" style="display:grid;gap:10px">
+                      <div><label data-i18n="payAmtLbl" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">Amount (৳)</label><input id="payAmount" type="number" min="50" required value="340" class="input"></div>
+                      <div><label data-i18n="payRefLbl" style="display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">TrxID / Card CVV (Demo)</label><input id="payRef" required placeholder="e.g. TRX9482 / 442" class="input"></div>
+                    </div>
+                    <button data-i18n="paySubmitBtn" class="btn-soft" style="width:100%">Pay Now</button>
+                  </form>
+                </div>
+
+                <div class="glass-card table-wrap">
+                  <div style="padding:14px 16px;border-bottom:1px solid #e2e8f0">
+                    <h3 data-i18n="ledgerTitle" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.06em">Take &amp; Pay Transaction Ledger</h3>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Ref ID</th>
+                        <th data-i18n="thType">Type</th>
+                        <th data-i18n="thMethod">Method</th>
+                        <th data-i18n="thDetails">Details</th>
+                        <th data-i18n="thDate">Date</th>
+                        <th data-i18n="thAmount">Amount</th>
+                        <th data-i18n="thStatus">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ledgerBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer id="contact" class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="brand">
+              <svg class="brand-svg">
+                <use href="#bq-logo" />
+              </svg>
+              <span>Baraqah <span class="grad-text">Dropship</span></span>
+            </div>
+            <p data-i18n="footerTag" style="margin-top:14px;line-height:1.6;max-width:280px">Empowering resellers across Bangladesh with authentic Korean cosmetics, automated fulfillment, and scale-ready tools.</p>
+          </div>
+          <div>
+            <h3 data-i18n="quickLinks" style="color:var(--text);font-weight:700;margin-bottom:12px">Quick Links</h3>
+            <ul style="display:grid;gap:8px">
+              <li><a href="#catalog" onclick="goto('catalog')" data-i18n="navCatalog">Catalog</a></li>
+              <li><a href="#how" onclick="goto('how')" data-i18n="navHow">How It Works</a></li>
+              <li><a href="#app" onclick="goto('app')" data-i18n="navApp">Get the App</a></li>
+              <li><a href="#" onclick="openModal('signup');return false" data-i18n="becomeReseller">Become a Reseller</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 data-i18n="supportTitle" style="color:var(--text);font-weight:700;margin-bottom:12px">Support</h3>
+            <ul style="display:grid;gap:8px">
+              <li>📍 Dhaka, Bangladesh</li>
+              <li>📞 <a href="tel:+8801633442200">+880 1633-442200</a></li>
+              <li>✉️ support@baraqahdropship.com</li>
+            </ul>
+          </div>
+          <div>
+            <h3 data-i18n="stayUpdated" style="color:var(--text);font-weight:700;margin-bottom:10px">Stay Updated</h3>
+            <p data-i18n="staySub" style="font-size:13px;margin-bottom:12px">Subscribe to our newsletter for the latest deals and updates.</p>
+            <form onsubmit="event.preventDefault();this.reset();toast(t('subToast'))" style="display:flex;gap:6px;background:#fff;border:1px solid #cbd5e1;border-radius:12px;padding:4px">
+              <input type="email" required data-i18n-ph="emailPh" placeholder="Email Address" style="flex:1;min-width:0;padding:8px 10px;border:none;outline:none">
+              <button class="btn-primary" style="padding:8px 14px;min-height:36px" aria-label="Subscribe">→</button>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Baraqah Dropship. All rights reserved.</p>
+          <div style="display:flex;gap:16px"><span>Privacy Policy</span><span>Terms of Service</span></div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============ BARAQAH AI ASSISTANT WIDGET ============ -->
+    <button id="aiFab" onclick="toggleAI()" class="btn-primary ai-fab">
+      <span>✨</span>
+      <span data-i18n="aiBtnLabel">Baraqah AI</span>
+    </button>
+
+    <div id="aiBox" class="glass-card ai-box hidden">
+      <div class="grad" style="padding:12px 16px;color:#fff;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <svg style="width:30px;height:30px">
+            <use href="#bq-logo" />
+          </svg>
+          <div>
+            <p style="font-weight:800;font-size:14px;line-height:1.2">Baraqah AI Assistant</p>
+            <p style="font-size:10px;opacity:.9" data-i18n="aiOnline">Online • Store, Orders &amp; Catalog Helper</p>
+          </div>
+        </div>
+        <button onclick="toggleAI()" style="color:#fff;font-size:22px;padding:4px 8px" aria-label="Close AI">×</button>
+      </div>
+      <div style="padding:8px 12px;background:rgba(255,255,255,.75);border-bottom:1px solid #e2e8f0;display:flex;flex-wrap:wrap;gap:6px">
+        <button type="button" onclick="askAIQuick('summary')" class="btn-soft" style="padding:4px 10px;min-height:28px;font-size:11px;border-radius:99px">👤 My Store</button>
+        <button type="button" onclick="askAIQuick('customers')" class="btn-soft" style="padding:4px 10px;min-height:28px;font-size:11px;border-radius:99px">👥 Customers</button>
+        <button type="button" onclick="askAIQuick('top')" class="btn-soft" style="padding:4px 10px;min-height:28px;font-size:11px;border-radius:99px">🔥 Top Profit</button>
+        <button type="button" onclick="askAIQuick('caption')" class="btn-soft" style="padding:4px 10px;min-height:28px;font-size:11px;border-radius:99px">✍️ FB Caption</button>
+        <button type="button" onclick="askAIQuick('balance')" class="btn-soft" style="padding:4px 10px;min-height:28px;font-size:11px;border-radius:99px">💳 Take &amp; Pay</button>
+      </div>
+      <div id="aiMessages" class="ai-msgs"></div>
+      <form id="aiForm" style="padding:10px;background:rgba(255,255,255,.9);border-top:1px solid #e2e8f0;display:flex;gap:8px">
+        <input id="aiInput" required data-i18n-ph="aiInputPh" placeholder="Ask about your details, orders, products, FAQ..." class="input" style="flex:1;min-height:38px">
+        <button class="btn-primary" style="min-height:38px;padding:8px 16px" data-i18n="aiSend">Ask</button>
+      </form>
+    </div>
+
+    <!-- ============ AUTH MODAL ============ -->
+    <div id="modal" class="modal-bg hidden" onclick="if(event.target===this)closeModal()">
+      <div class="modal-card" role="dialog" aria-modal="true">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 id="mTitle" style="font-size:20px;font-weight:800">Login</h3>
+          <button onclick="closeModal()" style="font-size:24px;padding:4px 8px" aria-label="Close">×</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button id="tLogin" onclick="openModal('login')" style="flex:1;padding:10px;border-radius:10px;font-weight:700" data-i18n="loginBtn">Login</button>
+          <button id="tSignup" onclick="openModal('signup')" style="flex:1;padding:10px;border-radius:10px;font-weight:700" data-i18n="signupTab">Sign Up</button>
+        </div>
+        <form id="authForm" style="margin-top:14px;display:grid;gap:10px">
+          <input id="aName" data-i18n-ph="fullNamePh" placeholder="Full name" class="su input">
+          <input id="aPhone" required data-i18n-ph="phonePh" placeholder="Phone number" class="input">
+          <input id="aShop" data-i18n-ph="shopPh" placeholder="Shop / Facebook page name" class="su input">
+          <input id="aPay" data-i18n-ph="payPh" placeholder="bKash / Nagad number" class="su input">
+          <input id="aPass" type="password" required data-i18n-ph="passPh" placeholder="Password" class="input">
+          <button id="aSubmit" class="btn-primary" style="width:100%">Login</button>
+        </form>
+        <button onclick="demoLogin()" data-i18n="demoLoginBtn" class="btn-soft" style="width:100%;margin-top:10px">Demo Login (One-Click)</button>
+      </div>
+    </div>
+
+    <!-- ============ ADD PAYMENT METHOD MODAL ============ -->
+    <div id="methodModal" class="modal-bg hidden" onclick="if(event.target===this)closeMethodModal()">
+      <div class="modal-card" role="dialog" aria-modal="true">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <h3 data-i18n="addMethodTitle" style="font-size:18px;font-weight:800">Add bKash, Nagad or Card</h3>
+          <button onclick="closeMethodModal()" style="font-size:24px">×</button>
+        </div>
+        <form id="methodForm" style="display:grid;gap:10px">
+          <select id="mProvider" onchange="toggleMethodFields()" class="input">
+            <option value="bKash">bKash</option>
+            <option value="Nagad">Nagad</option>
+            <option value="Card">Visa / Mastercard</option>
+          </select>
+          <input id="mHolder" required placeholder="Account / Card Holder Name" class="input">
+          <input id="mNumber" required placeholder="01XXXXXXXXX" class="input">
+          <div id="mMobileWrap">
+            <select id="mAccType" class="input">
+              <option value="Personal">Personal Account</option>
+              <option value="Merchant">Merchant Account</option>
+              <option value="Agent">Agent Account</option>
+            </select>
+          </div>
+          <div id="mCardWrap" class="hidden" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <input id="mExpiry" placeholder="MM/YY" class="input">
+            <select id="mNetwork" class="input">
+              <option value="Visa">Visa</option>
+              <option value="Mastercard">Mastercard</option>
+            </select>
+          </div>
+          <button class="btn-primary" style="width:100%" data-i18n="saveMethodBtn">Save Payment Method</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============ CREATE TICKET MODAL ============ -->
+    <div id="ticketModal" class="modal-bg hidden" onclick="if(event.target===this)closeTicketModal()">
+      <div class="modal-card" role="dialog" aria-modal="true">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <h3 data-i18n="createTicketTitle" style="font-size:18px;font-weight:800">Create Support Ticket</h3>
+          <button onclick="closeTicketModal()" style="font-size:24px">×</button>
+        </div>
+        <form id="ticketForm" style="display:grid;gap:10px">
+          <input id="tkSubject" required placeholder="Ticket Subject (e.g. Delivery update)" class="input">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <select id="tkCat" class="input">
+              <option value="Order & Delivery">Order &amp; Delivery</option>
+              <option value="Take & Pay">Take &amp; Pay / Payout</option>
+              <option value="Return & Refund">Return &amp; Refund</option>
+              <option value="Product Query">Product Query</option>
+            </select>
+            <select id="tkPriority" class="input">
+              <option value="Normal">Normal Priority</option>
+              <option value="High">High Priority</option>
+              <option value="Urgent">Urgent</option>
+            </select>
+          </div>
+          <select id="tkOrder" class="input"></select>
+          <textarea id="tkMsg" required rows="3" placeholder="Describe your issue..." class="input"></textarea>
+          <button data-i18n="submitTicketBtn" class="btn-primary" style="width:100%">Submit Ticket</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============ ORDER DETAIL MODAL ============ -->
+    <div id="orderModal" class="modal-bg hidden" onclick="if(event.target===this)closeOrderModal()">
+      <div class="modal-card" role="dialog" aria-modal="true">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <h3 id="omId" style="font-size:18px;font-weight:800">Order</h3>
+          <button onclick="closeOrderModal()" style="font-size:24px">×</button>
+        </div>
+        <div id="omBody" style="display:grid;gap:12px;font-size:14px"></div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script>
+    const PRODUCTS_DATA = [{
+        id: 1,
+        name: "Advanced Snail 96 Mucin Power Essence",
+        brand: "COSRX",
+        category: "Serums",
+        wholesale: 1450,
+        retail: 1950,
+        stock: "In Stock - Dhaka Hub",
+        color: "#8fa2ff"
+      },
+      {
+        id: 2,
+        name: "Relief Sun: Rice + Probiotics SPF50+",
+        brand: "Beauty of Joseon",
+        category: "Sunscreens",
+        wholesale: 1300,
+        retail: 1790,
+        stock: "In Stock - Dhaka Hub",
+        color: "#ffd27a"
+      },
+      {
+        id: 3,
+        name: "Heartleaf 77% Soothing Toner",
+        brand: "Anua",
+        category: "Toners",
+        wholesale: 1850,
+        retail: 2450,
+        stock: "In Stock - Dhaka Hub",
+        color: "#8be0b4"
+      },
+      {
+        id: 4,
+        name: "Lip Sleeping Mask Berry",
+        brand: "Laneige",
+        category: "Moisturizers",
+        wholesale: 1650,
+        retail: 2200,
+        stock: "In Stock - Dhaka Hub",
+        color: "#ff9db8"
+      },
+      {
+        id: 5,
+        name: "Madagascar Centella Ampoule",
+        brand: "SKIN1004",
+        category: "Serums",
+        wholesale: 1500,
+        retail: 2050,
+        stock: "In Stock - Dhaka Hub",
+        color: "#9be3a8"
+      },
+      {
+        id: 6,
+        name: "AHA BHA PHA 30 Days Miracle Toner",
+        brand: "Some By Mi",
+        category: "Toners",
+        wholesale: 1250,
+        retail: 1750,
+        stock: "In Stock - Dhaka Hub",
+        color: "#8ad6e6"
+      },
+      {
+        id: 7,
+        name: "Low pH Good Morning Gel Cleanser",
+        brand: "COSRX",
+        category: "Cleansers",
+        wholesale: 850,
+        retail: 1250,
+        stock: "In Stock - Dhaka Hub",
+        color: "#b7c4ff"
+      },
+      {
+        id: 8,
+        name: "Pore Control Cleansing Oil",
+        brand: "Anua",
+        category: "Cleansers",
+        wholesale: 1900,
+        retail: 2500,
+        stock: "Low Stock - Dhaka Hub",
+        color: "#ffe08a"
+      },
+      {
+        id: 9,
+        name: "Glow Deep Serum Rice + Alpha-Arbutin",
+        brand: "Beauty of Joseon",
+        category: "Serums",
+        wholesale: 1350,
+        retail: 1850,
+        stock: "In Stock - Dhaka Hub",
+        color: "#ffc2a1"
+      },
+      {
+        id: 10,
+        name: "Water Bank Blue Hyaluronic Cream",
+        brand: "Laneige",
+        category: "Moisturizers",
+        wholesale: 2900,
+        retail: 3750,
+        stock: "In Stock - Dhaka Hub",
+        color: "#7fc4ff"
+      },
+      {
+        id: 11,
+        name: "Hyalu-Cica Water-Fit Sun Serum",
+        brand: "SKIN1004",
+        category: "Sunscreens",
+        wholesale: 1550,
+        retail: 2090,
+        stock: "In Stock - Dhaka Hub",
+        color: "#a8e6ff"
+      },
+      {
+        id: 12,
+        name: "Cica Calming Moisture Cream",
+        brand: "Some By Mi",
+        category: "Moisturizers",
+        wholesale: 1700,
+        retail: 2300,
+        stock: "In Stock - Dhaka Hub",
+        color: "#c9b8ff"
+      }
+    ];
+
+    const CATS = ["All", "Cleansers", "Serums", "Sunscreens", "Moisturizers", "Toners"];
+    const STORAGE_KEY = "baraqah_dropship_v1";
+
+    const I18N = {
+      en: {
+        navCatalog: "Catalog",
+        navHow: "How It Works",
+        navApp: "Get the App",
+        navFaq: "FAQ",
+        loginBtn: "Login",
+        signupTab: "Sign Up",
+        joinBtn: "Join as Reseller",
+        loginJoinShort: "Join / Login",
+        logoutBtn: "Log Out",
+        heroTitleHTML: 'Start Your <span class="hero-kw">Korean Cosmetics</span> Business in <span class="hero-kw">Bangladesh</span> With <span class="hero-kw-pill"><span class="hero-kw">Zero Inventory</span></span>',
+        heroSub: "List authentic K-beauty on your Facebook page, set your own price, and we pack, ship with COD and send your profit to bKash or Nagad.",
+        heroCta1: "Start Dropshipping Free",
+        heroCta2: "Explore Catalog",
+        heroBadge1: "Monthly profit growth",
+        heroBadge2: "Cash on Delivery",
+        heroBadge2Val: "All over Bangladesh",
+        howPre: "Get started with",
+        howPost: "today",
+        step1T: "Open your store",
+        step1D: "No credit card needed. It is 100% risk free. Start by opening a free reseller account.",
+        step2T: "Account approval",
+        step2D: "Take your time to review our catalog with wholesale prices straight from our Dhaka hub.",
+        step3T: "Start selling",
+        step3D: "List products on your page. Customer pays you on COD, we deliver, and you keep the profit.",
+        getStartedFree: "Get Started Free",
+        catPre: "High",
+        catPost: "Profits.",
+        catSub: "Take your time to review our products with wholesale prices straight from the suppliers.",
+        searchPh: "Search products or brands",
+        wholesaleLbl: "Wholesale",
+        retailLbl: "Suggested retail",
+        estProfitLbl: "Est. profit",
+        placeOrderBtn: "Place Order",
+        saveStoreBtn: "Add to Store",
+        savedStoreBtn: "In My Store ✓",
+        calcTitle: "Profit & Margin Calculator",
+        calcSub: "Slide to estimate your profit per sale and monthly reseller earnings.",
+        calcSellLbl: "Your Selling Price (COD)",
+        calcQtyLbl: "Monthly Orders",
+        calcWhs: "Wholesale",
+        calcMargin: "Profit / Order",
+        calcMonthly: "Monthly Profit",
+        appPre: "Download the",
+        appPost: "App",
+        appSub: "Manage products, orders, payouts and tickets, all from your phone.",
+        appLive: "Now live on Google Play",
+        appF1: "Real-time Dashboard",
+        appF2: "Product & Order Management",
+        appF3: "bKash, Nagad & Card Take/Pay",
+        appF4: "24/7 Support Tickets",
+        faqPre: "Got",
+        faqHighlight: "Questions?",
+        faqPost: "We've Got Answers.",
+        faqSub: "Quick answers to the most common questions about Baraqah Dropship.",
+        faqHelp: "Still need help? Contact support →",
+        footerTag: "Empowering resellers across Bangladesh with authentic Korean cosmetics, automated fulfillment, and scale-ready tools.",
+        quickLinks: "Quick Links",
+        becomeReseller: "Become a Reseller",
+        supportTitle: "Support",
+        stayUpdated: "Stay Updated",
+        staySub: "Subscribe to our newsletter for the latest deals and updates.",
+        emailPh: "Email Address",
+        fullNamePh: "Full name",
+        phonePh: "Phone number",
+        shopPh: "Shop / Facebook page name",
+        payPh: "bKash / Nagad number",
+        passPh: "Password",
+        demoLoginBtn: "Demo Login (One-Click)",
+        sbNav: "Navigation",
+        sbDash: "Dashboard",
+        sbProd: "Products",
+        sbAllProd: "All Products",
+        sbMyStore: "My Store Products",
+        sbMenu: "Menu",
+        sbOrders: "Orders",
+        sbOrderList: "List",
+        sbOrderAdd: "Add",
+        sbTickets: "Tickets",
+        sbAccount: "Account",
+        sbNotice: "Notice",
+        sbSettings: "Settings & Take/Pay",
+        welcomeBack: "Welcome back",
+        hubStatus: "● Dhaka Hub • Live COD",
+        availBal: "Avail:",
+        addOrderBtn: "+ Add Order",
+        overviewTitle: "Overview",
+        takePayQuick: "Take & Pay (bKash/Nagad/Card)",
+        ticketsQuick: "Support Tickets",
+        perfTitle: "7-Day Sales & Profit Pulse",
+        perfSub: "Live COD performance from your store orders",
+        quickView: "Quick View",
+        qvNewOrder: "New Order",
+        qvTickets: "Open Ticket",
+        qvTakePay: "Take & Pay",
+        qvCatalog: "Catalog",
+        defaultMethodLbl: "Default Payout",
+        recentOrders: "Recent Orders",
+        viewMore: "View More",
+        thOrderId: "Order ID",
+        thDate: "Date",
+        thCustomer: "Customer",
+        thQty: "Qty",
+        thAmount: "Amount",
+        thProfit: "Profit",
+        thStatus: "Status",
+        thProduct: "Product",
+        thType: "Type",
+        thMethod: "Method",
+        thDetails: "Details",
+        dashCatalogTitle: "All Products Catalog",
+        dashCatalogSub: "Browse wholesale prices, save to your store, or place orders directly inside your dashboard.",
+        myStoreTitle: "My Store Products",
+        myStoreSub: "Products you saved to promote on your Facebook page or WhatsApp.",
+        browseMoreProd: "+ Add From Catalog",
+        addOrderTitle: "Add Order",
+        addOrderSub: "Submit new dropship order",
+        custNamePh: "Customer name",
+        custPhonePh: "Customer phone (01XXXXXXXXX)",
+        custAddrPh: "Delivery address",
+        zoneDhaka: "Inside Dhaka – ৳70",
+        zoneOutside: "Outside Dhaka – ৳130",
+        codPricePh: "Customer selling price (COD, ৳)",
+        netProfitLbl: "Your net profit",
+        placeOrderSubmit: "Place Dropship Order",
+        myOrdersTitle: "My Orders",
+        orderSearchPh: "Search order ID or customer",
+        ticketsTitle: "Support Tickets",
+        ticketsSub: "Raise delivery, refund, product, or Take & Pay support tickets.",
+        newTicketBtn: "+ Create Ticket",
+        createTicketTitle: "Create Support Ticket",
+        submitTicketBtn: "Submit Ticket",
+        noticeTitle: "Hub Notices & Updates",
+        settingsTitle: "Settings & Take/Pay",
+        settingsSub: "Manage your store profile, bKash / Nagad / Card accounts, payouts and payments.",
+        tabProfile: "Store Profile",
+        tabTakePay: "Take & Pay (bKash / Nagad / Card)",
+        profHeading: "Reseller & Store Details",
+        lblFullName: "Full Name",
+        lblPhone: "Phone Number",
+        lblShop: "Shop / Facebook Page",
+        lblCity: "Return / Hub City",
+        lblBio: "Invoice Sender Note",
+        saveProfileBtn: "Save Store Settings",
+        savedMethodsTitle: "Linked bKash, Nagad & Card Accounts",
+        savedMethodsSub: "Use these accounts to Take (withdraw profit) or Pay (settle dues & top-up).",
+        addMethodBtn: "+ Add Payment Method",
+        addMethodTitle: "Add bKash, Nagad or Card",
+        saveMethodBtn: "Save Payment Method",
+        takeTag: "TAKE • WITHDRAW PROFIT",
+        takeHeading: "Take Profit to bKash / Nagad / Card",
+        selectMethodLbl: "Receive Via",
+        takeAmtLbl: "Amount (৳, min 500)",
+        takeSubmitBtn: "Take Profit Now",
+        payTag: "PAY • SETTLE / TOP-UP",
+        payHeading: "Pay via bKash / Nagad / Card",
+        duePlatformLbl: "Platform Due:",
+        payTypeLbl: "Payment Purpose",
+        payViaLbl: "Pay Using",
+        payAmtLbl: "Amount (৳)",
+        payRefLbl: "TrxID / Card CVV (Demo)",
+        paySubmitBtn: "Pay Now",
+        ledgerTitle: "Take & Pay Transaction Ledger",
+        aiBtnLabel: "Baraqah AI",
+        aiOnline: "Online • Store, Orders & Catalog Helper",
+        aiInputPh: "Ask about your details, orders, products, FAQ...",
+        aiSend: "Ask",
+        playToast: "Add your Google Play link here",
+        subToast: "Subscribed. Thank you!",
+        faqs: [
+          ["Q1: How do I become a reseller?", "Create a free reseller account with your name, phone number, shop or page name and your bKash or Nagad number. You can start listing products right away."],
+          ["Q2: How do I create an account?", "Click Join as Reseller, fill in your details and set a password. You can also use the demo login to look around first."],
+          ["Q3: How can I view the products available for resale?", "Open All Products inside your dashboard or the home catalog to see wholesale and suggested retail prices."],
+          ["Q4: How are prices set for resellers?", "You pay the wholesale price. You choose your own selling price, and your profit is the selling price minus the wholesale price and delivery fee."],
+          ["Q5: What payment methods are accepted?", "Customers pay via Cash on Delivery. Resellers can Take profits or Pay dues using bKash, Nagad, or Visa/Mastercard."],
+          ["Q6: How is shipping handled?", "We pack and ship every order anywhere in Bangladesh. The delivery fee is ৳70 inside Dhaka and ৳130 outside Dhaka."],
+          ["Q7: What is the return policy?", "If an item arrives damaged or wrong, open a Support Ticket right after delivery with the Order ID and we will arrange a replacement."],
+          ["Q8: How do I process a refund?", "Submit a Support Ticket with the Order ID. Once approved, the refunded amount is adjusted in your profit balance."]
+        ]
+      },
+      bn: {
+        navCatalog: "ক্যাটালগ",
+        navHow: "কিভাবে কাজ করে",
+        navApp: "অ্যাপ ডাউনলোড",
+        navFaq: "জিজ্ঞাসা",
+        loginBtn: "লগইন",
+        signupTab: "সাইন আপ",
+        joinBtn: "রিসেলার হিসেবে যোগ দিন",
+        loginJoinShort: "যোগ দিন",
+        logoutBtn: "লগ আউট",
+        heroTitleHTML: '<span class="hero-kw-pill"><span class="hero-kw">বিনা পুঁজিতে</span></span> <span class="hero-kw">বাংলাদেশে</span> আপনার <span class="hero-kw">কোরিয়ান কসমেটিকস</span> ব্যবসা শুরু করুন',
+        heroSub: "আপনার ফেসবুক পেজে আসল কে-বিউটি পণ্য লিস্ট করুন, নিজের মতো দাম ঠিক করুন—আমরা প্যাক করে COD ডেলিভারি দেব এবং লাভ পাঠাব বিকাশ বা নগদে।",
+        heroCta1: "ফ্রি ড্রপশিপিং শুরু করুন",
+        heroCta2: "ক্যাটালগ দেখুন",
+        heroBadge1: "মাসিক লাভের প্রবৃদ্ধি",
+        heroBadge2: "ক্যাশ অন ডেলিভারি",
+        heroBadge2Val: "সারা বাংলাদেশে",
+        howPre: "আজই শুরু করুন",
+        howPost: "এর সাথে",
+        step1T: "আপনার স্টোর খুলুন",
+        step1D: "কোনো ক্রেডিট কার্ডের প্রয়োজন নেই। ১০০% ঝুঁকিমুক্তভাবে ফ্রি রিসেলার অ্যাকাউন্ট খুলুন।",
+        step2T: "অ্যাকাউন্ট অনুমোদন",
+        step2D: "ঢাকা হাব থেকে সরাসরি পাইকারি দামে আমাদের ক্যাটালগ যাচাই করুন।",
+        step3T: "বিক্রি শুরু করুন",
+        step3D: "পেজে পণ্য পোস্ট করুন। কাস্টমার COD-তে পেমেন্ট করবে, আমরা ডেলিভারি দেব আর লাভ আপনার।",
+        getStartedFree: "ফ্রি শুরু করুন",
+        catPre: "উচ্চ",
+        catPost: "মুনাফা।",
+        catSub: "সরাসরি সাপ্লায়ারের পাইকারি মূল্যে আমাদের কোরিয়ান কসমেটিকস পণ্য দেখুন।",
+        searchPh: "পণ্য বা ব্র্যান্ড খুঁজুন",
+        wholesaleLbl: "পাইকারি দাম",
+        retailLbl: "প্রস্তাবিত খুচরা",
+        estProfitLbl: "সম্ভাব্য লাভ",
+        placeOrderBtn: "অর্ডার দিন",
+        saveStoreBtn: "স্টোরে সেভ করুন",
+        savedStoreBtn: "স্টোরে আছে ✓",
+        calcTitle: "লাভ ও মার্জিন ক্যালকুলেটর",
+        calcSub: "প্রতি অর্ডারে ও মাসিক সম্ভাব্য লাভ দেখতে স্লাইডার ব্যবহার করুন।",
+        calcSellLbl: "আপনার বিক্রয় মূল্য (COD)",
+        calcQtyLbl: "মাসিক অর্ডার সংখ্যা",
+        calcWhs: "পাইকারি",
+        calcMargin: "অর্ডার প্রতি লাভ",
+        calcMonthly: "মাসিক লাভ",
+        appPre: "ডাউনলোড করুন",
+        appPost: "অ্যাপ",
+        appSub: "মোবাইল থেকেই পণ্য, অর্ডার, পেমেন্ট ও সাপোর্ট টিকেট পরিচালনা করুন।",
+        appLive: "গুগল প্লে-তে এখন লাইভ",
+        appF1: "রিয়েল-টাইম ড্যাশবোর্ড",
+        appF2: "পণ্য ও অর্ডার ম্যানেজমেন্ট",
+        appF3: "বিকাশ, নগদ ও কার্ড Take/Pay",
+        appF4: "২৪/৭ সাপোর্ট টিকেট",
+        faqPre: "কোনো",
+        faqHighlight: "প্রশ্ন আছে?",
+        faqPost: "আমাদের কাছে উত্তর আছে।",
+        faqSub: "বারাকাহ ড্রপশিপ সম্পর্কে সাধারণ কিছু প্রশ্নের দ্রুত উত্তর।",
+        faqHelp: "আরও সাহায্য প্রয়োজন? যোগাযোগ করুন →",
+        footerTag: "সারা বাংলাদেশে রিসেলারদের আসল কোরিয়ান কসমেটিকস, অটোমেটেড ডেলিভারি ও আধুনিক টুল দিয়ে সহায়তা করছি।",
+        quickLinks: "দ্রুত লিংক",
+        becomeReseller: "রিসেলার হোন",
+        supportTitle: "সাপোর্ট",
+        stayUpdated: "আপডেট থাকুন",
+        staySub: "নতুন অফার ও আপডেট পেতে নিউজলেটারে সাবস্ক্রাইব করুন।",
+        emailPh: "ইমেইল ঠিকানা",
+        fullNamePh: "পুরো নাম",
+        phonePh: "মোবাইল নম্বর",
+        shopPh: "শপ / ফেসবুক পেজের নাম",
+        payPh: "বিকাশ / নগদ নম্বর",
+        passPh: "পাসওয়ার্ড",
+        demoLoginBtn: "ডেমো লগইন (এক ক্লিকে)",
+        sbNav: "নেভিগেশন",
+        sbDash: "ড্যাশবোর্ড",
+        sbProd: "পণ্যসমূহ",
+        sbAllProd: "সব পণ্য",
+        sbMyStore: "আমার স্টোরের পণ্য",
+        sbMenu: "মেনু",
+        sbOrders: "অর্ডারসমূহ",
+        sbOrderList: "অর্ডার তালিকা",
+        sbOrderAdd: "নতুন অর্ডার",
+        sbTickets: "টিকেট সাপোর্ট",
+        sbAccount: "অ্যাকাউন্ট",
+        sbNotice: "নোটিশ",
+        sbSettings: "সেটিংস ও Take/Pay",
+        welcomeBack: "স্বাগতম",
+        hubStatus: "● ঢাকা হাব • লাইভ COD",
+        availBal: "ব্যালেন্স:",
+        addOrderBtn: "+ অর্ডার",
+        overviewTitle: "একনজরে",
+        takePayQuick: "Take & Pay (বিকাশ/নগদ/কার্ড)",
+        ticketsQuick: "সাপোর্ট টিকেট",
+        perfTitle: "৭ দিনের সেলস ও লাভের গ্রাফ",
+        perfSub: "আপনার স্টোরের লাইভ COD পারফরম্যান্স",
+        quickView: "কুইক ভিউ",
+        qvNewOrder: "নতুন অর্ডার",
+        qvTickets: "টিকেট খুলুন",
+        qvTakePay: "Take & Pay",
+        qvCatalog: "ক্যাটালগ",
+        defaultMethodLbl: "ডিফল্ট মাধ্যম",
+        recentOrders: "সাম্প্রতিক অর্ডার",
+        viewMore: "সব দেখুন",
+        thOrderId: "অর্ডার আইডি",
+        thDate: "তারিখ",
+        thCustomer: "কাস্টমার",
+        thQty: "পরিমাণ",
+        thAmount: "টাকা",
+        thProfit: "লাভ",
+        thStatus: "অবস্থা",
+        thProduct: "পণ্য",
+        thType: "ধরন",
+        thMethod: "মাধ্যম",
+        thDetails: "বিবরণ",
+        dashCatalogTitle: "সব পণ্যের ক্যাটালগ",
+        dashCatalogSub: "ড্যাশবোর্ডের ভেতর থেকেই পাইকারি দাম দেখুন, স্টোরে সেভ করুন অথবা অর্ডার দিন।",
+        myStoreTitle: "আমার স্টোরের পণ্য",
+        myStoreSub: "ফেসবুক বা হোয়াটসঅ্যাপে বিক্রির জন্য সেভ করা পণ্য।",
+        browseMoreProd: "+ ক্যাটালগ থেকে যোগ করুন",
+        addOrderTitle: "নতুন অর্ডার যোগ করুন",
+        addOrderSub: "নতুন ড্রপশিপ অর্ডার সাবমিট করুন",
+        custNamePh: "কাস্টমারের নাম",
+        custPhonePh: "কাস্টমারের ফোন (01XXXXXXXXX)",
+        custAddrPh: "ডেলিভারি ঠিকানা",
+        zoneDhaka: "ঢাকার ভেতরে – ৳৭০",
+        zoneOutside: "ঢাকার বাইরে – ৳১৩০",
+        codPricePh: "বিক্রয় মূল্য (COD, ৳)",
+        netProfitLbl: "আপনার নিট লাভ",
+        placeOrderSubmit: "ড্রপশিপ অর্ডার কনফার্ম করুন",
+        myOrdersTitle: "আমার অর্ডারসমূহ",
+        orderSearchPh: "অর্ডার আইডি বা কাস্টমার খুঁজুন",
+        ticketsTitle: "সাপোর্ট টিকেট",
+        ticketsSub: "ডেলিভারি, রিফান্ড, পণ্য বা Take & Pay সংক্রান্ত টিকেট তৈরি করুন।",
+        newTicketBtn: "+ নতুন টিকেট",
+        createTicketTitle: "নতুন সাপোর্ট টিকেট তৈরি করুন",
+        submitTicketBtn: "টিকেট জমা দিন",
+        noticeTitle: "হাব নোটিশ ও আপডেট",
+        settingsTitle: "সেটিংস ও Take/Pay",
+        settingsSub: "স্টোর প্রোফাইল, বিকাশ / নগদ / কার্ড অ্যাকাউন্ট এবং পেমেন্ট পরিচালনা করুন।",
+        tabProfile: "স্টোর প্রোফাইল",
+        tabTakePay: "Take & Pay (বিকাশ / নগদ / কার্ড)",
+        profHeading: "রিসেলার ও স্টোরের তথ্য",
+        lblFullName: "পুরো নাম",
+        lblPhone: "ফোন নম্বর",
+        lblShop: "শপ / ফেসবুক পেজ",
+        lblCity: "রিটার্ন / হাব শহর",
+        lblBio: "ইনভয়েস নোট",
+        saveProfileBtn: "সেটিংস সেভ করুন",
+        savedMethodsTitle: "যুক্ত বিকাশ, নগদ ও কার্ড অ্যাকাউন্ট",
+        savedMethodsSub: "লাভ উত্তোলন (Take) বা বকেয়া পরিশোধ (Pay) করতে এই অ্যাকাউন্ট ব্যবহার করুন।",
+        addMethodBtn: "+ পেমেন্ট মাধ্যম যোগ করুন",
+        addMethodTitle: "বিকাশ, নগদ বা কার্ড যোগ করুন",
+        saveMethodBtn: "মাধ্যম সেভ করুন",
+        takeTag: "TAKE • লাভ উত্তোলন",
+        takeHeading: "বিকাশ / নগদ / কার্ডে লাভ নিন",
+        selectMethodLbl: "গ্রহণের মাধ্যম",
+        takeAmtLbl: "পরিমাণ (৳, ন্যূনতম ৫০০)",
+        takeSubmitBtn: "এখনই লাভ তুলুন",
+        payTag: "PAY • পেমেন্ট / টপ-আপ",
+        payHeading: "বিকাশ / নগদ / কার্ডে পেমেন্ট করুন",
+        duePlatformLbl: "প্ল্যাটফর্ম বকেয়া:",
+        payTypeLbl: "পেমেন্টের উদ্দেশ্য",
+        payViaLbl: "পেমেন্ট মাধ্যম",
+        payAmtLbl: "পরিমাণ (৳)",
+        payRefLbl: "TrxID / কার্ড CVV (ডেমো)",
+        paySubmitBtn: "পেমেন্ট করুন",
+        ledgerTitle: "Take & Pay লেনদেনের হিসাব",
+        aiBtnLabel: "বারাকাহ AI",
+        aiOnline: "অনলাইন • স্টোর, অর্ডার ও ক্যাটালগ সহায়ক",
+        aiInputPh: "আপনার তথ্য, অর্ডার, পণ্য বা প্রশ্ন লিখুন...",
+        aiSend: "জিজ্ঞাসা",
+        playToast: "এখানে আপনার গুগল প্লে লিংক যোগ করুন",
+        subToast: "সাবস্ক্রাইব সম্পন্ন হয়েছে। ধন্যবাদ!",
+        faqs: [
+          ["প্রশ্ন ১: কিভাবে রিসেলার হওয়া যায়?", "আপনার নাম, ফোন নম্বর, শপ বা ফেসবুক পেজের নাম ও বিকাশ/নগদ নম্বর দিয়ে ফ্রি রিসেলার অ্যাকাউন্ট খুলুন।"],
+          ["প্রশ্ন ২: কিভাবে অ্যাকাউন্ট খুলব?", "রিসেলার হিসেবে যোগ দিন বাটনে ক্লিক করে তথ্য দিন অথবা ডেমো লগইন দিয়ে দেখে নিতে পারেন।"],
+          ["প্রশ্ন ৩: রিসেলিংয়ের পণ্যগুলো কোথায় দেখব?", "ড্যাশবোর্ডের ভেতরে 'সব পণ্য' বা হোম পেজের ক্যাটালগে পাইকারি ও খুচরা দাম দেখতে পারবেন।"],
+          ["প্রশ্ন ৪: রিসেলারদের দাম কিভাবে নির্ধারিত হয়?", "আপনি পাইকারি মূল্যে পণ্য পাবেন। বিক্রয় মূল্য থেকে পাইকারি দাম ও ডেলিভারি ফি বাদ দিয়ে বাকিটা আপনার লাভ।"],
+          ["প্রশ্ন ৫: কি কি পেমেন্ট মাধ্যম রয়েছে?", "কাস্টমার COD-তে পেমেন্ট করবে। আপনি বিকাশ, নগদ ও কার্ডের মাধ্যমে Take (লাভ তোলা) ও Pay (বিল পরিশোধ) করতে পারবেন।"],
+          ["প্রশ্ন ৬: ডেলিভারি কিভাবে হয়?", "আমরা সারা বাংলাদেশে প্যাক ও শিপ করি। ডেলিভারি চার্জ ঢাকার ভেতরে ৳৭০ এবং বাইরে ৳১৩০।"],
+          ["প্রশ্ন ৭: রিটার্ন পলিসি কি?", "ক্ষতিগ্রস্ত বা ভুল পণ্য গেলে ডেলিভারির পরপরই সাপোর্ট টিকেট খুলুন, আমরা রিপ্লেসমেন্ট দেব।"],
+          ["প্রশ্ন ৮: রিফান্ড কিভাবে প্রসেস হয়?", "অর্ডার আইডিসহ টিকেট খুলুন। অনুমোদিত হলে আপনার ব্যালেন্সে সমন্বয় করা হবে।"]
+        ]
+      }
+    };
+
+    let lang = "en",
+      cat = "All",
+      dashCat = "All",
+      user = null;
+    let orders = [],
+      myStoreIds = [1, 2, 3, 5],
+      balance = 1980,
+      platformDue = 340;
+    let paymentMethods = [],
+      ledger = [],
+      tickets = [],
+      activeTicketId = null,
+      ticketFilter = "All",
+      aiHistory = [];
+
+    const $ = id => document.getElementById(id);
+    const t = k => (I18N[lang] && I18N[lang][k]) || I18N.en[k] || k;
+    const bdt = n => "৳" + Math.round(n).toLocaleString("en-US");
+    const today = () => new Date().toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+
+    /* ---------- LOCALSTORAGE PERSISTENCE FOR APK WEBVIEW ---------- */
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          lang,
+          user,
+          orders,
+          myStoreIds,
+          balance,
+          platformDue,
+          paymentMethods,
+          ledger,
+          tickets,
+          activeTicketId
+        }));
+      } catch (e) {}
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return false;
+        const s = JSON.parse(raw);
+        if (s.lang) lang = s.lang;
+        if (s.user) {
+          user = s.user;
+          orders = s.orders || [];
+          myStoreIds = s.myStoreIds || [1, 2, 3];
+          balance = typeof s.balance === "number" ? s.balance : 1980;
+          platformDue = typeof s.platformDue === "number" ? s.platformDue : 340;
+          paymentMethods = s.paymentMethods || [];
+          ledger = s.ledger || [];
+          tickets = s.tickets || [];
+          activeTicketId = s.activeTicketId || (tickets[0]?.id || null);
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function seedResellerData(name, shop, phone, payNum) {
+      const num = payNum || phone || "01712-908811";
+      orders = [{
+          id: "BD-1041",
+          pid: 1,
+          cust: "Farhana Akter",
+          phone: "01711223344",
+          addr: "Dhanmondi 27, Dhaka",
+          qty: 1,
+          cod: 1950,
+          profit: 430,
+          status: "Delivered",
+          date: "12 Nov 2026"
+        },
+        {
+          id: "BD-1042",
+          pid: 3,
+          cust: "Nusrat Jahan",
+          phone: "01819445566",
+          addr: "Agrabad, Chattogram",
+          qty: 1,
+          cod: 2450,
+          profit: 470,
+          status: "Delivered",
+          date: "14 Nov 2026"
+        },
+        {
+          id: "BD-1043",
+          pid: 2,
+          cust: "Mim Sultana",
+          phone: "01912778899",
+          addr: "Uttara Sector 7, Dhaka",
+          qty: 2,
+          cod: 3580,
+          profit: 910,
+          status: "Delivered",
+          date: "15 Nov 2026"
+        },
+        {
+          id: "BD-1044",
+          pid: 5,
+          cust: "Tasnim Tabassum",
+          phone: "01688332211",
+          addr: "Mirpur 10, Dhaka",
+          qty: 1,
+          cod: 2050,
+          profit: 480,
+          status: "In Transit",
+          date: "16 Nov 2026"
+        },
+        {
+          id: "BD-1045",
+          pid: 4,
+          cust: "Sabiha Chowdhury",
+          phone: "01755667788",
+          addr: "Zindabazar, Sylhet",
+          qty: 1,
+          cod: 2200,
+          profit: 420,
+          status: "Pending COD",
+          date: "17 Nov 2026"
+        },
+        {
+          id: "BD-1046",
+          pid: 7,
+          cust: "Raisa Rahman",
+          phone: "01844112233",
+          addr: "Banani, Dhaka",
+          qty: 1,
+          cod: 1250,
+          profit: 330,
+          status: "Processing",
+          date: today()
+        }
+      ];
+      balance = 1980;
+      platformDue = 340;
+      myStoreIds = [1, 2, 3, 5];
+      paymentMethods = [{
+          id: "PM-1",
+          provider: "bKash",
+          holder: name,
+          number: num,
+          meta: "Personal",
+          isDefault: true
+        },
+        {
+          id: "PM-2",
+          provider: "Nagad",
+          holder: name,
+          number: "01819-445522",
+          meta: "Personal",
+          isDefault: false
+        },
+        {
+          id: "PM-3",
+          provider: "Card",
+          holder: name,
+          number: "•••• •••• •••• 4829",
+          meta: "Visa • 08/28",
+          isDefault: false
+        }
+      ];
+      ledger = [{
+          id: "TX-901",
+          type: "TAKE",
+          method: "bKash",
+          details: "Profit withdrawal to " + num,
+          date: "15 Nov 2026",
+          amount: 1200,
+          status: "Completed"
+        },
+        {
+          id: "TX-902",
+          type: "PAY",
+          method: "Nagad",
+          details: "Shipping settlement (Oct batch)",
+          date: "13 Nov 2026",
+          amount: 260,
+          status: "Completed"
+        }
+      ];
+      tickets = [{
+          id: "TK-204",
+          subject: "Courier call update for BD-1044",
+          category: "Order & Delivery",
+          orderId: "BD-1044",
+          priority: "High",
+          status: "In Progress",
+          date: "17 Nov 2026",
+          messages: [{
+              sender: "You",
+              text: "Customer asked if Mirpur 10 delivery will reach before 5 PM today.",
+              time: "17 Nov, 11:20 AM"
+            },
+            {
+              sender: "Baraqah Support",
+              text: "Hi! Rider is already in Mirpur 10 zone and will contact 01688332211 shortly.",
+              time: "17 Nov, 11:35 AM"
+            }
+          ]
+        },
+        {
+          id: "TK-205",
+          subject: "Bulk COSRX Snail Mucin stock inquiry",
+          category: "Product Query",
+          orderId: "General",
+          priority: "Normal",
+          status: "Open",
+          date: today(),
+          messages: [{
+            sender: "You",
+            text: "Are 15 units of COSRX Snail 96 available at Dhaka Hub for a weekend campaign?",
+            time: "Today, 10:05 AM"
+          }]
+        }
+      ];
+      activeTicketId = "TK-204";
+    }
+
+    /* ---------- LANGUAGE ---------- */
+    function setLang(l) {
+      lang = l;
+      document.documentElement.lang = l === "bn" ? "bn" : "en";
+      document.querySelectorAll(".lang-btn-en").forEach(b => b.classList.toggle("active", l === "en"));
+      document.querySelectorAll(".lang-btn-bn").forEach(b => b.classList.toggle("active", l === "bn"));
+      if ($("heroTitleEl")) $("heroTitleEl").innerHTML = t("heroTitleHTML");
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (I18N[lang][k]) el.textContent = I18N[lang][k];
+      });
+      document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+        const k = el.getAttribute("data-i18n-ph");
+        if (I18N[lang][k]) el.placeholder = I18N[lang][k];
+      });
+      renderFaqs();
+      renderCatalog();
+      if (user) {
+        renderDash();
+        renderDashCatalog();
+      }
+      saveState();
+    }
+
+    function renderFaqs() {
+      $("faqList").innerHTML = I18N[lang].faqs.map(([q, a]) => `
+    <details class="faq-item">
+      <summary><span>${q}</span><span>+</span></summary>
+      <p>${a}</p>
+    </details>
+  `).join("");
+    }
+
+    /* ---------- NAVIGATION & TOAST ---------- */
+    function toast(msg) {
+      const el = $("toast");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+      clearTimeout(el._h);
+      el._h = setTimeout(() => el.classList.add("hidden"), 2800)
+    }
+
+    function showView(v) {
+      document.querySelectorAll(".view").forEach(e => e.classList.remove("active"));
+      $("view-" + v).classList.add("active");
+      $("siteHeader").classList.toggle("hidden", v === "dash");
+      $("contact").classList.toggle("hidden", v === "dash");
+      scrollTo(0, 0);
+    }
+
+    function goto(id) {
+      showView("landing");
+      setTimeout(() => $(id).scrollIntoView({
+        behavior: "smooth"
+      }), 40)
+    }
+
+    /* ---------- CATALOG & MARGIN CALCULATOR ---------- */
+    function bottle(c) {
+      return `<svg viewBox="0 0 120 120" style="width:100%;height:100%"><rect width="120" height="120" fill="${c}" opacity=".25"/><rect x="42" y="30" width="36" height="70" rx="10" fill="#fff"/><rect x="50" y="16" width="20" height="18" rx="4" fill="${c}"/><rect x="48" y="52" width="24" height="22" rx="4" fill="${c}" opacity=".7"/></svg>`
+    }
+
+    function toggleStoreProduct(id) {
+      if (!user) {
+        openModal("login");
+        toast("Login or Demo Login to save products");
+        return
+      }
+      if (myStoreIds.includes(id)) myStoreIds = myStoreIds.filter(x => x !== id);
+      else myStoreIds.push(id);
+      saveState();
+      renderCatalog();
+      renderDashCatalog();
+      renderMyStore();
+      toast(myStoreIds.includes(id) ? "Added to My Store Products" : "Removed from My Store");
+    }
+
+    function productCardHTML(p, inDash = false) {
+      const saved = myStoreIds.includes(p.id);
+      const saveCls = saved ? "btn-soft" : "btn-soft";
+      const orderCls = "btn-primary";
+      return `
+    <article class="prod-card ${inDash?'glass':''}">
+      <div class="prod-img">
+        <span class="prod-cat-tag">${p.category}</span>
+        <div class="prod-bottle">${bottle(p.color)}</div>
+      </div>
+      <div class="prod-body">
+        <div class="prod-meta"><span class="prod-brand">${p.brand}</span><span>#KB-${1000+p.id}</span></div>
+        <h3 class="prod-title">${p.name}</h3>
+        <div class="prod-prices">
+          <div class="prod-row"><span style="color:var(--muted)">${t('wholesaleLbl')}</span><b>${bdt(p.wholesale)}</b></div>
+          <div class="prod-row"><span style="color:var(--muted)">${t('retailLbl')}</span><span>${bdt(p.retail)}</span></div>
+          <div class="prod-row"><span style="color:var(--muted)">${t('estProfitLbl')}</span><b style="color:#059669">${bdt(p.retail-p.wholesale)}</b></div>
+        </div>
+        <p class="prod-stock ${p.stock.startsWith('Low')?'stock-low':'stock-ok'}">● ${p.stock}</p>
+        <div class="prod-actions">
+          <button onclick="toggleStoreProduct(${p.id})" class="${saveCls}" style="${saved?'background:#dbeafe;border-color:#2563eb':''}">${saved?t('savedStoreBtn'):t('saveStoreBtn')}</button>
+          <button onclick="orderFor(${p.id})" class="${orderCls}">${t('placeOrderBtn')} →</button>
+        </div>
+      </div>
+    </article>`;
+    }
+
+    function renderCatalog() {
+      $("filters").innerHTML = CATS.map(c => `<button onclick="cat='${c}';renderCatalog()" class="pill-btn ${c===cat?'active':''}">${c}</button>`).join("");
+      const q = $("search").value.toLowerCase();
+      const list = PRODUCTS_DATA.filter(p => (cat === "All" || p.category === cat) && (p.name + p.brand).toLowerCase().includes(q));
+      $("grid").innerHTML = list.length ? list.map(p => productCardHTML(p, false)).join("") : `<p style="color:var(--muted)">No products match.</p>`;
+    }
+    $("search").oninput = renderCatalog;
+
+    function renderDashCatalog() {
+      if (!$("dashFilters")) return;
+      $("dashFilters").innerHTML = CATS.map(c => `<button onclick="dashCat='${c}';renderDashCatalog()" class="pill-btn ${c===dashCat?'active':''}">${c}</button>`).join("");
+      const q = ($("dashSearch")?.value || "").toLowerCase();
+      const list = PRODUCTS_DATA.filter(p => (dashCat === "All" || p.category === dashCat) && (p.name + p.brand).toLowerCase().includes(q));
+      $("dashGrid").innerHTML = list.length ? list.map(p => productCardHTML(p, true)).join("") : `<p style="color:var(--muted)">No products match.</p>`;
+    }
+    $("dashSearch").oninput = renderDashCatalog;
+
+    function updateCalc() {
+      const sell = +$("calcSell").value,
+        qty = +$("calcQty").value,
+        whs = 1450;
+      const margin = Math.max(0, sell - whs);
+      $("calcSellVal").textContent = bdt(sell);
+      $("calcQtyVal").textContent = qty;
+      $("calcMarginVal").textContent = bdt(margin);
+      $("calcMonthVal").textContent = bdt(margin * qty);
+    }
+    $("calcSell").oninput = updateCalc;
+    $("calcQty").oninput = updateCalc;
+
+    /* ---------- AUTH ---------- */
+    function openModal(mode) {
+      const s = mode === "signup";
+      $("modal").classList.remove("hidden");
+      $("mTitle").textContent = s ? t("joinBtn") : t("loginBtn");
+      $("aSubmit").textContent = s ? t("joinBtn") : t("loginBtn");
+      document.querySelectorAll(".su").forEach(e => {
+        e.style.display = s ? "block" : "none";
+        e.required = s
+      });
+      $("tLogin").style.background = s ? "#f1f5f9" : "linear-gradient(135deg,#1e3a8a,#2563eb,#04C9F6)";
+      $("tLogin").style.color = s ? "#334155" : "#fff";
+      $("tSignup").style.background = s ? "linear-gradient(135deg,#1e3a8a,#2563eb,#04C9F6)" : "#f1f5f9";
+      $("tSignup").style.color = s ? "#fff" : "#334155";
+    }
+
+    function closeModal() {
+      $("modal").classList.add("hidden")
+    }
+
+    function applyUserSession() {
+      $("uName").textContent = user.name;
+      $("topUName").textContent = user.name;
+      $("uShop").textContent = user.shop;
+      $("uInit").textContent = user.name.charAt(0).toUpperCase();
+      $("setFullName").value = user.name;
+      $("setPhone").value = user.phone;
+      $("setShop").value = user.shop;
+      $("authArea").innerHTML = `<button onclick="showView('dash');renderDash()" class="btn-soft" style="padding:6px 12px;min-height:34px;font-size:12px">${t('sbDash')}</button><button onclick="logout()" class="btn-soft" style="padding:6px 12px;min-height:34px;font-size:12px">${t('logoutBtn')}</button>`;
+    }
+
+    function login(name, shop, phone = "01712345678", payNum = "01712345678") {
+      user = {
+        name,
+        shop,
+        phone
+      };
+      seedResellerData(name, shop, phone, payNum);
+      closeModal();
+      applyUserSession();
+      ["prod", "ord"].forEach(k => {
+        $("sub-" + k).classList.add("hidden");
+        $("chev-" + k).classList.remove("rot");
+      });
+      showView("dash");
+      renderDash();
+      renderDashCatalog();
+      panel("dash");
+      setSettingsTab("takepay");
+      initAI();
+      saveState();
+      toast("Welcome " + name + "! Sample orders & Take/Pay loaded.");
+    }
+
+    function logout() {
+      user = null;
+      localStorage.removeItem(STORAGE_KEY);
+      $("authArea").innerHTML = `<button onclick="openModal('login')" data-i18n="loginBtn" class="btn-login-desk">${t('loginBtn')}</button><button onclick="openModal('signup')" class="btn-primary btn-join-hdr"><span class="lbl-mob" data-i18n="loginJoinShort">${t('loginJoinShort')}</span><span class="lbl-desk" data-i18n="joinBtn">${t('joinBtn')}</span></button>`;
+      initAI();
+      showView("landing");
+    }
+
+    function demoLogin() {
+      login("Baraqah Demo Reseller", "K-Beauty Dhaka Corner", "01712-908811", "01712-908811")
+    }
+    $("authForm").onsubmit = e => {
+      e.preventDefault();
+      login($("aName").value || "New Reseller", $("aShop").value || "My K-Beauty Shop", $("aPhone").value || "01711000000", $("aPay").value || $("aPhone").value);
+    };
+
+    /* ---------- DASHBOARD NAVIGATION ---------- */
+    function toggleSubmenu(key) {
+      const box = $("sub-" + key),
+        chev = $("chev-" + key);
+      const hidden = box.classList.toggle("hidden");
+      chev.classList.toggle("rot", !hidden);
+    }
+
+    function orderFor(id) {
+      if (!user) {
+        openModal("login");
+        toast("Login or use Demo Login to place orders");
+        return
+      }
+      showView("dash");
+      renderDash();
+      panel("add");
+      $("oProd").value = id;
+      calcProfit();
+    }
+
+    function toggleSide() {
+      const e = $("side"),
+        bd = $("sideBackdrop");
+      if (innerWidth < 768) {
+        const opening = e.classList.contains("hidden");
+        e.classList.toggle("hidden", !opening);
+        bd.classList.toggle("hidden", !opening);
+      } else {
+        e.classList.toggle("side-off");
+      }
+    }
+
+    function closeSide() {
+      if (innerWidth < 768) {
+        $("side").classList.add("hidden");
+        $("sideBackdrop").classList.add("hidden");
+      }
+    }
+
+    function panel(n) {
+      ["dash", "allproducts", "mystore", "add", "list", "tickets", "notice", "settings"].forEach(k => $("panel-" + k).classList.toggle("hidden", k !== n));
+      document.querySelectorAll(".nav-i[data-p]").forEach(b => b.classList.toggle("dash-nav-active", b.dataset.p === n));
+      closeSide();
+      scrollTo(0, 0);
+      if (n === "allproducts") renderDashCatalog();
+      if (n === "mystore") renderMyStore();
+      if (n === "tickets") renderTickets();
+      if (n === "settings") renderSettings();
+      if (n === "add") renderDash();
+    }
+
+    function statusBadge(st) {
+      const cls = st === "Delivered" ? "b-deliv" : st === "In Transit" ? "b-trans" : st === "Pending COD" ? "b-pend" : "b-proc";
+      return `<span class="badge ${cls}">${st}</span>`;
+    }
+
+    function renderDash() {
+      const sum = a => a.reduce((t, o) => t + o.cod, 0);
+      const dl = orders.filter(o => o.status === "Delivered"),
+        pd = orders.filter(o => o.status !== "Delivered");
+      const paid = ledger.filter(x => x.type === "TAKE").reduce((a, b) => a + b.amount, 0);
+      const cards = [
+        ["Total Orders", orders.length, "Active COD Store", "📦"],
+        ["Total Sales", bdt(sum(orders)), "COD Value", "💰"],
+        ["Delivered COD", bdt(sum(dl)), dl.length + " Completed", "✅"],
+        ["In Progress", bdt(sum(pd)), pd.length + " Pending", "⏳"],
+        ["Available Profit", bdt(balance), "Ready to Take", "💳"],
+        ["Total Taken", bdt(paid), ledger.filter(x => x.type === "TAKE").length + " Withdrawals", "📲"],
+        ["Platform Due", bdt(platformDue), "bKash/Nagad/Card", "🧾"],
+        ["Total Profit", bdt(orders.reduce((t, o) => t + o.profit, 0)), "All-Time Margin", "📈"]
+      ];
+      $("stats").innerHTML = cards.map(([l, v, sub, e]) => `
+    <div class="glass-card stat-card">
+      <span class="stat-emoji">${e}</span>
+      <p class="stat-lbl">${l}</p>
+      <p class="stat-val">${v}</p>
+      <p class="stat-sub">${sub}</p>
+    </div>
+  `).join("");
+
+      const days = ["Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue"],
+        vals = [35, 52, 44, 68, 61, 84, 92];
+      $("miniChart").innerHTML = days.map((d, i) => `
+    <div class="chart-col">
+      <div class="chart-bar" style="height:${vals[i]}%"></div>
+      <span style="font-size:11px;font-weight:600;color:var(--muted)">${d}</span>
+    </div>
+  `).join("");
+
+      $("balChip").textContent = bdt(balance);
+      const def = paymentMethods.find(m => m.isDefault) || paymentMethods[0];
+      $("defaultMethodLabel").textContent = def ? `${def.provider} (${def.number})` : "Not set";
+
+      if (!$("oProd").options.length) {
+        $("oProd").innerHTML = PRODUCTS_DATA.map(p => `<option value="${p.id}">${p.brand} – ${p.name} (wholesale ${bdt(p.wholesale)})</option>`).join("");
+      }
+
+      $("ordersRecent").innerHTML = orders.slice().reverse().slice(0, 5).map(o => `
+    <tr onclick="openOrderModal('${o.id}')" class="clickable">
+      <td style="font-weight:700;color:var(--blue-main)">${o.id}</td>
+      <td>${o.date}</td><td>${o.cust}</td><td>${o.qty||1}</td>
+      <td style="font-weight:600">${bdt(o.cod)}</td>
+      <td style="font-weight:700;color:#059669">${bdt(o.profit)}</td>
+      <td>${statusBadge(o.status)}</td>
+    </tr>
+  `).join("");
+
+      renderOrdersList();
+      renderTicketsBadge();
+      renderSettings();
+    }
+
+    function renderOrdersList() {
+      const q = ($("orderSearch")?.value || "").toLowerCase(),
+        f = $("orderFilter")?.value || "All";
+      const list = orders.slice().reverse().filter(o => (f === "All" || o.status === f) && (o.id + " " + o.cust).toLowerCase().includes(q));
+      $("ordersAll").innerHTML = list.length ? list.map(o => {
+        const p = PRODUCTS_DATA.find(x => x.id === o.pid) || PRODUCTS_DATA[0];
+        return `<tr>
+      <td style="font-weight:700;color:var(--blue-main)">${o.id}</td>
+      <td>${p.brand} – <span style="color:var(--muted);font-size:12px">${p.name}</span></td>
+      <td>${o.cust}</td><td style="font-size:12px;color:var(--muted)">${o.date}</td>
+      <td style="font-weight:600">${bdt(o.cod)}</td><td style="font-weight:700;color:#059669">${bdt(o.profit)}</td>
+      <td>${statusBadge(o.status)}</td>
+      <td><button onclick="openOrderModal('${o.id}')" class="btn-soft" style="padding:5px 10px;min-height:30px;font-size:11px">Details</button></td>
+    </tr>`;
+      }).join("") : `<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--muted);font-weight:700">NO MATCHING ORDERS</td></tr>`;
+    }
+    $("orderSearch").oninput = renderOrdersList;
+    $("orderFilter").onchange = renderOrdersList;
+
+    function openOrderModal(id) {
+      const o = orders.find(x => x.id === id);
+      if (!o) return;
+      const p = PRODUCTS_DATA.find(x => x.id === o.pid) || PRODUCTS_DATA[0];
+      $("omId").textContent = `${o.id} • ${o.status}`;
+      $("omBody").innerHTML = `
+    <div style="background:#f8fafc;padding:14px;border-radius:14px;border:1px solid #e2e8f0;display:grid;gap:8px">
+      <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--muted)">Product</span><b>${p.brand} ${p.name}</b></div>
+      <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--muted)">Customer</span><b>${o.cust}</b></div>
+      <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--muted)">Phone</span><span>${o.phone||'017XXXXXXXX'}</span></div>
+      <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--muted)">Address</span><span>${o.addr||'Dhaka, Bangladesh'}</span></div>
+      <div style="display:flex;justify-content:space-between;border-top:1px solid #e2e8f0;padding-top:8px"><span style="color:var(--muted)">COD Amount</span><b>${bdt(o.cod)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Your Profit</span><b style="color:#059669">${bdt(o.profit)}</b></div>
+    </div>
+    <button onclick="closeOrderModal();panel('tickets');openTicketModal('${o.id}')" class="btn-primary" style="width:100%">Raise Ticket for This Order</button>
+  `;
+      $("orderModal").classList.remove("hidden");
+    }
+
+    function closeOrderModal() {
+      $("orderModal").classList.add("hidden")
+    }
+
+    function renderMyStore() {
+      const items = PRODUCTS_DATA.filter(p => myStoreIds.includes(p.id));
+      $("myStoreGrid").innerHTML = items.length ? items.map(p => `
+    <div class="glass-card" style="padding:14px;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:56px;height:56px;border-radius:12px;background:#fff;border:1px solid #e2e8f0;overflow:hidden;flex-shrink:0">${bottle(p.color)}</div>
+        <div style="min-width:0">
+          <span style="font-size:11px;font-weight:700;color:var(--blue-main)">${p.brand} • ${p.category}</span>
+          <h4 style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</h4>
+          <p style="font-size:12px;color:var(--muted)">Wholesale ${bdt(p.wholesale)} → Retail ${bdt(p.retail)}</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto">
+        <button onclick="navigator.clipboard?.writeText('✨ '+${JSON.stringify(p.brand+' '+p.name)}+' — Only ৳${p.retail}! Cash on Delivery all over Bangladesh.');toast('Facebook caption copied!')" class="btn-soft" style="font-size:11px;padding:8px">Copy FB Caption</button>
+        <button onclick="orderFor(${p.id})" class="btn-primary" style="font-size:11px;padding:8px">Create Order</button>
+      </div>
+    </div>
+  `).join("") : `<p style="color:var(--muted)">No saved products yet. Add items from All Products!</p>`;
+    }
+
+    function calcProfit() {
+      const p = PRODUCTS_DATA.find(x => x.id == $("oProd").value);
+      const pr = (+$("oPrice").value || 0) - (p ? p.wholesale : 0) - (+$("oZone").value);
+      $("oProfit").textContent = bdt(pr);
+      $("oProfit").style.color = pr < 0 ? "#dc2626" : "#059669";
+      return pr;
+    }
+    ["oProd", "oZone", "oPrice"].forEach(i => $(i).addEventListener("input", calcProfit));
+    $("orderForm").onsubmit = e => {
+      e.preventDefault();
+      const profit = calcProfit();
+      if (profit < 0) {
+        toast("Selling price is below wholesale + delivery. Raise COD price.");
+        return
+      }
+      orders.push({
+        id: "BD-" + (1041 + orders.length),
+        pid: +$("oProd").value,
+        cust: $("oName").value,
+        phone: $("oPhone").value,
+        addr: $("oAddr").value,
+        qty: 1,
+        cod: +$("oPrice").value,
+        profit,
+        status: "Pending COD",
+        date: today()
+      });
+      e.target.reset();
+      calcProfit();
+      saveState();
+      renderDash();
+      panel("list");
+      toast("Order submitted! Tracking ID generated.");
+    };
+
+    /* ---------- SETTINGS + bKash / Nagad / Card TAKE & PAY ---------- */
+    function setSettingsTab(tab) {
+      $("st-profile").classList.toggle("hidden", tab !== "profile");
+      $("st-takepay").classList.toggle("hidden", tab !== "takepay");
+      $("stTabProfile").className = tab === "profile" ? "btn-primary" : "";
+      $("stTabTakepay").className = tab === "takepay" ? "btn-primary" : "";
+      $("stTabProfile").style.padding = "8px 14px";
+      $("stTabTakepay").style.padding = "8px 14px";
+    }
+    $("profileForm").onsubmit = e => {
+      e.preventDefault();
+      if (!user) return;
+      user.name = $("setFullName").value;
+      user.phone = $("setPhone").value;
+      user.shop = $("setShop").value;
+      applyUserSession();
+      saveState();
+      toast("Store profile updated!");
+    };
+
+    function providerIcon(p) {
+      const bg = p === "bKash" ? "#fce7f3;color:#be185d" : p === "Nagad" ? "#ffedd5;color:#c2410c" : "#dbeafe;color:#1e40af";
+      return `<span style="padding:3px 8px;border-radius:6px;background:${bg};font-weight:800;font-size:11px">${p}</span>`;
+    }
+
+    function renderSettings() {
+      $("takeAvail").textContent = bdt(balance);
+      $("payDueAmt").textContent = bdt(platformDue);
+      $("paymentMethodsGrid").innerHTML = paymentMethods.map(m => `
+    <div style="background:rgba(255,255,255,.88);border:${m.isDefault?'2px solid #2563eb':'1px solid #e2e8f0'};border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        ${providerIcon(m.provider)}
+        ${m.isDefault ? `<span class="badge grad" style="color:#fff">Default</span>` : `<button onclick="setDefaultMethod('${m.id}')" style="font-size:11px;font-weight:700;color:var(--blue-main)">Set Default</button>`}
+      </div>
+      <div><p style="font-weight:700;font-size:14px">${m.number}</p><p style="font-size:12px;color:var(--muted)">${m.holder} • ${m.meta}</p></div>
+      <div style="text-align:right"><button onclick="removeMethod('${m.id}')" style="font-size:11px;color:#e11d48;font-weight:600">Remove</button></div>
+    </div>
+  `).join("");
+      const opts = paymentMethods.map(m => `<option value="${m.id}">${m.provider} – ${m.number} (${m.meta})</option>`).join("");
+      $("takeMethodSelect").innerHTML = opts;
+      $("payMethodSelect").innerHTML = opts;
+      $("ledgerBody").innerHTML = ledger.slice().reverse().map(tx => `
+    <tr>
+      <td style="font-weight:700">${tx.id}</td>
+      <td><span class="badge ${tx.type==='TAKE'?'b-deliv':'b-proc'}">${tx.type}</span></td>
+      <td>${providerIcon(tx.method)}</td>
+      <td style="font-size:12px;color:#475569">${tx.details}</td>
+      <td style="font-size:12px;color:var(--muted)">${tx.date}</td>
+      <td style="font-weight:800;color:${tx.type==='TAKE'?'#059669':'#0f172a'}">${tx.type==='TAKE'?'+':'-'}${bdt(tx.amount)}</td>
+      <td><span class="badge b-deliv">${tx.status}</span></td>
+    </tr>
+  `).join("");
+    }
+
+    function setDefaultMethod(id) {
+      paymentMethods.forEach(m => m.isDefault = (m.id === id));
+      saveState();
+      renderDash();
+      toast("Default Take & Pay method updated")
+    }
+
+    function removeMethod(id) {
+      if (paymentMethods.length <= 1) {
+        toast("Keep at least one active payment method");
+        return
+      }
+      paymentMethods = paymentMethods.filter(m => m.id !== id);
+      if (!paymentMethods.some(m => m.isDefault)) paymentMethods[0].isDefault = true;
+      saveState();
+      renderDash();
+      toast("Payment method removed");
+    }
+
+    function openAddMethodModal() {
+      $("methodModal").classList.remove("hidden");
+      $("mHolder").value = user?.name || "";
+      toggleMethodFields()
+    }
+
+    function closeMethodModal() {
+      $("methodModal").classList.add("hidden")
+    }
+
+    function toggleMethodFields() {
+      const isCard = $("mProvider").value === "Card";
+      $("mMobileWrap").classList.toggle("hidden", isCard);
+      $("mCardWrap").classList.toggle("hidden", !isCard);
+      $("mNumber").placeholder = isCard ? "Card Number (16 digits)" : "01XXXXXXXXX";
+    }
+    $("methodForm").onsubmit = e => {
+      e.preventDefault();
+      const prov = $("mProvider").value;
+      let num = $("mNumber").value.trim(),
+        meta = $("mAccType").value;
+      if (prov === "Card") {
+        num = "•••• •••• •••• " + (num.slice(-4) || "1234");
+        meta = $("mNetwork").value + " • " + ($("mExpiry").value || "12/28");
+      }
+      paymentMethods.push({
+        id: "PM-" + (Date.now() % 10000),
+        provider: prov,
+        holder: $("mHolder").value,
+        number: num,
+        meta,
+        isDefault: false
+      });
+      closeMethodModal();
+      e.target.reset();
+      saveState();
+      renderDash();
+      toast(prov + " linked!");
+    };
+    $("takeForm").onsubmit = e => {
+      e.preventDefault();
+      const amt = +$("takeAmount").value,
+        m = paymentMethods.find(x => x.id === $("takeMethodSelect").value);
+      if (!m || amt < 500 || amt > balance) {
+        toast(amt < 500 ? "Minimum Take is ৳500" : "Insufficient available balance");
+        return
+      }
+      balance -= amt;
+      ledger.push({
+        id: "TX-" + (901 + ledger.length),
+        type: "TAKE",
+        method: m.provider,
+        details: `Profit sent to ${m.number}`,
+        date: today(),
+        amount: amt,
+        status: "Completed"
+      });
+      e.target.reset();
+      saveState();
+      renderDash();
+      toast(`${bdt(amt)} sent via ${m.provider}!`);
+    };
+    $("payForm").onsubmit = e => {
+      e.preventDefault();
+      const amt = +$("payAmount").value,
+        m = paymentMethods.find(x => x.id === $("payMethodSelect").value),
+        purpose = $("payPurpose").value;
+      if (!m) return;
+      if (purpose === "Shipping / COD Fee") platformDue = Math.max(0, platformDue - amt);
+      else if (purpose === "Wholesale Pre-pay") balance += amt;
+      ledger.push({
+        id: "TX-" + (901 + ledger.length),
+        type: "PAY",
+        method: m.provider,
+        details: `${purpose} (Ref: ${$("payRef").value})`,
+        date: today(),
+        amount: amt,
+        status: "Completed"
+      });
+      $("payRef").value = "";
+      $("payAmount").value = platformDue || 500;
+      saveState();
+      renderDash();
+      toast(`Paid ${bdt(amt)} using ${m.provider}!`);
+    };
+
+    /* ---------- TICKETS SYSTEM ---------- */
+    function renderTicketsBadge() {
+      $("openTicketBadge").textContent = tickets.filter(tk => tk.status !== "Resolved").length
+    }
+
+    function ticketStatusBadge(st) {
+      return `<span class="badge ${st==='Resolved'?'b-deliv':st==='In Progress'?'b-proc':'b-pend'}">${st}</span>`
+    }
+
+    function renderTickets() {
+      renderTicketsBadge();
+      $("ticketFilters").innerHTML = ["All", "Open", "In Progress", "Resolved"].map(f => `<button onclick="ticketFilter='${f}';renderTickets()" class="pill-btn ${ticketFilter===f?'active':''}">${f}</button>`).join("");
+      const visible = tickets.filter(tk => ticketFilter === "All" || tk.status === ticketFilter);
+      $("ticketList").innerHTML = visible.length ? visible.map(tk => `
+    <button onclick="activeTicketId='${tk.id}';renderTickets()" class="ticket-btn ${activeTicketId===tk.id?'active':''}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px"><span style="font-size:12px;font-weight:800;color:var(--blue-main)">${tk.id} • ${tk.category}</span>${ticketStatusBadge(tk.status)}</div>
+      <p style="margin-top:6px;font-weight:700;font-size:13px">${tk.subject}</p>
+      <div style="margin-top:6px;display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>Order: ${tk.orderId}</span><span>${tk.date}</span></div>
+    </button>
+  `).join("") : `<p style="color:var(--muted);text-align:center;padding:16px">No tickets in this status.</p>`;
+
+      const act = tickets.find(tk => tk.id === activeTicketId) || visible[0];
+      if (!act) {
+        $("ticketThread").innerHTML = `<p style="margin:auto;color:var(--muted)">Select or create a ticket.</p>`;
+        return
+      }
+      activeTicketId = act.id;
+      $("ticketThread").innerHTML = `
+    <div style="padding-bottom:12px;border-bottom:1px solid #e2e8f0;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px">
+      <div><span style="font-size:12px;font-weight:800;color:var(--blue-main)">${act.id}</span> ${ticketStatusBadge(act.status)}<h3 style="margin-top:4px;font-weight:800">${act.subject}</h3></div>
+      <button onclick="toggleTicketResolved('${act.id}')" class="btn-soft" style="padding:6px 12px;min-height:34px;font-size:12px">${act.status==='Resolved'?'Reopen':'Mark Resolved ✓'}</button>
+    </div>
+    <div style="flex:1;padding:14px 0;display:flex;flex-direction:column;gap:10px;max-height:260px;overflow-y:auto">
+      ${act.messages.map(m=>`<div class="msg-bubble ${m.sender==='You'?'msg-user':'msg-ai'}"><p style="font-size:10px;font-weight:700;opacity:.8;margin-bottom:2px">${m.sender}</p><p>${m.text}</p></div>`).join("")}
+    </div>
+    <form onsubmit="sendTicketReply(event,'${act.id}')" style="padding-top:10px;border-top:1px solid #e2e8f0;display:flex;gap:8px">
+      <input id="tkReplyInput" required placeholder="Write a reply to Baraqah Support..." class="input" style="flex:1">
+      <button class="btn-primary">Send</button>
+    </form>
+  `;
+    }
+
+    function sendTicketReply(e, id) {
+      e.preventDefault();
+      const msg = $("tkReplyInput").value.trim(),
+        tk = tickets.find(x => x.id === id);
+      if (!tk || !msg) return;
+      tk.messages.push({
+        sender: "You",
+        text: msg,
+        time: "Just now"
+      });
+      if (tk.status === "Resolved") tk.status = "In Progress";
+      saveState();
+      renderTickets();
+      setTimeout(() => {
+        tk.messages.push({
+          sender: "Baraqah Support",
+          text: "Our Dhaka Hub support team has logged your update on " + tk.id + " and will follow up shortly.",
+          time: "Just now"
+        });
+        if (tk.status === "Open") tk.status = "In Progress";
+        saveState();
+        renderTickets();
+      }, 500);
+    }
+
+    function toggleTicketResolved(id) {
+      const tk = tickets.find(x => x.id === id);
+      if (!tk) return;
+      tk.status = tk.status === "Resolved" ? "Open" : "Resolved";
+      saveState();
+      renderTickets();
+      toast(tk.id + " marked " + tk.status);
+    }
+
+    function openTicketModal(preOrderId) {
+      $("tkOrder").innerHTML = `<option value="General">General / No Specific Order</option>` + orders.map(o => `<option value="${o.id}">${o.id} – ${o.cust}</option>`).join("");
+      if (preOrderId) $("tkOrder").value = preOrderId;
+      $("ticketModal").classList.remove("hidden");
+    }
+
+    function closeTicketModal() {
+      $("ticketModal").classList.add("hidden")
+    }
+    $("ticketForm").onsubmit = e => {
+      e.preventDefault();
+      const id = "TK-" + (204 + tickets.length);
+      tickets.unshift({
+        id,
+        subject: $("tkSubject").value,
+        category: $("tkCat").value,
+        orderId: $("tkOrder").value,
+        priority: $("tkPriority").value,
+        status: "Open",
+        date: today(),
+        messages: [{
+          sender: "You",
+          text: $("tkMsg").value,
+          time: "Just now"
+        }]
+      });
+      activeTicketId = id;
+      ticketFilter = "All";
+      closeTicketModal();
+      e.target.reset();
+      saveState();
+      renderTickets();
+      toast("Ticket " + id + " created!");
+    };
+
+    /* ---------- SOBER, HONEST & CONTEXT-AWARE BARAQAH AI ---------- */
+    function initAI() {
+      const g = user ?
+        (lang === "bn" ? `আসসালামু আলাইকুম <b>${user.name}</b>। আমি আপনার স্টোর (<b>${user.shop}</b>), অর্ডার, কাস্টমার, Take &amp; Pay এবং আমাদের ক্যাটালগ নিয়ে সাহায্য করতে পারি। আপনি কী দেখতে চান?` :
+          `Hello <b>${user.name}</b>. I can help with your store details, orders, customers, Take &amp; Pay wallet, and our K-beauty catalog. How can I assist you?`) :
+        (lang === "bn" ? "আসসালামু আলাইকুম। আমি <b>বারাকাহ AI</b>। আমি আমাদের কে-বিউটি পণ্য, পাইকারি মূল্য, ডেলিভারি নিয়ম এবং ওয়েবসাইট সংক্রান্ত প্রশ্নে সাহায্য করতে পারি।" :
+          "Hello. I'm <b>Baraqah AI</b>. I can help with our K-beauty catalog, wholesale pricing, delivery rules, and website FAQs. Log in anytime if you'd like help with your store orders and customers.");
+      aiHistory = [{
+        role: "ai",
+        html: g
+      }];
+      renderAI();
+    }
+
+    function toggleAI() {
+      const box = $("aiBox");
+      const opening = box.classList.contains("hidden");
+      box.classList.toggle("hidden", !opening);
+      if (opening) {
+        if (!aiHistory.length) initAI();
+        setTimeout(() => $("aiInput")?.focus(), 50);
+      }
+    }
+
+    function renderAI() {
+      const box = $("aiMessages");
+      box.innerHTML = aiHistory.map(m => `<div class="msg-bubble ${m.role==='user'?'msg-user':'msg-ai'}">${m.html}</div>`).join("");
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function askAIQuick(type) {
+      const p = {
+        summary: "Show my store details",
+        customers: "Show my customers",
+        top: "Show top profit products",
+        caption: "Write a Facebook sales caption",
+        balance: "Show my balance and Take & Pay"
+      };
+      processAI(p[type]);
+    }
+
+    function generateAIReply(query) {
+      const q = query.toLowerCase().trim();
+      const ordMatch = query.match(/(?:bd|nd)-\d+/i);
+      if (ordMatch) {
+        if (!user) return "Please log in first so I can check your order details.";
+        const oid = ordMatch[0].toUpperCase(),
+          o = orders.find(x => x.id === oid);
+        if (o) {
+          const p = PRODUCTS_DATA.find(x => x.id === o.pid);
+          return `📦 <b>${o.id}</b> (${o.status})<br>Customer: <b>${o.cust}</b> (${o.phone})<br>Product: ${p?p.brand+' '+p.name:''}<br>COD: <b>${bdt(o.cod)}</b> • Profit: <b style="color:#059669">${bdt(o.profit)}</b>`;
+        }
+        return `Order <b>${oid}</b> isn't available in your account.`;
+      }
+      if (user && orders.length) {
+        const cm = orders.find(o => q.includes(o.cust.toLowerCase().split(" ")[0]) || q.includes(o.phone));
+        if (cm) return `👤 <b>${cm.cust}</b> (${cm.phone})<br>Address: ${cm.addr}<br>Order: <b>${cm.id}</b> (${cm.status}) • COD: <b>${bdt(cm.cod)}</b>`;
+      }
+      if (/my store|summary|detail|profile|my product|আমার স্টোর|আমার তথ্য/.test(q)) {
+        if (!user) return "Please log in or use Demo Login so I can help with your store details.";
+        const saved = PRODUCTS_DATA.filter(p => myStoreIds.includes(p.id)).map(p => `${p.brand} ${p.name}`).join(", ");
+        return `🏪 <b>${user.shop}</b> (Owner: <b>${user.name}</b>)<br>• Orders: <b>${orders.length}</b> • Balance: <b>${bdt(balance)}</b><br>• Saved Products (${myStoreIds.length}): ${saved || 'None'}`;
+      }
+      if (/customer|buyer|কাস্টমার/.test(q)) {
+        if (!user) return "Please log in first so I can help with your customer list.";
+        return `👥 <b>Your Customers (${orders.length}):</b><br>` + orders.map(o => `• <b>${o.cust}</b> (${o.id} – ${o.status}, ${bdt(o.cod)})`).join("<br>");
+      }
+      if (/balance|withdraw|take|pay|bkash|nagad|card|ব্যালেন্স|বিকাশ|নগদ/.test(q)) {
+        if (!user) return "Resellers can Take profits or Pay dues via bKash, Nagad, or Card (min withdrawal ৳500). Log in to view your wallet.";
+        return `💳 <b>Take &amp; Pay Wallet:</b><br>Available: <b style="color:#059669">${bdt(balance)}</b> • Due: <b>${bdt(platformDue)}</b><br>Linked: ${paymentMethods.map(m=>`${m.provider} (${m.number})`).join(", ")}`;
+      }
+      if (/order|status|deliver|অর্ডার/.test(q)) {
+        if (!user) return "Please log in first so I can help with your orders.";
+        return `📦 You have <b>${orders.length} orders</b>. Latest: <b>${orders[orders.length-1].id}</b> for ${orders[orders.length-1].cust} (${orders[orders.length-1].status}).`;
+      }
+      if (/caption|post|fb|facebook|ক্যাপশন/.test(q)) {
+        const pr = PRODUCTS_DATA.find(p => q.includes(p.brand.toLowerCase())) || PRODUCTS_DATA[0];
+        return `✨ 100% Authentic ${pr.brand} ${pr.name}!<br>💰 Only ৳${pr.retail} • Cash on Delivery all over Bangladesh!`;
+      }
+      if (/how|work|ship|fee|dhaka|return|refund|app|faq|কিভাবে|চার্জ/.test(q)) {
+        return `🌐 <b>Baraqah Dropship:</b> Join free, list K-beauty at your price, we ship COD (৳70 inside Dhaka, ৳130 outside Dhaka) and credit profit to your bKash, Nagad, or Card.`;
+      }
+      const mp = PRODUCTS_DATA.filter(p => (p.name + " " + p.brand + " " + p.category).toLowerCase().split(/\s+/).some(w => w.length > 2 && q.includes(w)));
+      if (mp.length || /top profit|catalog|পণ্য|লাভ/.test(q)) {
+        const list = (mp.length ? mp : PRODUCTS_DATA.slice().sort((a, b) => (b.retail - b.wholesale) - (a.retail - a.wholesale))).slice(0, 3);
+        return list.map(p => `• <b>${p.brand}</b> ${p.name} (Wholesale ${bdt(p.wholesale)}, Profit <b style="color:#059669">${bdt(p.retail-p.wholesale)}</b>)`).join("<br>");
+      }
+      return lang === "bn" ?
+        "দুঃখিত, আমি এই বিষয়ে জানি না অথবা এই তথ্যটি বর্তমানে বারাকাহ ড্রপশিপে নেই। আমি আপনার স্টোরের তথ্য, অর্ডার, কাস্টমার, Take &amp; Pay এবং ক্যাটালগ নিয়ে সাহায্য করতে পারি।" :
+        "I don't know that, or that product/information isn't available here. I can help with your store details, orders, customers, Take &amp; Pay, our K-beauty catalog, and website FAQs.";
+    }
+
+    function processAI(text) {
+      if (!text || !text.trim()) return;
+      aiHistory.push({
+        role: "user",
+        html: text.replace(/</g, "&lt;")
+      });
+      aiHistory.push({
+        role: "ai",
+        html: "<i>Thinking...</i>"
+      });
+      renderAI();
+      setTimeout(() => {
+        aiHistory.pop();
+        aiHistory.push({
+          role: "ai",
+          html: generateAIReply(text)
+        });
+        renderAI();
+      }, 280);
+    }
+    $("aiForm").onsubmit = e => {
+      e.preventDefault();
+      const inp = $("aiInput"),
+        txt = inp.value.trim();
+      inp.value = "";
+      processAI(txt)
+    };
+
+    /* ---------- BOOTSTRAP APP ---------- */
+    const restored = loadState();
+    setLang(lang);
+    updateCalc();
+    if (restored && user) {
+      applyUserSession();
+      showView("dash");
+      renderDash();
+      renderDashCatalog();
+      panel("dash");
+      setSettingsTab("takepay");
+    }
+    initAI();
+
+    </script>
+  </body>
+
+</html>
+```
