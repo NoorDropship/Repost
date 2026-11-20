@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokkanio Storefront</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Hind Siliguri', system-ui, sans-serif;
+      background: #F8FAFC;
+      color: #0f172a;
+      min-height: 100dvh
+    }
+
+    .grad {
+      background: linear-gradient(135deg, #6979F5, #04C9F6)
+    }
+
+    .grad-text {
+      background: linear-gradient(135deg, #1e40af, #04C9F6);
+      -webkit-background-clip: text;
+      color: transparent
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, .78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, .85);
+      box-shadow: 0 12px 32px -12px rgba(30, 64, 175, .16)
+    }
+
+    .dash-bg {
+      background: radial-gradient(circle at 10% 10%, rgba(30, 64, 175, .14), transparent 42%), radial-gradient(circle at 90% 15%, rgba(4, 201, 246, .16), transparent 40%), radial-gradient(circle at 50% 95%, rgba(59, 130, 246, .12), transparent 45%), #F8FAFC
+    }
+
+    .dash-btn-primary {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #04C9F6 100%);
+      color: #fff;
+      box-shadow: 0 8px 20px -6px rgba(37, 99, 235, .45);
+      transition: all .2s ease
+    }
+
+    .dash-btn-primary:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px)
+    }
+
+    .dash-btn-soft {
+      background: linear-gradient(135deg, rgba(30, 58, 138, .09), rgba(4, 201, 246, .16));
+      border: 1px solid rgba(56, 189, 248, .45);
+      color: #1e3a8a;
+      backdrop-filter: blur(10px);
+      transition: all .2s ease
+    }
+
+    :focus-visible {
+      outline: 3px solid #04C9F6;
+      outline-offset: 2px
+    }
+
+    </style>
+    <style id="storeThemeCss"></style>
+    <style id="storeCustomCss"></style>
+  </head>
+
+  <body class="dash-bg dk-store-root">
+    <!-- Loading State -->
+    <div id="stateLoading" class="min-h-[100dvh] flex flex-col items-center justify-center p-6 text-center">
+      <div class="w-12 h-12 rounded-2xl grad flex items-center justify-center shadow-lg animate-pulse mb-4">
+        <svg width="26" height="26" viewBox="0 0 40 40">
+          <path d="M13 11h7a8.5 8.5 0 010 18h-7V11z" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <p class="font-bold text-sm text-slate-600" data-i18n="loadingStore">Loading Dokkanio Store...</p>
+    </div>
+
+    <!-- Not Found / Claim Slug State -->
+    <div id="stateNotFound" class="hidden min-h-[100dvh] flex items-center justify-center p-4">
+      <div class="glass-card rounded-3xl max-w-md w-full p-7 text-center space-y-4">
+        <div class="w-16 h-16 rounded-2xl grad text-white flex items-center justify-center text-2xl mx-auto shadow-lg">🏪</div>
+        <h1 class="text-2xl font-extrabold text-slate-900" data-i18n="claimTitle">Store Not Claimed Yet!</h1>
+        <p class="text-sm text-slate-600">
+          <span data-i18n="claimSub1">The store link</span>
+          <b id="missingSlugBadge" class="inline-block px-2.5 py-0.5 rounded-lg bg-blue-50 text-blue-700 font-mono text-xs border border-blue-200">dokkanio.com/store</b>
+          <span data-i18n="claimSub2">is available! Launch your own online store in 60 seconds with Dokkanio.</span>
+        </p>
+        <a href="/" class="dash-btn-primary font-bold w-full py-3 rounded-xl text-sm inline-flex items-center justify-center gap-2">
+          🚀 <span data-i18n="claimBtn">Claim This Store on Dokkanio</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Live Storefront Container -->
+    <div id="storeApp" class="hidden min-h-[100dvh] flex flex-col">
+      <div id="announceBar" class="dk-announce-bar hidden text-center text-xs font-bold py-2.5 px-4"></div>
+
+      <!-- Store Navbar -->
+      <header class="sticky top-0 z-30 border-b border-black/10 backdrop-blur-md bg-white/70 dk-store-nav">
+        <div class="max-w-6xl mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div id="storeLogoWrap" class="shrink-0"></div>
+            <div class="min-w-0">
+              <h1 id="navStoreName" class="dk-store-title font-extrabold text-sm sm:text-lg truncate">Dokkanio Store</h1>
+              <p class="text-[10px] opacity-70 truncate">64-District COD • bKash • Nagad • Card</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="inline-flex items-center rounded-xl bg-slate-100/90 p-0.5 border border-slate-200/80 text-[11px] font-bold">
+              <button type="button" onclick="setLang('en')" class="lang-btn-en px-2 py-1 rounded-lg transition">EN</button>
+              <button type="button" onclick="setLang('bn')" class="lang-btn-bn px-2 py-1 rounded-lg transition">বাংলা</button>
+            </div>
+            <a id="navWaBtn" href="#" target="_blank" class="hidden sm:inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm">📲 WhatsApp</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Store Content -->
+      <main class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-8">
+        <section id="storeHeroSection"></section>
+
+        <section class="space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 id="catalogHeading" class="dk-store-title text-lg sm:text-xl font-extrabold">All Products</h2>
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+              <input id="storeSearch" type="search" data-i18n-ph="searchPh" placeholder="Search products..." class="w-full sm:w-64 bg-white/85 border border-slate-300/80 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-800 outline-none">
+            </div>
+          </div>
+          <div id="storeProductsGrid" class="dk-prod-grid grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5"></div>
+        </section>
+      </main>
+
+      <footer class="border-t border-black/10 py-6 px-4 text-center text-xs opacity-75">
+        <p>© <span id="ftYear">2026</span> <b id="ftStoreName">Dokkanio Store</b> • <span data-i18n="poweredBy">Powered by</span> <a href="/" class="underline font-bold">Dokkanio.com</a></p>
+      </footer>
+    </div>
+
+    <!-- ============ ONE-STEP CHECKOUT MODAL ============ -->
+    <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeCheckout()">
+      <div class="bg-white/95 backdrop-blur-xl border border-white rounded-3xl w-full max-w-lg max-h-[94dvh] overflow-y-auto shadow-2xl p-5 sm:p-6 text-slate-900" role="dialog" aria-modal="true">
+        <!-- Checkout Form View -->
+        <div id="checkoutFormWrap">
+          <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-200">
+            <div>
+              <h3 class="text-lg font-extrabold" data-i18n="coTitle">Express Checkout</h3>
+              <p class="text-xs text-slate-500" data-i18n="coSub">Fast delivery across all 64 districts of Bangladesh</p>
+            </div>
+            <button onclick="closeCheckout()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-xl leading-none" aria-label="Close">×</button>
+          </div>
+
+          <!-- Selected Product Summary -->
+          <div class="mt-4 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center gap-3">
+            <div id="coProdImg" class="w-14 h-14 rounded-xl bg-white border border-slate-200 overflow-hidden flex items-center justify-center shrink-0 text-2xl">🧴</div>
+            <div class="min-w-0 flex-1">
+              <p id="coProdTitle" class="font-bold text-sm truncate">Product</p>
+              <p class="text-xs text-slate-500"><span id="coProdBadge"></span></p>
+            </div>
+            <p id="coProdPrice" class="font-extrabold text-base text-blue-700 shrink-0">৳0</p>
+          </div>
+
+          <form id="checkoutForm" class="mt-4 space-y-3">
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblName">Full Name *</label>
+                <input id="coName" required data-i18n-ph="phName" placeholder="Your full name" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblPhone">Phone Number *</label>
+                <input id="coPhone" required pattern="01[0-9]{9}" placeholder="01XXXXXXXXX" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblDistrict">District (64 Districts) *</label>
+              <select id="coDistrict" required class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblAddress">Full Delivery Address *</label>
+              <textarea id="coAddress" required rows="2" data-i18n-ph="phAddress" placeholder="House, Road, Area / Thana..." class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></textarea>
+            </div>
+
+            <!-- Payment Method Selector -->
+            <div>
+              <label class="block text-[11px] font-bold text-slate-500 mb-2" data-i18n="lblPayMethod">Payment Method *</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold" id="payMethodBtns">
+                <button type="button" onclick="selectPayMethod('COD')" data-pm="COD" class="pm-btn dash-btn-primary py-2.5 px-2 rounded-xl text-center">🚚 COD</button>
+                <button type="button" onclick="selectPayMethod('bKash')" data-pm="bKash" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">💗 bKash</button>
+                <button type="button" onclick="selectPayMethod('Nagad')" data-pm="Nagad" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">🧡 Nagad</button>
+                <button type="button" onclick="selectPayMethod('Card')" data-pm="Card" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">💳 Card</button>
+              </div>
+            </div>
+
+            <!-- bKash / Nagad Payment Box -->
+            <div id="mobilePayBox" class="hidden p-3.5 rounded-2xl bg-pink-50/70 border border-pink-200 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <div>
+                  <p class="text-[11px] font-bold text-slate-600"><span id="mpLabel">Send Money to Seller bKash</span>:</p>
+                  <p id="mpNumber" class="font-mono font-extrabold text-sm text-slate-900">01XXXXXXXXX</p>
+                </div>
+                <button type="button" onclick="copySellerPayNum()" class="bg-white border border-slate-300 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-bold shrink-0">📋 Copy</button>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1" data-i18n="lblTrxId">Transaction ID (TrxID) *</label>
+                <input id="coTrxId" placeholder="e.g. BKS8492ABC" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm uppercase">
+              </div>
+            </div>
+
+            <!-- Debit / Credit Card (Visa/Mastercard) UI -->
+            <div id="cardPayBox" class="hidden p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-blue-900">Visa / Mastercard Checkout</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white border border-blue-200 text-blue-700">SSL Encrypted</span>
+              </div>
+              <input id="coCardNum" placeholder="Card Number (16 digits)" maxlength="19" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm">
+              <div class="grid grid-cols-2 gap-2.5">
+                <input id="coCardExp" placeholder="MM / YY" maxlength="7" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm">
+                <input id="coCardCvv" placeholder="CVV" maxlength="4" type="password" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm">
+              </div>
+            </div>
+
+            <button id="coSubmitBtn" type="submit" class="dash-btn-primary font-bold w-full py-3.5 rounded-xl text-sm shadow-lg" data-i18n="confirmOrderBtn">Confirm Order</button>
+          </form>
+        </div>
+
+        <!-- Order Confirmation Screen -->
+        <div id="checkoutSuccessWrap" class="hidden text-center py-4 space-y-4">
+          <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">✅</div>
+          <div>
+            <h3 class="text-xl font-extrabold text-slate-900" data-i18n="ordConfirmedTitle">Order Confirmed!</h3>
+            <p class="text-xs text-slate-500 mt-1" data-i18n="ordConfirmedSub">Your order has been received and sent to Dokkanio Hub Processing.</p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4 text-left text-xs space-y-2">
+            <div class="flex justify-between"><span class="text-slate-500">Order ID</span><b id="confOrderId" class="font-mono text-blue-700">#0000</b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Product</span><b id="confProd" class="text-right max-w-[200px] truncate"></b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Amount</span><b id="confAmount" class="text-emerald-600"></b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Payment</span><b id="confPay"></b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Status</span><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">Hub Processing</span></div>
+          </div>
+          <a id="confWaBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-md">
+            📲 <span data-i18n="sendWaReceipt">Send Order Receipt on WhatsApp</span>
+          </a>
+          <button type="button" onclick="closeCheckout()" class="dash-btn-soft font-bold w-full py-2.5 rounded-xl text-xs" data-i18n="continueShop">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[60] bg-slate-900/95 backdrop-blur text-white text-sm px-5 py-3 rounded-xl shadow-xl hidden max-w-[90vw] text-center"></div>
+
+    <script>
+    const SUPABASE_URL = "https://aijyvcqpvhwzwtfqpbol.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_2DZ9NzgEEzYR3Cf4ZnFGYw_hB3Z1kQW";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const BD_DISTRICTS = ["Dhaka", "Chattogram", "Sylhet", "Rajshahi", "Khulna", "Barishal", "Rangpur", "Mymensingh", "Gazipur", "Narayanganj", "Cumilla", "Bogura", "Cox's Bazar", "Jashore", "Tangail", "Narsingdi", "Feni", "Brahmanbaria", "Noakhali", "Dinajpur", "Pabna", "Kushtia", "Faridpur", "Savar", "Bagerhat", "Bandarban", "Barguna", "Bhola", "Chandpur", "Chapainawabganj", "Chuadanga", "Gaibandha", "Gopalganj", "Habiganj", "Jamalpur", "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachhari", "Kishoreganj", "Kurigram", "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura", "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj", "Naogaon", "Narail", "Natore", "Netrokona", "Nilphamari", "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rangamati", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj", "Thakurgaon"];
+
+    const THEMES = {
+      "Default": {
+        label: "Dokkanio Official",
+        layout: "standard",
+        bg: "linear-gradient(135deg,#f8fafc,#eef2ff)",
+        card: "rgba(255,255,255,0.86)",
+        text: "#0f172a",
+        accent: "linear-gradient(135deg,#1e3a8a,#2563eb,#04C9F6)",
+        btnText: "#ffffff",
+        radius: "14px",
+        cols: 3,
+        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
+      },
+      "Soft": {
+        label: "Soft Pastel",
+        layout: "comfy",
+        bg: "linear-gradient(135deg,#fff7ed,#fdf2f8)",
+        card: "rgba(255,255,255,0.92)",
+        text: "#3f2e3e",
+        accent: "linear-gradient(135deg,#f472b6,#fb923c)",
+        btnText: "#ffffff",
+        radius: "18px",
+        cols: 3,
+        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
+      },
+      "Dark": {
+        label: "Dark Mode",
+        layout: "cool",
+        bg: "linear-gradient(135deg,#090d16,#1e1b4b)",
+        card: "rgba(30,41,59,0.88)",
+        text: "#f8fafc",
+        accent: "linear-gradient(135deg,#06b6d4,#6366f1)",
+        btnText: "#ffffff",
+        radius: "14px",
+        cols: 3,
+        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
+      },
+      "Cute": {
+        label: "Cute Pink",
+        layout: "comfy",
+        bg: "linear-gradient(135deg,#ffe4e6,#fce7f3)",
+        card: "#ffffff",
+        text: "#831843",
+        accent: "linear-gradient(135deg,#ec4899,#f43f5e)",
+        btnText: "#ffffff",
+        radius: "999px",
+        cols: 2,
+        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
+      },
+      "Aesthetic": {
+        label: "Aesthetic Editorial",
+        layout: "aesthetic",
+        bg: "linear-gradient(135deg,#f6f4f0,#ebe6dd)",
+        card: "#fcfaf7",
+        text: "#292524",
+        accent: "linear-gradient(135deg,#57534e,#78716c)",
+        btnText: "#ffffff",
+        radius: "8px",
+        cols: 2,
+        font: "'Playfair Display','Hind Siliguri',Georgia,serif"
+      },
+      "Featured Product": {
+        label: "Featured Spotlight",
+        layout: "featured",
+        bg: "linear-gradient(135deg,#f8fafc,#e0f2fe)",
+        card: "#ffffff",
+        text: "#0f172a",
+        accent: "linear-gradient(135deg,#1e3a8a,#04C9F6)",
+        btnText: "#ffffff",
+        radius: "16px",
+        cols: 3,
+        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
+      },
+      "Many Products": {
+        label: "Mega Catalog",
+        layout: "many",
+        bg: "#f1f5f9",
+        card: "#ffffff",
+        text: "#0f172a",
+        accent: "linear-gradient(135deg,#2563eb,#0ea5e9)",
+        btnText: "#ffffff",
+        radius: "10px",
+        cols: 4,
+        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
+      },
+      "Comfy Style": {
+        label: "Comfy Style",
+        layout: "comfy",
+        bg: "linear-gradient(135deg,#fff7ed,#fdf2f8)",
+        card: "rgba(255,255,255,0.92)",
+        text: "#4a2c2a",
+        accent: "linear-gradient(135deg,#f472b6,#fb923c)",
+        btnText: "#ffffff",
+        radius: "22px",
+        cols: 2,
+        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
+      },
+      "Few Products": {
+        label: "Boutique Showcase",
+        layout: "few",
+        bg: "linear-gradient(135deg,#ffffff,#f8fafc)",
+        card: "#ffffff",
+        text: "#111827",
+        accent: "#111827",
+        btnText: "#ffffff",
+        radius: "12px",
+        cols: 2,
+        font: "'Playfair Display','Hind Siliguri',Georgia,serif"
+      },
+      "Cool Style": {
+        label: "Cool Style",
+        layout: "cool",
+        bg: "linear-gradient(135deg,#090d16,#131c31)",
+        card: "rgba(30,41,59,0.85)",
+        text: "#f1f5f9",
+        accent: "linear-gradient(135deg,#06b6d4,#6366f1)",
+        btnText: "#ffffff",
+        radius: "14px",
+        cols: 3,
+        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
+      }
+    };
+
+    const I18N = {
+      en: {
+        loadingStore: "Loading Dokkanio Store...",
+        claimTitle: "Store Not Claimed Yet!",
+        claimSub1: "The store link",
+        claimSub2: "is available! Launch your own online store in 60 seconds with Dokkanio.",
+        claimBtn: "Claim This Store on Dokkanio",
+        searchPh: "Search products...",
+        poweredBy: "Powered by",
+        coTitle: "Express Checkout",
+        coSub: "Fast delivery across all 64 districts of Bangladesh",
+        lblName: "Full Name *",
+        phName: "Your full name",
+        lblPhone: "Phone Number *",
+        lblDistrict: "District (64 Districts) *",
+        lblAddress: "Full Delivery Address *",
+        phAddress: "House, Road, Area / Thana...",
+        lblPayMethod: "Payment Method *",
+        lblTrxId: "Transaction ID (TrxID) *",
+        confirmOrderBtn: "Confirm Order",
+        ordConfirmedTitle: "Order Confirmed!",
+        ordConfirmedSub: "Your order has been received and sent to Dokkanio Hub Processing.",
+        sendWaReceipt: "Send Order Receipt on WhatsApp",
+        continueShop: "Continue Shopping"
+      },
+      bn: {
+        loadingStore: "দোকানিও স্টোর লোড হচ্ছে...",
+        claimTitle: "এই স্টোরটি এখনো নেওয়া হয়নি!",
+        claimSub1: "স্টোর লিংক",
+        claimSub2: "খালি আছে! দোকানিও-তে ৬০ সেকেন্ডে আপনার নিজের স্টোর চালু করুন।",
+        claimBtn: "দোকানিও-তে এই স্টোরটি নিন",
+        searchPh: "পণ্য খুঁজুন...",
+        poweredBy: "পরিচালনায়",
+        coTitle: "দ্রুত চেকআউট",
+        coSub: "সারা বাংলাদেশের ৬৪ জেলায় দ্রুত ডেলিভারি",
+        lblName: "আপনার নাম *",
+        phName: "পুরো নাম লিখুন",
+        lblPhone: "মোবাইল নম্বর *",
+        lblDistrict: "জেলা (৬৪ জেলা) *",
+        lblAddress: "সম্পূর্ণ ঠিকানা *",
+        phAddress: "বাসা, রোড, এলাকা / থানা...",
+        lblPayMethod: "পেমেন্ট মাধ্যম *",
+        lblTrxId: "ট্রানজেকশন আইডি (TrxID) *",
+        confirmOrderBtn: "অর্ডার কনফার্ম করুন",
+        ordConfirmedTitle: "অর্ডার কনফার্ম হয়েছে!",
+        ordConfirmedSub: "আপনার অর্ডারটি গ্রহণ করা হয়েছে এবং দোকানিও হাব প্রসেসিং-এ পাঠানো হয়েছে।",
+        sendWaReceipt: "হোয়াটসঅ্যাপে রসিদ পাঠান",
+        continueShop: "কেনাকাটা চালিয়ে যান"
+      }
+    };
+
+    let lang = "en",
+      storeData = null,
+      storeMeta = {
+        logo_url: "",
+        banner_url: "",
+        announcement: "",
+        hero_headline: "",
+        hero_sub: "",
+        cta_text: "Order Now",
+        layout_cols: null
+      },
+      products = [];
+    let selectedProduct = null,
+      selectedPayMethod = "COD";
+    const $ = id => document.getElementById(id);
+    const bdt = n => "৳" + Math.round(Number(n) || 0).toLocaleString("en-US");
+    const t = k => (I18N[lang] && I18N[lang][k]) || I18N.en[k] || k;
+
+    function toast(msg) {
+      const el = $("toast");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+      clearTimeout(el._h);
+      el._h = setTimeout(() => el.classList.add("hidden"), 3000);
+    }
+
+    function setLang(l) {
+      lang = l;
+      document.documentElement.lang = l === "bn" ? "bn" : "en";
+      document.querySelectorAll(".lang-btn-en").forEach(b => b.className = "lang-btn-en px-2 py-1 rounded-lg transition " + (l === "en" ? "dash-btn-primary" : "text-slate-600"));
+      document.querySelectorAll(".lang-btn-bn").forEach(b => b.className = "lang-btn-bn px-2 py-1 rounded-lg transition " + (l === "bn" ? "dash-btn-primary" : "text-slate-600"));
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (I18N[lang][k]) el.textContent = I18N[lang][k];
+      });
+      document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+        const k = el.getAttribute("data-i18n-ph");
+        if (I18N[lang][k]) el.placeholder = I18N[lang][k];
+      });
+    }
+
+    function parseCustomCssWithMeta(rawCss = "") {
+      const m = rawCss.match(/\/\*DK_META:(.*?)\*\/\n?/);
+      let meta = {
+        logo_url: "",
+        banner_url: "",
+        announcement: "",
+        hero_headline: "",
+        hero_sub: "",
+        cta_text: "Order Now",
+        layout_cols: null
+      };
+      let cleanCss = rawCss || "";
+      if (m) {
+        try {
+          meta = {
+            ...meta,
+            ...JSON.parse(m[1])
+          };
+        } catch (_) {}
+        cleanCss = rawCss.replace(m[0], "");
+      }
+      return {
+        meta,
+        cleanCss
+      };
+    }
+
+    function applyThemeAndCss(themeName, cleanCss) {
+      const th = THEMES[themeName] || THEMES.Default;
+      const cols = storeMeta.layout_cols || th.cols || 3;
+      $("storeThemeCss").textContent = `
+        .dk-store-root { background: ${th.bg}; color: ${th.text}; font-family: ${th.font}; }
+        .dk-prod-card { background: ${th.card}; color: ${th.text}; border-radius: ${th.radius}; }
+        .dk-buy-btn { background: ${th.accent}; color: ${th.btnText}; border-radius: ${th.radius}; transition: all .2s ease; }
+        .dk-buy-btn:hover { filter: brightness(1.07); transform: translateY(-1px); }
+        @media (min-width: 768px) { .dk-prod-grid { grid-template-columns: repeat(${cols}, minmax(0, 1fr)); } }
+      `;
+      $("storeCustomCss").textContent = cleanCss || "";
+      return th;
+    }
+
+    function renderStorefront() {
+      const th = applyThemeAndCss(storeData.theme, storeData._cleanCss);
+      const sName = storeData.store_name || "Dokkanio Store";
+      document.title = `${sName} – Dokkanio`;
+      $("navStoreName").textContent = sName;
+      $("ftStoreName").textContent = sName;
+      $("ftYear").textContent = new Date().getFullYear();
+
+      // Logo
+      $("storeLogoWrap").innerHTML = storeMeta.logo_url ?
+        `<img src="${storeMeta.logo_url}" class="w-9 h-9 rounded-full object-cover border border-white shadow" alt="${sName}">` :
+        `<span class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-sm shadow" style="background:${th.accent};color:${th.btnText}">${sName.charAt(0).toUpperCase()}</span>`;
+
+      // WhatsApp nav button
+      if (storeData.whatsapp_number) {
+        const waClean = storeData.whatsapp_number.replace(/[^0-9]/g, "");
+        $("navWaBtn").href = `https://wa.me/${waClean.startsWith("88") ? waClean : "88" + waClean}`;
+        $("navWaBtn").classList.remove("hidden");
+      }
+
+      // Announcement Bar
+      if (storeMeta.announcement) {
+        $("announceBar").textContent = storeMeta.announcement;
+        $("announceBar").style.background = th.accent;
+        $("announceBar").style.color = th.btnText;
+        $("announceBar").classList.remove("hidden");
+      }
+
+      const heroHead = storeMeta.hero_headline || sName;
+      const heroSub = storeMeta.hero_sub || "Authentic products with fast 64-district Cash on Delivery, bKash, Nagad & Card checkout.";
+      const ctaText = storeMeta.cta_text || "Order Now";
+      const isDark = th.layout === "cool";
+      const borderSub = isDark ? "border-white/10" : "border-black/10";
+
+      // Hero / Featured Spotlight
+      let gridItems = products;
+      if (th.layout === "featured" && products.length) {
+        const feat = products[0];
+        gridItems = products.slice(1).length ? products.slice(1) : products;
+        $("storeHeroSection").innerHTML = `
+          <div class="dk-prod-card border ${borderSub} p-5 sm:p-7 grid md:grid-cols-5 gap-6 items-center shadow-lg">
+            <div class="md:col-span-2 h-56 sm:h-64 rounded-2xl bg-slate-100 overflow-hidden flex items-center justify-center">
+              ${feat.image_url ? `<img src="${feat.image_url}" class="w-full h-full object-cover" alt="${feat.title}">` : `<span class="text-6xl">✨</span>`}
+            </div>
+            <div class="md:col-span-3 space-y-3">
+              <span class="inline-block text-xs font-extrabold uppercase px-3 py-1 rounded-full bg-amber-100 text-amber-800">⭐ Featured Product</span>
+              <h2 class="dk-store-title text-2xl sm:text-3xl font-extrabold leading-tight">${feat.title}</h2>
+              <p class="text-sm opacity-80">${heroSub}</p>
+              <div class="flex flex-wrap items-center gap-4 pt-2">
+                <span class="text-2xl sm:text-3xl font-extrabold">${bdt(feat.price)}</span>
+                <button onclick="openCheckout('${feat.id}')" class="dk-buy-btn px-7 py-3 text-sm font-bold shadow-lg">${ctaText}</button>
+              </div>
+            </div>
+          </div>`;
+      } else if (storeMeta.banner_url) {
+        $("storeHeroSection").innerHTML = `
+          <div class="dk-prod-card border ${borderSub} overflow-hidden shadow-md">
+            <img src="${storeMeta.banner_url}" class="w-full h-44 sm:h-64 object-cover" alt="${sName}">
+            <div class="p-5 sm:p-6 text-center">
+              <h2 class="dk-store-title text-2xl sm:text-3xl font-extrabold">${heroHead}</h2>
+              <p class="text-xs sm:text-sm opacity-75 mt-1 max-w-xl mx-auto">${heroSub}</p>
+            </div>
+          </div>`;
+      } else {
+        $("storeHeroSection").innerHTML = `
+          <div class="dk-prod-card border ${borderSub} p-6 sm:p-10 text-center shadow-sm" style="${isDark ? 'background:linear-gradient(135deg,rgba(6,182,212,.14),rgba(99,102,241,.2))' : ''}">
+            <span class="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${borderSub} opacity-80 mb-3">Welcome to ${sName}</span>
+            <h2 class="dk-store-title text-2xl sm:text-4xl font-extrabold">${heroHead}</h2>
+            <p class="text-xs sm:text-base opacity-75 mt-2 max-w-xl mx-auto">${heroSub}</p>
+          </div>`;
+      }
+
+      renderProductGrid(gridItems, ctaText, th, borderSub);
+    }
+
+    function renderProductGrid(list, ctaText, th, borderSub) {
+      const q = ($("storeSearch").value || "").toLowerCase();
+      const filtered = list.filter(p => p.title.toLowerCase().includes(q));
+      $("catalogHeading").textContent = `${th.layout === "few" ? "Curated Collection" : "Store Products"} (${filtered.length})`;
+      $("storeProductsGrid").innerHTML = filtered.length ? filtered.map(p => `
+        <article class="dk-prod-card border ${borderSub} p-3 sm:p-4 shadow-sm flex flex-col justify-between gap-3">
+          <div class="${th.layout==='few'?'h-48 sm:h-56':'h-36 sm:h-44'} rounded-xl bg-slate-100/80 overflow-hidden flex items-center justify-center relative">
+            ${p.is_bundle ? `<span class="absolute top-2 left-2 z-10 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 shadow-sm">Bundle</span>` : ""}
+            ${p.image_url ? `<img src="${p.image_url}" class="w-full h-full object-cover" alt="${p.title}">` : `<span class="text-4xl">🧴</span>`}
+          </div>
+          <div class="flex-1 flex flex-col">
+            <h3 class="font-bold text-xs sm:text-sm leading-snug line-clamp-2">${p.title}</h3>
+            <p class="font-extrabold text-base sm:text-lg mt-1.5">${bdt(p.price)}</p>
+          </div>
+          <button onclick="openCheckout('${p.id}')" class="dk-buy-btn w-full py-2.5 text-xs sm:text-sm font-bold shadow-sm">${ctaText}</button>
+        </article>
+      `).join("") : `<div class="col-span-full text-center py-12 opacity-65 text-sm">No products listed in this store yet.</div>`;
+    }
+
+    $("storeSearch").oninput = () => renderStorefront();
+
+    /* ---------- CHECKOUT MODAL ---------- */
+    function populateDistricts() {
+      $("coDistrict").innerHTML = BD_DISTRICTS.map(d => `<option value="${d}">${d}</option>`).join("");
+    }
+
+    function openCheckout(prodId) {
+      selectedProduct = products.find(p => String(p.id) === String(prodId));
+      if (!selectedProduct) return;
+      $("checkoutFormWrap").classList.remove("hidden");
+      $("checkoutSuccessWrap").classList.add("hidden");
+      $("coProdTitle").textContent = selectedProduct.title;
+      $("coProdPrice").textContent = bdt(selectedProduct.price);
+      $("coProdBadge").textContent = selectedProduct.is_bundle ? "Bundle Deal • Instant Dispatch" : "In Stock • Ready to Ship";
+      $("coProdImg").innerHTML = selectedProduct.image_url ? `<img src="${selectedProduct.image_url}" class="w-full h-full object-cover">` : "🧴";
+      selectPayMethod("COD");
+      $("checkoutModal").classList.remove("hidden");
+      $("checkoutModal").classList.add("flex");
+    }
+
+    function closeCheckout() {
+      $("checkoutModal").classList.add("hidden");
+      $("checkoutModal").classList.remove("flex");
+    }
+
+    function selectPayMethod(pm) {
+      selectedPayMethod = pm;
+      document.querySelectorAll(".pm-btn").forEach(btn => {
+        const active = btn.dataset.pm === pm;
+        btn.className = "pm-btn py-2.5 px-2 rounded-xl text-center " + (active ? "dash-btn-primary" : "dash-btn-soft");
+      });
+      const isMobilePay = pm === "bKash" || pm === "Nagad";
+      $("mobilePayBox").classList.toggle("hidden", !isMobilePay);
+      $("cardPayBox").classList.toggle("hidden", pm !== "Card");
+      $("coTrxId").required = isMobilePay;
+      $("coCardNum").required = pm === "Card";
+      $("coCardExp").required = pm === "Card";
+      $("coCardCvv").required = pm === "Card";
+
+      if (isMobilePay) {
+        const num = pm === "bKash" ? (storeData.bkash_number || "Contact Seller") : (storeData.nagad_number || "Contact Seller");
+        $("mpLabel").textContent = `Send Money to Seller ${pm}`;
+        $("mpNumber").textContent = num;
+      }
+    }
+
+    function copySellerPayNum() {
+      const num = $("mpNumber").textContent.trim();
+      navigator.clipboard?.writeText(num);
+      toast(`Copied ${selectedPayMethod} number: ${num}`);
+    }
+
+    $("checkoutForm").onsubmit = async e => {
+      e.preventDefault();
+      if (!selectedProduct || !storeData) return;
+      const btn = $("coSubmitBtn");
+      btn.disabled = true;
+      btn.textContent = "Placing Order...";
+
+      let trxId = "COD";
+      if (selectedPayMethod === "bKash" || selectedPayMethod === "Nagad") {
+        trxId = $("coTrxId").value.trim().toUpperCase();
+      } else if (selectedPayMethod === "Card") {
+        const rawCard = $("coCardNum").value.replace(/\s+/g, "");
+        trxId = "CARD-" + (rawCard.slice(-4) || "VISA");
+      }
+
+      const orderPayload = {
+        store_id: storeData.id,
+        product_id: selectedProduct.id,
+        product_title: selectedProduct.title,
+        amount: Number(selectedProduct.price),
+        customer_name: $("coName").value.trim(),
+        customer_phone: $("coPhone").value.trim(),
+        district: $("coDistrict").value,
+        address: $("coAddress").value.trim(),
+        payment_method: selectedPayMethod,
+        trx_id: trxId,
+        status: "Pending",
+        fulfillment_status: "Hub Processing",
+        seller_payout_status: "Credited to Wallet"
+      };
+
+      try {
+        const {
+          data,
+          error
+        } = await sb.from("orders").insert([orderPayload]).select().single();
+        if (error) throw error;
+        const orderId = data?.id || ("DK-" + Date.now().toString().slice(-6));
+        showOrderConfirmation(orderId, orderPayload);
+      } catch (err) {
+        toast("Order error: " + (err.message || err));
+      } finally {
+        btn.disabled = false;
+        btn.textContent = t("confirmOrderBtn");
+      }
+    };
+
+    function showOrderConfirmation(orderId, o) {
+      $("checkoutFormWrap").classList.add("hidden");
+      $("checkoutSuccessWrap").classList.remove("hidden");
+      $("confOrderId").textContent = "#" + String(orderId).slice(0, 8).toUpperCase();
+      $("confProd").textContent = o.product_title;
+      $("confAmount").textContent = bdt(o.amount);
+      $("confPay").textContent = `${o.payment_method}${o.trx_id && o.trx_id !== "COD" ? " (" + o.trx_id + ")" : ""}`;
+
+      const sellerWa = (storeData.whatsapp_number || storeData.bkash_number || "").replace(/[^0-9]/g, "");
+      const intlWa = sellerWa.startsWith("88") ? sellerWa : "88" + sellerWa;
+      const receiptMsg = encodeURIComponent(
+        `🛍️ *New Order Receipt – ${storeData.store_name}*\n` +
+        `Order ID: #${String(orderId).slice(0, 8).toUpperCase()}\n` +
+        `Product: ${o.product_title}\n` +
+        `Amount: ${bdt(o.amount)}\n` +
+        `Payment: ${o.payment_method} (${o.trx_id})\n` +
+        `Customer: ${o.customer_name} (${o.customer_phone})\n` +
+        `Location: ${o.district}, ${o.address}\n` +
+        `Status: Hub Processing`
+      );
+      $("confWaBtn").href = `https://wa.me/${intlWa}?text=${receiptMsg}`;
+      $("checkoutForm").reset();
+      toast("Order placed successfully!");
+    }
+
+    /* ---------- BOOTSTRAP STORE FROM SLUG ---------- */
+    (async function initStorefront() {
+      setLang("en");
+      populateDistricts();
+
+      let slug = window.location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+      if (!slug || slug === "404.html" || slug === "index.html") {
+        slug = new URLSearchParams(window.location.search).get("slug")?.toLowerCase() || "";
+      } else if (slug.includes("/")) {
+        slug = slug.split("/")[0];
+      }
+
+      if (!slug) {
+        $("stateLoading").classList.add("hidden");
+        $("missingSlugBadge").textContent = "dokkanio.com/yourstore";
+        $("stateNotFound").classList.remove("hidden");
+        return;
+      }
+
+      try {
+        const {
+          data: store,
+          error
+        } = await sb
+          .from("stores")
+          .select("id, store_name, slug, bkash_number, nagad_number, whatsapp_number, theme, custom_css")
+          .eq("slug", slug)
+          .maybeSingle();
+
+        if (error || !store) {
+          $("stateLoading").classList.add("hidden");
+          $("missingSlugBadge").textContent = `dokkanio.com/${slug}`;
+          $("stateNotFound").classList.remove("hidden");
+          return;
+        }
+
+        storeData = store;
+        const parsed = parseCustomCssWithMeta(store.custom_css || "");
+        storeMeta = parsed.meta;
+        storeData._cleanCss = parsed.cleanCss;
+
+        const {
+          data: prods
+        } = await sb
+          .from("products")
+          .select("id, title, price, image_url, is_bundle")
+          .eq("store_id", store.id)
+          .order("id", {
+            ascending: false
+          });
+
+        products = prods || [];
+        $("stateLoading").classList.add("hidden");
+        $("storeApp").classList.remove("hidden");
+        renderStorefront();
+      } catch (err) {
+        $("stateLoading").classList.add("hidden");
+        $("missingSlugBadge").textContent = `dokkanio.com/${slug}`;
+        $("stateNotFound").classList.remove("hidden");
+      }
+    })();
+
+    </script>
+  </body>
+
+</html>
