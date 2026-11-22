@@ -104,7 +104,7 @@
           <b id="missingSlugBadge" class="inline-block px-2.5 py-0.5 rounded-lg bg-blue-50 text-blue-700 font-mono text-xs border border-blue-200">dokkanio.com/store</b>
           <span data-i18n="claimSub2">is available! Launch your own online store in 60 seconds with Dokkanio.</span>
         </p>
-        <a href="/" class="dash-btn-primary font-bold w-full py-3 rounded-xl text-sm inline-flex items-center justify-center gap-2">
+        <a id="claimStoreLink" href="/" class="dash-btn-primary font-bold w-full py-3 rounded-xl text-sm inline-flex items-center justify-center gap-2">
           🚀 <span data-i18n="claimBtn">Claim This Store on Dokkanio</span>
         </a>
       </div>
@@ -759,6 +759,10 @@
       } else if (slug.includes("/")) {
         slug = slug.split("/")[0];
       }
+
+      const claimUrl = new URL("/", window.location.origin);
+      if (slug) claimUrl.searchParams.set("claim", slug);
+      $("claimStoreLink").href = claimUrl.toString();
 
       if (!slug) {
         $("stateLoading").classList.add("hidden");
