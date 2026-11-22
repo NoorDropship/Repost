@@ -1664,6 +1664,7 @@
     <script>
     const SUPABASE_URL = "https://aijyvcqpvhwzwtfqpbol.supabase.co";
     const SUPABASE_KEY = "sb_publishable_2DZ9NzgEEzYR3Cf4ZnFGYw_hB3Z1kQW";
+    const CLAIM_REQUESTED_SLUG = new URLSearchParams(window.location.search).get("claim")?.toLowerCase().replace(/[^a-z0-9-]/g, "") || "";
     const sb = (window.supabase && typeof window.supabase.createClient === 'function') ?
       window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : {
         auth: {
@@ -2989,7 +2990,53 @@
       activeTicketId = "TK-204";
     }
 
-    async function loadSellerWorkspace(authUser, fallbackShop = "My Dokkanio Store", fallbackPay = "01712908811") {
+    function normalizeStoreSlug(value) {
+      return String(value || "")
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 48)
+        .replace(/-+$/g, "");
+    }
+
+    function buildClaimRedirectUrl(slug = CLAIM_REQUESTED_SLUG) {
+      const url = new URL("/", window.location.origin);
+      if (slug) url.searchParams.set("claim", slug);
+      return url.toString();
+    }
+
+    async function createSellerStore(authUser, storeName, fallbackPay, preferredSlug) {
+      const baseSlug = normalizeStoreSlug(preferredSlug || storeName) || "store";
+      for (let attempt = 0; attempt < 100; attempt++) {
+        const candidateSlug = attempt === 0 ? baseSlug : `${baseSlug}-${attempt + 1}`;
+        const { data: existing, error: lookupError } = await sb
+          .from("stores")
+          .select("id")
+          .eq("slug", candidateSlug)
+          .maybeSingle();
+        if (lookupError) return { error: lookupError };
+        if (existing) continue;
+
+        const { data: created, error: createError } = await sb.from("stores").insert([{
+          owner_id: authUser.id,
+          slug: candidateSlug,
+          store_name: storeName,
+          bkash_number: fallbackPay,
+          nagad_number: fallbackPay,
+          whatsapp_number: "88" + fallbackPay.replace(/^88/, ""),
+          theme: "Default",
+          custom_css: ""
+        }]).select().single();
+        if (createError?.code === "23505") continue;
+        if (createError) return { error: createError };
+        return { store: created };
+      }
+      return { error: new Error("Could not find an available store link. Try a different store name.") };
+    }
+
+    async function loadSellerWorkspace(authUser, fallbackShop = "My Dokkanio Store", fallbackPay = "01712908811", preferredSlug = CLAIM_REQUESTED_SLUG) {
       isDemoMode = false;
       user = {
         id: authUser.id,
@@ -3000,28 +3047,30 @@
       };
 
       let {
-        data: storesList
+        data: storesList,
+        error: storesError
       } = await sb.from("stores").select("*").eq("owner_id", authUser.id).limit(1);
+      if (storesError) {
+        toast("Could not load your store: " + storesError.message);
+        return false;
+      }
       if (storesList && storesList.length) {
         currentStore = storesList[0];
       } else {
-        const slugBase = (fallbackShop || user.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "store";
-        const newSlug = slugBase + "-" + Math.floor(100 + Math.random() * 899);
-        const {
-          data: created,
-          error: stErr
-        } = await sb.from("stores").insert([{
-          owner_id: authUser.id,
-          slug: newSlug,
-          store_name: fallbackShop,
-          bkash_number: fallbackPay,
-          nagad_number: fallbackPay,
-          whatsapp_number: "88" + fallbackPay.replace(/^88/, ""),
-          theme: "Default",
-          custom_css: ""
-        }]).select().single();
-        if (stErr) toast("Store init note: " + stErr.message);
-        if (created) currentStore = created;
+        const { store: created, error: stErr } = await createSellerStore(
+          authUser,
+          fallbackShop || user.name + " Store",
+          fallbackPay,
+          preferredSlug
+        );
+        if (stErr) {
+          toast("Store setup failed: " + stErr.message);
+          return false;
+        }
+        currentStore = created;
+        if (preferredSlug && currentStore.slug !== preferredSlug) {
+          toast(`That link was just claimed. Your store is available at ${buildPublicStoreUrl(currentStore.slug)}.`);
+        }
       }
 
       const parsed = parseCustomCssWithMeta(currentStore.custom_css || "");
@@ -3070,6 +3119,7 @@
       tickets = [];
       enterDashboardUI();
       subscribeRealtimeOrders();
+      return true;
     }
 
     function enterDashboardUI() {
@@ -3174,6 +3224,7 @@
             email,
             password: pass,
             options: {
+              emailRedirectTo: buildClaimRedirectUrl(),
               data: {
                 full_name: name,
                 shop_name: shop,
@@ -3183,7 +3234,8 @@
           });
           if (error) throw error;
           if (data.user && data.session) {
-            await loadSellerWorkspace(data.user, shop, pay);
+            const loaded = await loadSellerWorkspace(data.user, shop, pay, CLAIM_REQUESTED_SLUG);
+            if (!loaded) return;
             toast("Account & Dokkanio Store created!");
           } else {
             toast("Signup successful! Check email or click Login.");
@@ -3198,7 +3250,8 @@
             password: pass
           });
           if (error) throw error;
-          await loadSellerWorkspace(data.user, shop, pay);
+          const loaded = await loadSellerWorkspace(data.user, shop, pay, CLAIM_REQUESTED_SLUG);
+          if (!loaded) return;
           toast("Welcome back to Dokkanio!");
         }
       } catch (err) {
@@ -5008,7 +5061,15 @@
       const {
         data
       } = await sb.auth.getSession();
-      if (data?.session?.user) await loadSellerWorkspace(data.session.user);
+      if (data?.session?.user) {
+        await loadSellerWorkspace(data.session.user, undefined, undefined, CLAIM_REQUESTED_SLUG);
+      } else if (CLAIM_REQUESTED_SLUG) {
+        const shopInput = $("aShop");
+        if (shopInput && !shopInput.value.trim()) {
+          shopInput.value = CLAIM_REQUESTED_SLUG.replace(/-/g, " ");
+        }
+        openModal("signup");
+      }
     });
 
     </script>
