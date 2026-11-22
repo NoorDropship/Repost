@@ -1771,7 +1771,7 @@
       };
     if (!window.supabase) console.warn('Supabase CDN unavailable: Dokkanio is running in offline preview mode.');
 
-    const BD_DISTRICTS = ["Dhaka", "Chattogram", "Sylhet", "Rajshahi", "Khulna", "Barishal", "Rangpur", "Mymensingh", "Gazipur", "Narayanganj", "Cumilla", "Bogura", "Cox's Bazar", "Jashore", "Tangail", "Narsingdi", "Feni", "Brahmanbaria", "Noakhali", "Dinajpur", "Pabna", "Kushtia", "Faridpur", "Savar", "Bagerhat", "Bandarban", "Barguna", "Bhola", "Chandpur", "Chapainawabganj", "Chuadanga", "Gaibandha", "Gopalganj", "Habiganj", "Jamalpur", "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachhari", "Kishoreganj", "Kurigram", "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura", "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj", "Naogaon", "Narail", "Natore", "Netrokona", "Nilphamari", "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rangamati", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj", "Thakurgaon"];
+    const BD_DISTRICTS = ["Dhaka", "Chattogram", "Sylhet", "Rajshahi", "Khulna", "Barishal", "Rangpur", "Mymensingh", "Gazipur", "Narayanganj", "Cumilla", "Bogura", "Cox's Bazar", "Jashore", "Tangail", "Narsingdi", "Feni", "Brahmanbaria", "Noakhali", "Dinajpur", "Pabna", "Kushtia", "Faridpur", "Bagerhat", "Bandarban", "Barguna", "Bhola", "Chandpur", "Chapainawabganj", "Chuadanga", "Gaibandha", "Gopalganj", "Habiganj", "Jamalpur", "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachhari", "Kishoreganj", "Kurigram", "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura", "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj", "Naogaon", "Narail", "Natore", "Netrokona", "Nilphamari", "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rangamati", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj", "Thakurgaon"];
 
     const PRODUCTS_DATA = [{
         id: 1,
@@ -2419,7 +2419,8 @@
       layout_cols: null
     };
     let publicStore = null,
-      publicStoreProducts = [];
+      publicStoreProducts = [],
+      publicCart = [];
     let storeProducts = [],
       orders = [],
       adminOrders = [],
@@ -2434,6 +2435,10 @@
       rtChannel = null;
     let syncTargetProduct = null,
       syncPlatform = "shopify";
+
+    function isSellerPayoutCredited(order) {
+      return String(order?.seller_payout_status || "").toLowerCase().startsWith("credited");
+    }
 
     function playOrderSound() {
       if ($("prefSound") && !$("prefSound").checked) return;
@@ -2924,7 +2929,11 @@
           created_at: daysAgoIso(4)
         }
       ];
-      balance = orders.reduce((s, o) => s + Math.round((Number(o.amount) || 0) * 0.28), 0);
+      try {
+        const customerOrders = JSON.parse(localStorage.getItem("dk_demo_orders_" + currentStore.slug) || "[]");
+        if (Array.isArray(customerOrders)) orders.unshift(...customerOrders);
+      } catch (_) {}
+      balance = orders.filter(isSellerPayoutCredited).reduce((s, o) => s + Math.round((Number(o.amount) || 0) * 0.28), 0);
       platformDue = 0;
       paymentMethods = [{
           id: "PM-1",
@@ -3036,7 +3045,7 @@
         });
         orders = ords || [];
         // New accounts with 0 orders strictly start at ৳0 profit!
-        balance = orders.reduce((s, o) => s + Math.round((Number(o.amount) || 0) * 0.28), 0);
+        balance = orders.filter(isSellerPayoutCredited).reduce((s, o) => s + Math.round((Number(o.amount) || 0) * 0.28), 0);
       } else {
         orders = [];
         balance = 0;
@@ -3100,7 +3109,7 @@
           const o = payload.new;
           if (!orders.some(x => x.id === o.id)) {
             orders.unshift(o);
-            const profitGain = Math.round((Number(o.amount) || 0) * 0.28);
+            const profitGain = isSellerPayoutCredited(o) ? Math.round((Number(o.amount) || 0) * 0.28) : 0;
             balance += profitGain;
             playOrderSound();
             showRealtimeOrderAlert(o, profitGain);
@@ -3111,13 +3120,13 @@
 
     function showRealtimeOrderAlert(o, profitGain) {
       $("rtAlertTitle").textContent = `🎉 New Order: ${o.product_title} (${bdt(o.amount)})`;
-      $("rtAlertSub").textContent = `${o.customer_name} • ${o.district} • ${o.payment_method} • +${bdt(profitGain)} Credited to Seller Wallet`;
+      $("rtAlertSub").textContent = profitGain ? `${o.customer_name} • ${o.district} • ${o.payment_method} • +${bdt(profitGain)} Credited to Seller Wallet` : `${o.customer_name} • ${o.district} • ${o.payment_method} • Awaiting payment verification`;
       const waPhone = (o.customer_phone || "").replace(/[^0-9]/g, ""),
         intlPhone = waPhone.startsWith("88") ? waPhone : "88" + waPhone;
       const msg = encodeURIComponent(`Assalamu Alaikum ${o.customer_name}! Your order for ${o.product_title} (${bdt(o.amount)}) on ${currentStore.store_name} is confirmed and currently in Hub Processing (Dokkanio). Thank you!`);
       $("rtAlertWa").href = `https://wa.me/${intlPhone}?text=${msg}`;
       $("rtAlertBanner").classList.remove("hidden");
-      toast(`New order from ${o.customer_name}! Wallet +${bdt(profitGain)}`);
+      toast(profitGain ? `New order from ${o.customer_name}! Wallet +${bdt(profitGain)}` : `New order from ${o.customer_name}; payment needs review.`);
     }
 
     async function logout() {
@@ -3259,11 +3268,8 @@
     }
 
     function buildPublicStoreUrl(slug) {
-      const url = new URL(window.location.href);
-      url.search = "";
-      url.hash = "";
-      url.searchParams.set("store", String(slug || "store").toLowerCase());
-      return url.toString();
+      const storeSlug = String(slug || "store").toLowerCase().replace(/[^a-z0-9-]/g, "");
+      return new URL(`/${encodeURIComponent(storeSlug)}`, window.location.origin).toString();
     }
 
     function updateLiveStoreLinks() {
@@ -3283,9 +3289,30 @@
       }
     }
 
-    function openLiveStorefront() {
+    async function openLiveStorefront() {
       const slug = ($("sbSlug")?.value || currentStore.slug || "store").toLowerCase().replace(/[^a-z0-9-]/g, "");
-      window.open(buildPublicStoreUrl(slug), "_blank", "noopener,noreferrer");
+      if (!slug) {
+        toast("Add a store slug before opening your storefront.");
+        return;
+      }
+      const savePromise = saveStoreToSupabase(false);
+      const previewWindow = window.open(`/${encodeURIComponent(slug)}`, "_blank");
+      if (!previewWindow) {
+        await savePromise;
+        toast("Allow pop-ups to open your live storefront.");
+        return;
+      }
+      const saved = await savePromise;
+      if (!saved) {
+        try {
+          previewWindow.close();
+        } catch (_) {}
+        return;
+      }
+      try {
+        previewWindow.location.reload();
+      } catch (_) {}
+      toast(`Store synced. Live at ${buildPublicStoreUrl(slug)}`);
     }
     async function copyLiveStoreLink() {
       const slug = ($("sbSlug")?.value || currentStore.slug || "store").toLowerCase().replace(/[^a-z0-9-]/g, "");
@@ -3433,6 +3460,18 @@
           theme: currentStore.theme,
           custom_css: currentStore.custom_css,
           store_name: currentStore.store_name
+        }));
+        localStorage.setItem("dk_storefront_" + currentStore.slug, JSON.stringify({
+          store: {
+            ...currentStore
+          },
+          products: storeProducts.map(product => ({
+            ...product
+          })),
+          meta: {
+            ...storeMeta
+          },
+          demo: isDemoMode
         }));
       } catch (_) {}
       if (showMsg) toast("Published! Live at " + buildPublicStoreUrl(currentStore.slug));
@@ -3888,7 +3927,8 @@
       const phoneRaw = String(store?.whatsapp_number || "").replace(/\D/g, "");
       const phone = phoneRaw.startsWith("880") ? phoneRaw : phoneRaw.startsWith("0") ? "88" + phoneRaw : phoneRaw;
       const msg = encodeURIComponent(`Assalamu Alaikum! I want to order ${product.title} from ${store?.store_name || "your store"}. Please share the order details.`);
-      const orderAction = phone ?
+      const orderAction = context === "live" ?
+        `<button type="button" data-add-to-cart="${escapeStoreHTML(String(product.id ?? product.title))}" class="inline-flex mt-6 items-center justify-center rounded-xl px-5 py-3 text-sm font-bold w-full" style="background:${accentColor};color:${buttonText};border-radius:${theme.radius}">Add to bag</button>` : phone ?
         `<a href="https://wa.me/${phone}?text=${msg}" target="_blank" rel="noopener noreferrer" class="inline-flex mt-6 items-center justify-center rounded-xl px-5 py-3 text-sm font-bold w-full" style="background:${accentColor};color:${buttonText};border-radius:${theme.radius}">Continue on WhatsApp</a>` :
         `<div class="mt-6 rounded-xl px-4 py-3 text-xs font-bold text-center" style="background:${accentColor};color:${buttonText};border-radius:${theme.radius}">Seller WhatsApp contact is not configured yet</div>`;
       const dialog = $("storeProductModal").querySelector(".product-dialog");
@@ -3897,7 +3937,9 @@
       dialog.style.borderRadius = theme.radius;
       $("spmHeader").style.borderColor = themeName === "Cool Style" ? "rgba(255,255,255,.16)" : "rgba(15,23,42,.12)";
       $("spmStoreName").textContent = store?.store_name || "Store";
-      $("spmBody").innerHTML = `<div class="grid sm:grid-cols-2 gap-6 items-start"><div class="aspect-square rounded-2xl overflow-hidden grid place-items-center" style="background:rgba(148,163,184,.12)">${image ? `<img src="${escapeStoreHTML(image)}" alt="${escapeStoreHTML(product.title)}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.classList.add('grid','place-items-center');this.parentElement.insertAdjacentText('beforeend','Image unavailable')">` : `<span class="text-6xl">✦</span>`}</div><div><span class="text-[10px] font-extrabold uppercase tracking-widest" style="opacity:.65">${product.is_bundle ? "Bundle deal" : "Store product"}</span><h2 class="text-2xl font-extrabold mt-2">${escapeStoreHTML(product.title)}</h2><p class="text-xl font-black mt-3">${bdt(product.price)}</p><p class="text-sm mt-4" style="opacity:.72">Contact the seller to confirm availability, delivery, and payment details.</p>${orderAction}</div></div>`;
+      $("spmBody").innerHTML = `<div class="grid sm:grid-cols-2 gap-6 items-start"><div class="aspect-square rounded-2xl overflow-hidden grid place-items-center" style="background:rgba(148,163,184,.12)">${image ? `<img src="${escapeStoreHTML(image)}" alt="${escapeStoreHTML(product.title)}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.classList.add('grid','place-items-center');this.parentElement.insertAdjacentText('beforeend','Image unavailable')">` : `<span class="text-6xl">✦</span>`}</div><div><span class="text-[10px] font-extrabold uppercase tracking-widest" style="opacity:.65">${product.is_bundle ? "Bundle deal" : "Store product"}</span><h2 class="text-2xl font-extrabold mt-2">${escapeStoreHTML(product.title)}</h2><p class="text-xl font-black mt-3">${bdt(product.price)}</p><p class="text-sm mt-4" style="opacity:.72">Add this item to your bag to enter delivery details and submit your order.</p>${orderAction}</div></div>`;
+      const addToCartButton = $("spmBody").querySelector("[data-add-to-cart]");
+      addToCartButton?.addEventListener("click", () => addToPublicCart(product.id ?? product.title));
       $("storeProductModal").classList.remove("hidden");
       $("storeProductModal").classList.add("flex");
     }
@@ -3907,22 +3949,223 @@
       $("storeProductModal").classList.remove("flex");
     }
 
+    function openPublicCart() {
+      $("publicCartOverlay")?.classList.remove("hidden");
+      $("publicCartClose")?.focus();
+    }
+
+    function closePublicCart() {
+      $("publicCartOverlay")?.classList.add("hidden");
+      $("publicBagButton")?.focus();
+    }
+
+    function updatePublicPaymentHint() {
+      const method = $("publicPaymentMethod")?.value;
+      const hint = $("publicPaymentHint");
+      const trxInput = $("publicTrxId");
+      if (!hint) return;
+      const number = method === "bKash" ? publicStore?.bkash_number : method === "Nagad" ? publicStore?.nagad_number : "";
+      if (method === "bKash" || method === "Nagad") {
+        hint.textContent = number ? `Send payment to ${method}: ${number}, then enter the transaction ID below. The seller will verify payment before processing.` : `Ask the seller for their ${method} payment number before sending payment.`;
+        trxInput.required = true;
+      } else if (method === "Card") {
+        hint.textContent = "Card processing is not connected. This submits a card-payment request only; do not enter card details here. The seller will contact you to arrange payment.";
+        trxInput.required = false;
+      } else {
+        hint.textContent = "Pay the seller in cash when your order is delivered.";
+        trxInput.required = false;
+      }
+    }
+
+    function renderPublicCartLines() {
+      const lines = $("publicCartLines");
+      if (!lines) return;
+      const count = publicCart.reduce((sum, item) => sum + item.quantity, 0);
+      $("publicBagCount").textContent = String(count);
+      $("publicCartTotal").textContent = bdt(publicCart.reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0));
+      lines.innerHTML = publicCart.length ? publicCart.map(({
+        product,
+        quantity
+      }) => {
+        const id = String(product.id ?? product.title);
+        return `<article class="flex items-center justify-between gap-3 border-b border-slate-200 py-3"><div class="min-w-0"><h3 class="font-bold text-sm truncate">${escapeStoreHTML(product.title)}</h3><p class="text-xs text-slate-500 mt-1">${bdt(product.price)} each</p></div><div class="flex items-center gap-2 shrink-0"><button type="button" data-cart-action="decrease" data-cart-id="${escapeStoreHTML(id)}" class="h-8 w-8 rounded-lg border border-slate-300" aria-label="Decrease quantity">−</button><span class="w-5 text-center text-sm font-bold">${quantity}</span><button type="button" data-cart-action="increase" data-cart-id="${escapeStoreHTML(id)}" class="h-8 w-8 rounded-lg border border-slate-300" aria-label="Increase quantity">+</button><button type="button" data-cart-action="remove" data-cart-id="${escapeStoreHTML(id)}" class="ml-1 text-xs font-bold text-rose-600 underline">Remove</button></div></article>`;
+      }).join("") : `<p class="py-8 text-center text-sm text-slate-500">Your bag is empty. Add a product to get started.</p>`;
+      $("publicCheckoutButton").disabled = !publicCart.length;
+      $("publicCheckoutButton").classList.toggle("opacity-50", !publicCart.length);
+      $("publicCheckoutButton").classList.toggle("cursor-not-allowed", !publicCart.length);
+    }
+
+    function addToPublicCart(productId) {
+      const product = publicStoreProducts.find(item => String(item.id ?? item.title) === String(productId));
+      if (!product || !Number.isFinite(Number(product.price)) || Number(product.price) < 0) return;
+      const id = String(product.id ?? product.title);
+      const existing = publicCart.find(item => String(item.product.id ?? item.product.title) === id);
+      if (existing) existing.quantity = Math.min(existing.quantity + 1, 99);
+      else publicCart.push({
+        product,
+        quantity: 1
+      });
+      closeStoreProductModal();
+      renderPublicCartLines();
+      openPublicCart();
+    }
+
+    function installPublicCartPortal() {
+      $("publicStoreMount").insertAdjacentHTML("beforeend", `<div id="publicCartPortal"><button id="publicBagButton" type="button" class="fixed bottom-5 right-5 z-[70] rounded-full bg-slate-900 px-5 py-3 text-sm font-extrabold text-white shadow-xl" aria-label="Open shopping bag">Bag <span id="publicBagCount" class="ml-1 rounded-full bg-white/20 px-2 py-0.5">0</span></button><div id="publicCartOverlay" class="hidden fixed inset-0 z-[90] bg-slate-950/60 p-3 sm:p-6" role="presentation"><section class="ml-auto flex h-full max-h-[850px] w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-white text-slate-900 shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="publicCartTitle"><header class="flex items-center justify-between border-b border-slate-200 px-5 py-4"><div><p class="text-xs font-bold uppercase tracking-widest text-slate-500">${escapeStoreHTML(publicStore.store_name || "Store")}</p><h2 id="publicCartTitle" class="text-xl font-extrabold">Your bag</h2></div><button id="publicCartClose" type="button" class="h-10 w-10 rounded-full border border-slate-200 text-lg" aria-label="Close shopping bag">×</button></header><div id="publicCartLines" class="min-h-0 flex-1 overflow-y-auto px-5"></div><form id="publicCheckoutForm" class="max-h-[58%] overflow-y-auto border-t border-slate-200 bg-slate-50 px-5 py-4"><div class="mb-4 flex items-center justify-between text-sm font-bold"><span>Order total</span><span id="publicCartTotal" class="text-lg">৳0</span></div><div class="grid gap-3"><label class="grid gap-1 text-xs font-bold">Full name<input id="publicCustomerName" name="customer_name" required maxlength="100" autocomplete="name" class="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm font-normal"></label><label class="grid gap-1 text-xs font-bold">Phone number<input id="publicCustomerPhone" name="customer_phone" required maxlength="20" inputmode="tel" autocomplete="tel" class="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm font-normal"></label><label class="grid gap-1 text-xs font-bold">District<select id="publicCustomerDistrict" name="district" required class="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm font-normal"><option value="">Choose a district</option>${BD_DISTRICTS.map(district => `<option value="${escapeStoreHTML(district)}">${escapeStoreHTML(district)}</option>`).join("")}</select></label><label class="grid gap-1 text-xs font-bold">Delivery address<textarea id="publicCustomerAddress" name="address" required maxlength="500" rows="2" autocomplete="street-address" class="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm font-normal"></textarea></label><label class="grid gap-1 text-xs font-bold">Payment method<select id="publicPaymentMethod" name="payment_method" required class="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm font-normal"><option value="bKash">bKash</option><option value="Nagad">Nagad</option><option value="Card">Card (arrange with seller)</option><option value="COD">Cash on Delivery</option></select></label><div id="publicPaymentHint" class="rounded-xl bg-white p-3 text-xs leading-relaxed text-slate-600" aria-live="polite"></div><label class="grid gap-1 text-xs font-bold">Transaction ID <span class="font-normal text-slate-500">Required for bKash or Nagad</span><input id="publicTrxId" name="trx_id" maxlength="80" autocomplete="off" class="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm font-normal"></label><p id="publicCheckoutStatus" class="hidden rounded-xl p-3 text-sm" role="status" aria-live="polite"></p><button id="publicCheckoutButton" type="submit" class="rounded-xl bg-slate-900 px-4 py-3 text-sm font-extrabold text-white">Submit order</button><p class="text-[11px] leading-relaxed text-slate-500">Submitting places an order request; payment is verified by the seller. Card details are never collected on this page.</p></div></form></section></div></div>`);
+      $("publicBagButton").addEventListener("click", openPublicCart);
+      $("publicCartClose").addEventListener("click", closePublicCart);
+      $("publicCartOverlay").addEventListener("click", event => {
+        if (event.target === $("publicCartOverlay")) closePublicCart();
+      });
+      $("publicCartLines").addEventListener("click", event => {
+        const button = event.target.closest("[data-cart-action]");
+        if (!button) return;
+        const item = publicCart.find(entry => String(entry.product.id ?? entry.product.title) === button.dataset.cartId);
+        if (!item) return;
+        if (button.dataset.cartAction === "remove" || (button.dataset.cartAction === "decrease" && item.quantity === 1)) publicCart = publicCart.filter(entry => entry !== item);
+        else if (button.dataset.cartAction === "decrease") item.quantity -= 1;
+        else if (button.dataset.cartAction === "increase") item.quantity = Math.min(item.quantity + 1, 99);
+        renderPublicCartLines();
+      });
+      $("publicPaymentMethod").addEventListener("change", updatePublicPaymentHint);
+      $("publicCheckoutForm").addEventListener("submit", submitPublicOrder);
+      updatePublicPaymentHint();
+      renderPublicCartLines();
+    }
+
+    async function submitPublicOrder(event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const status = $("publicCheckoutStatus");
+      const button = $("publicCheckoutButton");
+      const values = Object.fromEntries(new FormData(form));
+      const total = publicCart.reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0);
+      const method = String(values.payment_method || "");
+      const phone = String(values.customer_phone || "").replace(/[^0-9+]/g, "");
+      status.classList.remove("hidden", "bg-rose-50", "text-rose-700", "bg-emerald-50", "text-emerald-700");
+      if (!publicCart.length || !publicStore?.id || !Number.isFinite(total) || total <= 0 || phone.replace(/\D/g, "").length < 8) {
+        status.textContent = "Check your bag and contact details, then try again.";
+        status.classList.add("bg-rose-50", "text-rose-700");
+        return;
+      }
+      if ((method === "bKash" || method === "Nagad") && !String(values.trx_id || "").trim()) {
+        status.textContent = "Enter the transaction ID after sending your bKash or Nagad payment.";
+        status.classList.add("bg-rose-50", "text-rose-700");
+        $("publicTrxId").focus();
+        return;
+      }
+      const order = {
+        store_id: publicStore.id,
+        product_title: publicCart.map(({
+          product,
+          quantity
+        }) => `${product.title} × ${quantity}`).join(", "),
+        amount: Math.round(total),
+        customer_name: String(values.customer_name || "").trim(),
+        customer_phone: phone,
+        district: String(values.district || ""),
+        address: String(values.address || "").trim(),
+        payment_method: method,
+        trx_id: String(values.trx_id || "").trim() || (method === "COD" ? "COD" : method === "Card" ? "CARD_REQUESTED" : ""),
+        status: "Pending",
+        fulfillment_status: "New Order",
+        seller_payout_status: "Pending Verification"
+      };
+      button.disabled = true;
+      button.textContent = "Submitting…";
+      try {
+        if (publicStore._demo) {
+          const key = "dk_demo_orders_" + publicStore.slug;
+          const savedOrders = JSON.parse(localStorage.getItem(key) || "[]");
+          savedOrders.unshift({
+            ...order,
+            id: `DEMO-${Date.now()}`,
+            created_at: new Date().toISOString()
+          });
+          localStorage.setItem(key, JSON.stringify(savedOrders));
+        } else {
+          const {
+            error
+          } = await sb.from("orders").insert([order]);
+          if (error) throw error;
+        }
+        publicCart = [];
+        form.reset();
+        $("publicPaymentMethod").value = "bKash";
+        updatePublicPaymentHint();
+        renderPublicCartLines();
+        status.textContent = "Order request submitted. The seller will verify payment and contact you about delivery.";
+        status.classList.add("bg-emerald-50", "text-emerald-700");
+      } catch (error) {
+        status.textContent = `Order could not be saved. ${error?.message || "Check your connection and try again."}`;
+        status.classList.add("bg-rose-50", "text-rose-700");
+      } finally {
+        button.disabled = !publicCart.length;
+        button.textContent = "Submit order";
+      }
+    }
+
     async function loadPublicStorefront(slug) {
       showView("storefront");
+      publicCart = [];
       $("publicStoreMount").innerHTML = `<div class="min-h-screen grid place-items-center p-8 text-center"><div><div class="animate-spin rounded-full h-8 w-8 border-4 border-slate-200 border-t-slate-700 mx-auto"></div><p class="mt-4 text-sm text-slate-500">Loading storefront…</p></div></div>`;
-      const {
-        data: storefrontPayload,
-        error
-      } = await sb.rpc("get_public_storefront", {
-        p_slug: slug
-      });
-      const store = storefrontPayload?.store || null;
-      if (error || !store) {
-        $("publicStoreMount").innerHTML = `<div class="min-h-screen grid place-items-center p-6 text-center"><div class="max-w-md"><div class="text-5xl">🏬</div><h1 class="text-2xl font-extrabold mt-4">Store unavailable</h1><p class="text-sm text-slate-500 mt-2">We could not load this storefront. Check the link or try again later.</p><a href="/" class="inline-flex mt-5 bg-slate-900 text-white rounded-xl px-5 py-3 text-sm font-bold">Visit Dokkanio</a><p class="text-[11px] text-slate-400 mt-4">The Supabase storefront function must be installed. Run the companion SQL file supplied with this HTML.</p></div></div>`;
+      let storefrontPayload = null;
+      let store = null;
+      let products = [];
+      let localStore = null;
+      try {
+        localStore = JSON.parse(localStorage.getItem("dk_storefront_" + slug) || "null");
+      } catch (_) {}
+      if (localStore?.demo && localStore.store?.slug === slug) {
+        store = {
+          ...localStore.store,
+          _demo: true
+        };
+        products = Array.isArray(localStore.products) ? localStore.products : [];
+      } else {
+        try {
+          const {
+            data,
+            error
+          } = await sb.rpc("get_public_storefront", {
+            p_slug: slug
+          });
+          if (!error && data?.store) {
+            storefrontPayload = data;
+            store = data.store;
+            products = Array.isArray(data.products) ? data.products : [];
+          }
+        } catch (_) {}
+        if (!store) {
+          try {
+            const {
+              data: storeData,
+              error: storeError
+            } = await sb.from("stores").select("id,store_name,slug,bkash_number,nagad_number,whatsapp_number,theme,custom_css").eq("slug", slug).maybeSingle();
+            if (!storeError && storeData) {
+              store = storeData;
+              const {
+                data: productData,
+                error: productError
+              } = await sb.from("products").select("id,store_id,title,price,image_url,is_bundle").eq("store_id", storeData.id).order("id", {
+                ascending: false
+              });
+              if (!productError) products = productData || [];
+              else store = null;
+            }
+          } catch (_) {}
+        }
+        if (!store && localStore?.store?.slug === slug) {
+          store = localStore.store;
+          products = Array.isArray(localStore.products) ? localStore.products : [];
+        }
+      }
+      if (!store) {
+        $("publicStoreMount").innerHTML = `<div class="min-h-screen grid place-items-center p-6 text-center"><div class="max-w-md"><div class="text-5xl">🏬</div><h1 class="text-2xl font-extrabold mt-4">Store unavailable</h1><p class="text-sm text-slate-500 mt-2">We could not load this storefront. Check the link or try again later.</p><a href="/" class="inline-flex mt-5 bg-slate-900 text-white rounded-xl px-5 py-3 text-sm font-bold">Visit Dokkanio</a></div></div>`;
         return;
       }
       publicStore = store;
-      publicStoreProducts = Array.isArray(storefrontPayload.products) ? storefrontPayload.products : [];
+      publicStoreProducts = products;
       const parsed = parseCustomCssWithMeta(store.custom_css || "");
       const meta = parsed.meta;
       store._cleanCss = parsed.cleanCss;
@@ -3930,6 +4173,7 @@
       $("publicStoreMount").innerHTML = `<div id="publicStoreRoot" class="dk-store-root min-h-screen">${result.html}</div>`;
       $("publicStoreDynamicStyle").textContent = result.style;
       bindStoreProductCards($("publicStoreRoot"), "live");
+      installPublicCartPortal();
       document.title = `${store.store_name || "Store"} | Powered by Dokkanio`;
     }
 
@@ -3938,7 +4182,7 @@
       const querySlug = params.get("store");
       if (querySlug) return querySlug.toLowerCase().replace(/[^a-z0-9-]/g, "");
       const path = location.pathname.replace(/^\/+|\/+$/g, "");
-      const reserved = ["index.html", "admin", "dashboard", "login", "signup"];
+      const reserved = ["index.html", "admin", "dashboard", "login", "signup", "catalog", "checkout", "api", "favicon.ico", "robots.txt", "sitemap.xml"];
       if (path && !reserved.includes(path.toLowerCase()) && !path.includes(".")) return path.toLowerCase().replace(/[^a-z0-9-]/g, "");
       return "";
     }
@@ -4755,7 +4999,7 @@
       };
 
     /* ---------- BOOT ---------- */
-    (async function boot() {
+    document.addEventListener("DOMContentLoaded", async () => {
       setLang("en");
       initAI();
       const storeSlug = requestedStoreSlug();
@@ -4767,7 +5011,7 @@
         data
       } = await sb.auth.getSession();
       if (data?.session?.user) await loadSellerWorkspace(data.session.user);
-    })();
+    });
 
     </script>
     <style id="storeEditorOverlayStyles">
