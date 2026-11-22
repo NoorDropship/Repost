@@ -1000,7 +1000,7 @@
                     <p id="uShop" class="text-xs text-slate-500 truncate"></p>
                   </div>
                 </div>
-                <a id="liveStoreSideLink" href="#" target="_blank" class="mt-2.5 w-full dash-btn-primary font-bold rounded-xl py-2 text-xs flex items-center justify-center gap-1 hidden"> Open Live Store</a>
+                <button id="liveStoreSideLink" type="button" onclick="openLiveStorefront()" class="mt-2.5 w-full dash-btn-primary font-bold rounded-xl py-2 text-xs flex items-center justify-center gap-1 hidden">↗ Preview / Open Live Store</button>
                 <button onclick="logout()" data-i18n="logoutBtn" class="mt-2 w-full dash-btn-soft font-bold rounded-xl py-2">Log Out</button>
               </div>
             </div>
@@ -3278,41 +3278,55 @@
       if ($("previewUrlBar")) $("previewUrlBar").textContent = liveUrl;
       if ($("sbTopSlugUrl")) $("sbTopSlugUrl").textContent = `dokkanio.com/${slug}`;
       if ($("sbLiveUrlBtn")) {
+        // Never a direct href: a direct click would skip the Supabase save,
+        // so 404.html would not find the store yet. Route through save-first flow.
         $("sbLiveUrlBtn").href = liveUrl;
-        $("sbLiveUrlBtn").title = "Published storefront URL (requires hosting and public store setup)";
+        $("sbLiveUrlBtn").title = "Save to Supabase first, then open your live storefront";
+        $("sbLiveUrlBtn").onclick = (e) => {
+          e.preventDefault();
+          openLiveStorefront();
+        };
       }
       if ($("sbActiveThemeBadge")) $("sbActiveThemeBadge").textContent = currentStore.theme || "Default";
       const sideL = $("liveStoreSideLink");
       if (sideL) {
-        sideL.href = liveUrl;
+        // Button now (not an <a>): no href bypass. Click goes through openLiveStorefront().
+        sideL.dataset.liveUrl = liveUrl;
         sideL.classList.remove("hidden");
       }
     }
 
     async function openLiveStorefront() {
+      // FIX 1 — Preview / Open Live Store:
+      // 1) Seller MUST click Save Website to Supabase first (saveStoreToSupabase),
+      //    so Cloudflare 404.html can find the store in the database.
+      // 2) Only AFTER the save succeeds, open the REAL Cloudflare store link:
+      //    window.open('/' + slug, '_blank') — never about:blank, never a blob:,
+      //    never a data: URL, never an iframe preview.
+      // NOTE: window.open() is called AFTER an await, so some browsers may
+      // block it as a pop-up. If that happens we do NOT fall back to
+      // about:blank — we show the real link so the seller can click it.
       const slug = ($("sbSlug")?.value || currentStore.slug || "store").toLowerCase().replace(/[^a-z0-9-]/g, "");
       if (!slug) {
         toast("Add a store slug before opening your storefront.");
         return;
       }
-      const savePromise = saveStoreToSupabase(false);
-      const previewWindow = window.open(`/${encodeURIComponent(slug)}`, "_blank");
-      if (!previewWindow) {
-        await savePromise;
-        toast("Allow pop-ups to open your live storefront.");
+      toast("Saving website to Supabase first…");
+      const saved = await saveStoreToSupabase(false);
+      if (!saved) {
+        toast("Save failed — live store was NOT opened. Fix the save error and try again.");
         return;
       }
-      const saved = await savePromise;
-      if (!saved) {
+      const livePath = "/" + encodeURIComponent(slug);
+      const previewWindow = window.open(livePath, "_blank");
+      if (!previewWindow) {
+        toast("Pop-up blocked — click here to open your live store: " + buildPublicStoreUrl(slug));
         try {
-          previewWindow.close();
+          await navigator.clipboard.writeText(buildPublicStoreUrl(slug));
         } catch (_) {}
         return;
       }
-      try {
-        previewWindow.location.reload();
-      } catch (_) {}
-      toast(`Store synced. Live at ${buildPublicStoreUrl(slug)}`);
+      toast(`Store saved. Live at ${buildPublicStoreUrl(slug)}`);
     }
     async function copyLiveStoreLink() {
       const slug = ($("sbSlug")?.value || currentStore.slug || "store").toLowerCase().replace(/[^a-z0-9-]/g, "");
