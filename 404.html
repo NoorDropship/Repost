@@ -1,307 +1,628 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dokkanio Storefront</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{overflow-x:hidden;width:100%;max-width:100vw;margin:0;padding:0;scroll-behavior:smooth}
-    body{font-family:'DM Sans','Plus Jakarta Sans','Hind Siliguri',system-ui,sans-serif;background:#fff;color:#191a1d;min-height:100dvh}
-    .grad{background:linear-gradient(135deg,#6979F5,#04C9F6)}
-    .glass-card{background:rgba(255,255,255,.84);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.9);box-shadow:0 12px 32px -12px rgba(30,64,175,.16)}
-    .dash-btn-primary{background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 50%,#04C9F6 100%);color:#fff;box-shadow:0 8px 20px -6px rgba(37,99,235,.45);transition:all .2s ease}
-    .dash-btn-primary:hover{filter:brightness(1.07);transform:translateY(-1px)}
-    .dash-btn-soft{background:linear-gradient(135deg,rgba(30,58,138,.09),rgba(4,201,246,.16));border:1px solid rgba(56,189,248,.45);color:#1e3a8a;transition:all .2s ease}
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokkanio Storefront</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'DM Sans', 'Plus Jakarta Sans', 'Hind Siliguri', system-ui, sans-serif;
+      background: #fff;
+      color: #191a1d;
+      min-height: 100dvh
+    }
+
+    .grad {
+      background: linear-gradient(135deg, #6979F5, #04C9F6)
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, .84);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, .9);
+      box-shadow: 0 12px 32px -12px rgba(30, 64, 175, .16)
+    }
+
+    .dash-btn-primary {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #04C9F6 100%);
+      color: #fff;
+      box-shadow: 0 8px 20px -6px rgba(37, 99, 235, .45);
+      transition: all .2s ease
+    }
+
+    .dash-btn-primary:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px)
+    }
+
+    .dash-btn-soft {
+      background: linear-gradient(135deg, rgba(30, 58, 138, .09), rgba(4, 201, 246, .16));
+      border: 1px solid rgba(56, 189, 248, .45);
+      color: #1e3a8a;
+      transition: all .2s ease
+    }
 
     /* Studio + Legacy Storefront Themes */
-    .dk-store-root{--accent:#6758df;--hero:#f1eee9;--surface:#ffffff;--text:#191a1d;--muted:#666666;--line:#ececf0;--radius:14px;--btn-text:#ffffff;background:var(--surface);color:var(--text);min-height:100dvh}
-    .dk-store-root.theme-classic,.dk-store-root.theme-default{--accent:#6758df;--hero:#f1eee9;--surface:#ffffff;--text:#191a1d;--radius:14px}
-    .dk-store-root.theme-luxe,.dk-store-root.theme-few{--accent:#181818;--hero:#ece8e1;--surface:#ffffff;--text:#202020;--radius:4px}
-    .dk-store-root.theme-soft,.dk-store-root.theme-comfy{--accent:#d28b78;--hero:#f7eae5;--surface:#fffaf8;--text:#382c2a;--radius:18px}
-    .dk-store-root.theme-botanical,.dk-store-root.theme-aesthetic{--accent:#456e54;--hero:#e7ede6;--surface:#fbfdfb;--text:#23332a;--radius:10px}
-    .dk-store-root.theme-bold{--accent:#e65331;--hero:#f7e5dc;--surface:#ffffff;--text:#171717;--radius:12px}
-    .dk-store-root.theme-sunrise{--accent:#e76b43;--hero:linear-gradient(120deg,#f8dfc7,#f5b987);--surface:#fffaf4;--text:#3a2018;--radius:20px}
-    .dk-store-root.theme-noir,.dk-store-root.theme-dark{--accent:#d6b46a;--hero:#171717;--surface:#202020;--text:#f5f0e7;--muted:#bcb8b0;--line:#333333;--btn-text:#171717;--radius:4px}
-    .dk-store-root.theme-playful,.dk-store-root.theme-cute{--accent:#7056e8;--hero:linear-gradient(135deg,#e7e2ff,#ffd9e8);--surface:#ffffff;--text:#2b2450;--radius:24px}
-    .dk-store-root.theme-mono{--accent:#111111;--hero:#f4f4f4;--surface:#ffffff;--text:#111111;--radius:0px}
-    .dk-store-root.theme-coastal{--accent:#317b88;--hero:linear-gradient(135deg,#d9eef0,#b6dce0);--surface:#f8fcfc;--text:#153e47;--radius:14px}
-    .dk-store-root.theme-vintage{--accent:#9b573b;--hero:#eadbc6;--surface:#fbf4e9;--text:#503524;--radius:7px}
-    .dk-store-root.theme-tech,.dk-store-root.theme-cool{--accent:#20c7a5;--hero:#111e2a;--surface:#152432;--text:#edf8f6;--muted:#9fb5c3;--line:#253a48;--radius:12px}
+    .dk-store-root {
+      --accent: #6758df;
+      --hero: #f1eee9;
+      --surface: #ffffff;
+      --text: #191a1d;
+      --muted: #666666;
+      --line: #ececf0;
+      --radius: 14px;
+      --btn-text: #ffffff;
+      background: var(--surface);
+      color: var(--text);
+      min-height: 100dvh
+    }
 
-    .dk-store-nav{background:var(--surface);border-bottom:1px solid var(--line)}
-    .dk-hero{background:var(--hero);border-radius:calc(var(--radius) + 6px);overflow:hidden}
-    .dk-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);transition:transform .18s ease,box-shadow .18s ease}
-    .dk-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.08)}
-    .dk-btn{background:var(--accent);color:var(--btn-text);border-radius:var(--radius);font-weight:700;transition:filter .18s ease,transform .18s ease}
-    .dk-btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
-    .dk-store-root.theme-luxe h1,.dk-store-root.theme-luxe h2,.dk-store-root.theme-vintage h1,.dk-store-root.theme-vintage h2,.dk-store-root.theme-few h1{font-family:'Playfair Display',Georgia,serif;font-weight:600}
-    .dk-store-root.theme-tech h1,.dk-store-root.theme-tech h2{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}
-    .dk-store-root.theme-playful .dk-btn,.dk-store-root.theme-cute .dk-btn{border-radius:999px}
-    .dk-muted{color:var(--muted)}
-    :focus-visible{outline:3px solid #04C9F6;outline-offset:2px}
-  </style>
-  <style id="storeCustomCss"></style>
-</head>
-<body class="dk-store-root theme-classic">
-  <!-- Loading State -->
-  <div id="stateLoading" class="min-h-[100dvh] flex flex-col items-center justify-center p-6 text-center bg-slate-50 text-slate-900">
-    <div class="w-12 h-12 rounded-2xl grad flex items-center justify-center shadow-lg animate-pulse mb-4">
-      <svg width="26" height="26" viewBox="0 0 40 40"><path d="M13 11h7a8.5 8.5 0 010 18h-7V11z" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    .dk-store-root.theme-classic,
+    .dk-store-root.theme-default {
+      --accent: #6758df;
+      --hero: #f1eee9;
+      --surface: #ffffff;
+      --text: #191a1d;
+      --radius: 14px
+    }
+
+    .dk-store-root.theme-luxe,
+    .dk-store-root.theme-few {
+      --accent: #181818;
+      --hero: #ece8e1;
+      --surface: #ffffff;
+      --text: #202020;
+      --radius: 4px
+    }
+
+    .dk-store-root.theme-soft,
+    .dk-store-root.theme-comfy {
+      --accent: #d28b78;
+      --hero: #f7eae5;
+      --surface: #fffaf8;
+      --text: #382c2a;
+      --radius: 18px
+    }
+
+    .dk-store-root.theme-botanical,
+    .dk-store-root.theme-aesthetic {
+      --accent: #456e54;
+      --hero: #e7ede6;
+      --surface: #fbfdfb;
+      --text: #23332a;
+      --radius: 10px
+    }
+
+    .dk-store-root.theme-bold {
+      --accent: #e65331;
+      --hero: #f7e5dc;
+      --surface: #ffffff;
+      --text: #171717;
+      --radius: 12px
+    }
+
+    .dk-store-root.theme-sunrise {
+      --accent: #e76b43;
+      --hero: linear-gradient(120deg, #f8dfc7, #f5b987);
+      --surface: #fffaf4;
+      --text: #3a2018;
+      --radius: 20px
+    }
+
+    .dk-store-root.theme-noir,
+    .dk-store-root.theme-dark {
+      --accent: #d6b46a;
+      --hero: #171717;
+      --surface: #202020;
+      --text: #f5f0e7;
+      --muted: #bcb8b0;
+      --line: #333333;
+      --btn-text: #171717;
+      --radius: 4px
+    }
+
+    .dk-store-root.theme-playful,
+    .dk-store-root.theme-cute {
+      --accent: #7056e8;
+      --hero: linear-gradient(135deg, #e7e2ff, #ffd9e8);
+      --surface: #ffffff;
+      --text: #2b2450;
+      --radius: 24px
+    }
+
+    .dk-store-root.theme-mono {
+      --accent: #111111;
+      --hero: #f4f4f4;
+      --surface: #ffffff;
+      --text: #111111;
+      --radius: 0px
+    }
+
+    .dk-store-root.theme-coastal {
+      --accent: #317b88;
+      --hero: linear-gradient(135deg, #d9eef0, #b6dce0);
+      --surface: #f8fcfc;
+      --text: #153e47;
+      --radius: 14px
+    }
+
+    .dk-store-root.theme-vintage {
+      --accent: #9b573b;
+      --hero: #eadbc6;
+      --surface: #fbf4e9;
+      --text: #503524;
+      --radius: 7px
+    }
+
+    .dk-store-root.theme-tech,
+    .dk-store-root.theme-cool {
+      --accent: #20c7a5;
+      --hero: #111e2a;
+      --surface: #152432;
+      --text: #edf8f6;
+      --muted: #9fb5c3;
+      --line: #253a48;
+      --radius: 12px
+    }
+
+    .dk-store-nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .dk-hero {
+      background: var(--hero);
+      border-radius: calc(var(--radius) + 6px);
+      overflow: hidden
+    }
+
+    .dk-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: transform .18s ease, box-shadow .18s ease
+    }
+
+    .dk-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .08)
+    }
+
+    .dk-btn {
+      background: var(--accent);
+      color: var(--btn-text);
+      border-radius: var(--radius);
+      font-weight: 700;
+      transition: filter .18s ease, transform .18s ease
+    }
+
+    .dk-btn:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px)
+    }
+
+    .dk-store-root.theme-luxe h1,
+    .dk-store-root.theme-luxe h2,
+    .dk-store-root.theme-vintage h1,
+    .dk-store-root.theme-vintage h2,
+    .dk-store-root.theme-few h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 600
+    }
+
+    .dk-store-root.theme-tech h1,
+    .dk-store-root.theme-tech h2 {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase
+    }
+
+    .dk-store-root.theme-playful .dk-btn,
+    .dk-store-root.theme-cute .dk-btn {
+      border-radius: 999px
+    }
+
+    .dk-muted {
+      color: var(--muted)
+    }
+
+    :focus-visible {
+      outline: 3px solid #04C9F6;
+      outline-offset: 2px
+    }
+
+    </style>
+    <style id="storeCustomCss"></style>
+  </head>
+
+  <body class="dk-store-root theme-classic">
+    <!-- Loading State -->
+    <div id="stateLoading" class="min-h-[100dvh] flex flex-col items-center justify-center p-6 text-center bg-slate-50 text-slate-900">
+      <div class="w-12 h-12 rounded-2xl grad flex items-center justify-center shadow-lg animate-pulse mb-4">
+        <svg width="26" height="26" viewBox="0 0 40 40">
+          <path d="M13 11h7a8.5 8.5 0 010 18h-7V11z" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <p class="font-bold text-sm text-slate-600" data-i18n="loadingStore">Loading Dokkanio Store...</p>
     </div>
-    <p class="font-bold text-sm text-slate-600" data-i18n="loadingStore">Loading Dokkanio Store...</p>
-  </div>
 
-  <!-- Not Found / Claim Slug State -->
-  <div id="stateNotFound" class="hidden min-h-[100dvh] flex items-center justify-center p-4 bg-slate-50 text-slate-900">
-    <div class="glass-card rounded-3xl max-w-md w-full p-7 text-center space-y-4">
-      <div class="w-16 h-16 rounded-2xl grad text-white flex items-center justify-center text-2xl mx-auto shadow-lg">🏪</div>
-      <h1 class="text-2xl font-extrabold text-slate-900" data-i18n="claimTitle">Store Not Claimed Yet!</h1>
-      <p class="text-sm text-slate-600">
-        <span data-i18n="claimSub1">The store link</span>
-        <b id="missingSlugBadge" class="inline-block px-2.5 py-0.5 rounded-lg bg-blue-50 text-blue-700 font-mono text-xs border border-blue-200">dokkanio.com/store</b>
-        <span data-i18n="claimSub2">is available! Launch your own online store in 60 seconds with Dokkanio.</span>
-      </p>
-      <a href="/" class="dash-btn-primary font-bold w-full py-3 rounded-xl text-sm inline-flex items-center justify-center gap-2">
-        🚀 <span data-i18n="claimBtn">Claim This Store on Dokkanio</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Live Storefront Container -->
-  <div id="storeApp" class="hidden min-h-[100dvh] flex flex-col">
-    <div id="announceBar" class="hidden text-center text-xs font-bold py-2.5 px-4" style="background:var(--accent);color:var(--btn-text)"></div>
-
-    <header id="storeHeader" class="sticky top-0 z-30 dk-store-nav">
-      <div class="max-w-6xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
-        <a href="#top" class="flex items-center gap-2.5 min-w-0">
-          <div id="storeLogoWrap" class="shrink-0"></div>
-          <div class="min-w-0">
-            <h1 id="navStoreName" class="font-extrabold text-sm sm:text-lg truncate">Dokkanio Store</h1>
-            <p class="text-[10px] dk-muted truncate">64-District COD • bKash • Nagad • Card</p>
-          </div>
+    <!-- Not Found / Claim Slug State -->
+    <div id="stateNotFound" class="hidden min-h-[100dvh] flex items-center justify-center p-4 bg-slate-50 text-slate-900">
+      <div class="glass-card rounded-3xl max-w-md w-full p-7 text-center space-y-4">
+        <div class="w-16 h-16 rounded-2xl grad text-white flex items-center justify-center text-2xl mx-auto shadow-lg">🏪</div>
+        <h1 class="text-2xl font-extrabold text-slate-900" data-i18n="claimTitle">Store Not Claimed Yet!</h1>
+        <p class="text-sm text-slate-600">
+          <span data-i18n="claimSub1">The store link</span>
+          <b id="missingSlugBadge" class="inline-block px-2.5 py-0.5 rounded-lg bg-blue-50 text-blue-700 font-mono text-xs border border-blue-200">dokkanio.com/store</b>
+          <span data-i18n="claimSub2">is available! Launch your own online store in 60 seconds with Dokkanio.</span>
+        </p>
+        <a href="/" class="dash-btn-primary font-bold w-full py-3 rounded-xl text-sm inline-flex items-center justify-center gap-2">
+          🚀 <span data-i18n="claimBtn">Claim This Store on Dokkanio</span>
         </a>
-        <nav class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-wider dk-muted">
-          <a href="#shop" class="hover:opacity-100">Shop</a>
-          <a href="#story" class="hover:opacity-100">Story</a>
-          <a href="#faq" class="hover:opacity-100">FAQ</a>
-        </nav>
-        <div class="flex items-center gap-2 shrink-0">
-          <div class="inline-flex items-center rounded-xl bg-black/5 p-0.5 text-[11px] font-bold">
-            <button type="button" onclick="setLang('en')" class="lang-btn-en px-2 py-1 rounded-lg transition">EN</button>
-            <button type="button" onclick="setLang('bn')" class="lang-btn-bn px-2 py-1 rounded-lg transition">বাংলা</button>
-          </div>
-          <a id="navWaBtn" href="#" target="_blank" class="hidden sm:inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm">📲 WhatsApp</a>
-          <button type="button" onclick="openCartDrawer()" class="dk-btn px-3 sm:px-4 py-2 text-xs flex items-center gap-1.5">
-            🛍️ <span class="hidden sm:inline">Bag</span> <span id="bagCountBadge" class="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px]">0</span>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <main id="storeSectionsRoot" class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-8"></main>
-
-    <footer id="storeFooter" class="border-t py-8 px-4 text-center text-xs dk-muted" style="border-color:var(--line)">
-      <p>© <span id="ftYear">2026</span> <b id="ftStoreName">Dokkanio Store</b> • <span id="ftCustomText">Designed to last</span> • <span data-i18n="poweredBy">Powered by</span> <a href="/" class="underline font-bold">Dokkanio.com</a></p>
-    </footer>
-  </div>
-
-  <!-- ============ PRODUCT DETAIL MODAL ============ -->
-  <div id="detailModal" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeDetailModal()">
-    <div class="bg-white text-slate-900 rounded-3xl w-full max-w-3xl max-h-[92dvh] overflow-y-auto shadow-2xl overflow-hidden" role="dialog" aria-modal="true">
-      <div class="sticky top-0 z-10 bg-white/95 backdrop-blur px-5 py-3 border-b border-slate-200 flex items-center justify-between">
-        <span id="dmCategory" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Product</span>
-        <button type="button" onclick="closeDetailModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-xl leading-none">×</button>
-      </div>
-      <div id="dmBody" class="p-5 sm:p-7"></div>
-    </div>
-  </div>
-
-  <!-- ============ SHOPPING BAG DRAWER ============ -->
-  <div id="cartDrawer" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm justify-end" onclick="if(event.target===this)closeCartDrawer()">
-    <div class="bg-white text-slate-900 w-full max-w-md h-full flex flex-col shadow-2xl">
-      <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
-        <h3 class="text-lg font-extrabold">🛍️ Your Shopping Bag</h3>
-        <button type="button" onclick="closeCartDrawer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-xl leading-none">×</button>
-      </div>
-      <div id="cartItemsList" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
-      <div class="p-5 border-t border-slate-200 bg-slate-50 space-y-3">
-        <div class="flex justify-between items-center text-sm font-bold">
-          <span>Subtotal</span>
-          <span id="cartSubtotal" class="text-lg font-extrabold text-blue-700">৳0</span>
-        </div>
-        <button id="cartCheckoutBtn" type="button" onclick="proceedBagToCheckout()" class="dash-btn-primary w-full py-3.5 rounded-xl font-bold text-sm">Proceed to Checkout →</button>
       </div>
     </div>
-  </div>
 
-  <!-- ============ ONE-STEP EXPRESS CHECKOUT MODAL ============ -->
-  <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeCheckout()">
-    <div class="bg-white/95 backdrop-blur-xl border border-white rounded-3xl w-full max-w-lg max-h-[94dvh] overflow-y-auto shadow-2xl p-5 sm:p-6 text-slate-900" role="dialog" aria-modal="true">
-      <div id="checkoutFormWrap">
-        <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-200">
-          <div>
-            <h3 class="text-lg font-extrabold" data-i18n="coTitle">Express Checkout</h3>
-            <p class="text-xs text-slate-500" data-i18n="coSub">Fast delivery across all 64 districts of Bangladesh</p>
+    <!-- Live Storefront Container -->
+    <div id="storeApp" class="hidden min-h-[100dvh] flex flex-col">
+      <div id="announceBar" class="hidden text-center text-xs font-bold py-2.5 px-4" style="background:var(--accent);color:var(--btn-text)"></div>
+
+      <header id="storeHeader" class="sticky top-0 z-30 dk-store-nav">
+        <div class="max-w-6xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+          <a href="#top" class="flex items-center gap-2.5 min-w-0">
+            <div id="storeLogoWrap" class="shrink-0"></div>
+            <div class="min-w-0">
+              <h1 id="navStoreName" class="font-extrabold text-sm sm:text-lg truncate">Dokkanio Store</h1>
+              <p class="text-[10px] dk-muted truncate">64-District COD • bKash • Nagad • Card</p>
+            </div>
+          </a>
+          <nav class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-wider dk-muted">
+            <a href="#shop" class="hover:opacity-100">Shop</a>
+            <a href="#story" class="hover:opacity-100">Story</a>
+            <a href="#faq" class="hover:opacity-100">FAQ</a>
+          </nav>
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="inline-flex items-center rounded-xl bg-black/5 p-0.5 text-[11px] font-bold">
+              <button type="button" onclick="setLang('en')" class="lang-btn-en px-2 py-1 rounded-lg transition">EN</button>
+              <button type="button" onclick="setLang('bn')" class="lang-btn-bn px-2 py-1 rounded-lg transition">বাংলা</button>
+            </div>
+            <a id="navWaBtn" href="#" target="_blank" class="hidden sm:inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm">📲 WhatsApp</a>
+            <button type="button" onclick="openCartDrawer()" class="dk-btn px-3 sm:px-4 py-2 text-xs flex items-center gap-1.5">
+              🛍️ <span class="hidden sm:inline">Bag</span> <span id="bagCountBadge" class="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px]">0</span>
+            </button>
           </div>
-          <button onclick="closeCheckout()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-xl leading-none" aria-label="Close">×</button>
         </div>
+      </header>
 
-        <div id="coOrderSummary" class="mt-4 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2"></div>
+      <main id="storeSectionsRoot" class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-8"></main>
 
-        <form id="checkoutForm" class="mt-4 space-y-3">
-          <div class="grid sm:grid-cols-2 gap-3">
+      <footer id="storeFooter" class="border-t py-8 px-4 text-center text-xs dk-muted" style="border-color:var(--line)">
+        <p>© <span id="ftYear">2026</span> <b id="ftStoreName">Dokkanio Store</b> • <span id="ftCustomText">Designed to last</span> • <span data-i18n="poweredBy">Powered by</span> <a href="/" class="underline font-bold">Dokkanio.com</a></p>
+      </footer>
+    </div>
+
+    <!-- ============ PRODUCT DETAIL MODAL ============ -->
+    <div id="detailModal" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeDetailModal()">
+      <div class="bg-white text-slate-900 rounded-3xl w-full max-w-3xl max-h-[92dvh] overflow-y-auto shadow-2xl overflow-hidden" role="dialog" aria-modal="true">
+        <div class="sticky top-0 z-10 bg-white/95 backdrop-blur px-5 py-3 border-b border-slate-200 flex items-center justify-between">
+          <span id="dmCategory" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Product</span>
+          <button type="button" onclick="closeDetailModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-xl leading-none">×</button>
+        </div>
+        <div id="dmBody" class="p-5 sm:p-7"></div>
+      </div>
+    </div>
+
+    <!-- ============ SHOPPING BAG DRAWER ============ -->
+    <div id="cartDrawer" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm justify-end" onclick="if(event.target===this)closeCartDrawer()">
+      <div class="bg-white text-slate-900 w-full max-w-md h-full flex flex-col shadow-2xl">
+        <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+          <h3 class="text-lg font-extrabold">🛍️ Your Shopping Bag</h3>
+          <button type="button" onclick="closeCartDrawer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-xl leading-none">×</button>
+        </div>
+        <div id="cartItemsList" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+        <div class="p-5 border-t border-slate-200 bg-slate-50 space-y-3">
+          <div class="flex justify-between items-center text-sm font-bold">
+            <span>Subtotal</span>
+            <span id="cartSubtotal" class="text-lg font-extrabold text-blue-700">৳0</span>
+          </div>
+          <button id="cartCheckoutBtn" type="button" onclick="proceedBagToCheckout()" class="dash-btn-primary w-full py-3.5 rounded-xl font-bold text-sm">Proceed to Checkout →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ ONE-STEP EXPRESS CHECKOUT MODAL ============ -->
+    <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeCheckout()">
+      <div class="bg-white/95 backdrop-blur-xl border border-white rounded-3xl w-full max-w-lg max-h-[94dvh] overflow-y-auto shadow-2xl p-5 sm:p-6 text-slate-900" role="dialog" aria-modal="true">
+        <div id="checkoutFormWrap">
+          <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-200">
             <div>
-              <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblName">Full Name *</label>
-              <input id="coName" required data-i18n-ph="phName" placeholder="Your full name" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+              <h3 class="text-lg font-extrabold" data-i18n="coTitle">Express Checkout</h3>
+              <p class="text-xs text-slate-500" data-i18n="coSub">Fast delivery across all 64 districts of Bangladesh</p>
             </div>
-            <div>
-              <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblPhone">Phone Number *</label>
-              <input id="coPhone" required pattern="01[0-9]{9}" placeholder="01XXXXXXXXX" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
-            </div>
+            <button onclick="closeCheckout()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-xl leading-none" aria-label="Close">×</button>
           </div>
 
-          <div id="coEmailWrap" class="hidden">
-            <label class="block text-[11px] font-bold text-slate-500 mb-1">Email (optional)</label>
-            <input id="coEmail" type="email" placeholder="you@example.com" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
-          </div>
+          <div id="coOrderSummary" class="mt-4 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2"></div>
 
-          <div>
-            <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblDistrict">District (64 Districts) *</label>
-            <select id="coDistrict" required class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></select>
-          </div>
-
-          <div>
-            <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblAddress">Full Delivery Address *</label>
-            <textarea id="coAddress" required rows="2" data-i18n-ph="phAddress" placeholder="House, Road, Area / Thana..." class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></textarea>
-          </div>
-
-          <div>
-            <label class="block text-[11px] font-bold text-slate-500 mb-2" data-i18n="lblPayMethod">Payment Method *</label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold" id="payMethodBtns">
-              <button type="button" onclick="selectPayMethod('COD')" data-pm="COD" class="pm-btn dash-btn-primary py-2.5 px-2 rounded-xl text-center">🚚 COD</button>
-              <button type="button" onclick="selectPayMethod('bKash')" data-pm="bKash" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">💗 bKash</button>
-              <button type="button" onclick="selectPayMethod('Nagad')" data-pm="Nagad" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">🧡 Nagad</button>
-              <button type="button" onclick="selectPayMethod('Card')" data-pm="Card" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">💳 Card</button>
-            </div>
-          </div>
-
-          <div id="mobilePayBox" class="hidden p-3.5 rounded-2xl bg-pink-50/70 border border-pink-200 space-y-2.5">
-            <div class="flex items-center justify-between gap-2">
+          <form id="checkoutForm" class="mt-4 space-y-3">
+            <div class="grid sm:grid-cols-2 gap-3">
               <div>
-                <p class="text-[11px] font-bold text-slate-600"><span id="mpLabel">Send Money to Seller bKash</span>:</p>
-                <p id="mpNumber" class="font-mono font-extrabold text-sm text-slate-900">01XXXXXXXXX</p>
+                <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblName">Full Name *</label>
+                <input id="coName" required data-i18n-ph="phName" placeholder="Your full name" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
               </div>
-              <button type="button" onclick="copySellerPayNum()" class="bg-white border border-slate-300 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-bold shrink-0">📋 Copy</button>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblPhone">Phone Number *</label>
+                <input id="coPhone" required pattern="01[0-9]{9}" placeholder="01XXXXXXXXX" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+              </div>
             </div>
+
+            <div id="coEmailWrap" class="hidden">
+              <label class="block text-[11px] font-bold text-slate-500 mb-1">Email (optional)</label>
+              <input id="coEmail" type="email" placeholder="you@example.com" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+            </div>
+
             <div>
-              <label class="block text-[11px] font-bold text-slate-600 mb-1" data-i18n="lblTrxId">Transaction ID (TrxID) *</label>
-              <input id="coTrxId" placeholder="e.g. BKS8492ABC" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm uppercase">
+              <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblDistrict">District (64 Districts) *</label>
+              <select id="coDistrict" required class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></select>
             </div>
-          </div>
 
-          <div id="cardPayBox" class="hidden p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-extrabold text-blue-900">Visa / Mastercard Request</span>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white border border-blue-200 text-blue-700">Arranged by Seller</span>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblAddress">Full Delivery Address *</label>
+              <textarea id="coAddress" required rows="2" data-i18n-ph="phAddress" placeholder="House, Road, Area / Thana..." class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></textarea>
             </div>
-            <p class="text-[11px] text-slate-600">Submit your order below and the seller will send you a secure card payment link via phone/WhatsApp.</p>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-500 mb-2" data-i18n="lblPayMethod">Payment Method *</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold" id="payMethodBtns">
+                <button type="button" onclick="selectPayMethod('COD')" data-pm="COD" class="pm-btn dash-btn-primary py-2.5 px-2 rounded-xl text-center">🚚 COD</button>
+                <button type="button" onclick="selectPayMethod('bKash')" data-pm="bKash" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">💗 bKash</button>
+                <button type="button" onclick="selectPayMethod('Nagad')" data-pm="Nagad" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">🧡 Nagad</button>
+                <button type="button" onclick="selectPayMethod('Card')" data-pm="Card" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">💳 Card</button>
+              </div>
+            </div>
+
+            <div id="mobilePayBox" class="hidden p-3.5 rounded-2xl bg-pink-50/70 border border-pink-200 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <div>
+                  <p class="text-[11px] font-bold text-slate-600"><span id="mpLabel">Send Money to Seller bKash</span>:</p>
+                  <p id="mpNumber" class="font-mono font-extrabold text-sm text-slate-900">01XXXXXXXXX</p>
+                </div>
+                <button type="button" onclick="copySellerPayNum()" class="bg-white border border-slate-300 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-bold shrink-0">📋 Copy</button>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1" data-i18n="lblTrxId">Transaction ID (TrxID) *</label>
+                <input id="coTrxId" placeholder="e.g. BKS8492ABC" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm uppercase">
+              </div>
+            </div>
+
+            <div id="cardPayBox" class="hidden p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-blue-900">Visa / Mastercard Request</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white border border-blue-200 text-blue-700">Arranged by Seller</span>
+              </div>
+              <p class="text-[11px] text-slate-600">Submit your order below and the seller will send you a secure card payment link via phone/WhatsApp.</p>
+            </div>
+
+            <button id="coSubmitBtn" type="submit" class="dash-btn-primary font-bold w-full py-3.5 rounded-xl text-sm shadow-lg" data-i18n="confirmOrderBtn">Confirm Order</button>
+          </form>
+        </div>
+
+        <div id="checkoutSuccessWrap" class="hidden text-center py-4 space-y-4">
+          <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">✅</div>
+          <div>
+            <h3 class="text-xl font-extrabold text-slate-900" data-i18n="ordConfirmedTitle">Order Confirmed!</h3>
+            <p class="text-xs text-slate-500 mt-1" data-i18n="ordConfirmedSub">Your order has been received and sent to Dokkanio Hub Processing.</p>
           </div>
-
-          <button id="coSubmitBtn" type="submit" class="dash-btn-primary font-bold w-full py-3.5 rounded-xl text-sm shadow-lg" data-i18n="confirmOrderBtn">Confirm Order</button>
-        </form>
-      </div>
-
-      <div id="checkoutSuccessWrap" class="hidden text-center py-4 space-y-4">
-        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">✅</div>
-        <div>
-          <h3 class="text-xl font-extrabold text-slate-900" data-i18n="ordConfirmedTitle">Order Confirmed!</h3>
-          <p class="text-xs text-slate-500 mt-1" data-i18n="ordConfirmedSub">Your order has been received and sent to Dokkanio Hub Processing.</p>
+          <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4 text-left text-xs space-y-2">
+            <div class="flex justify-between"><span class="text-slate-500">Order ID</span><b id="confOrderId" class="font-mono text-blue-700">#0000</b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Items</span><b id="confProd" class="text-right max-w-[210px] truncate"></b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Amount</span><b id="confAmount" class="text-emerald-600"></b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Payment</span><b id="confPay"></b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Status</span><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">Hub Processing (Dokkanio)</span></div>
+          </div>
+          <a id="confWaBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-md">
+            📲 <span data-i18n="sendWaReceipt">Send Order Receipt on WhatsApp</span>
+          </a>
+          <button type="button" onclick="closeCheckout()" class="dash-btn-soft font-bold w-full py-2.5 rounded-xl text-xs" data-i18n="continueShop">Continue Shopping</button>
         </div>
-        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4 text-left text-xs space-y-2">
-          <div class="flex justify-between"><span class="text-slate-500">Order ID</span><b id="confOrderId" class="font-mono text-blue-700">#0000</b></div>
-          <div class="flex justify-between"><span class="text-slate-500">Items</span><b id="confProd" class="text-right max-w-[210px] truncate"></b></div>
-          <div class="flex justify-between"><span class="text-slate-500">Amount</span><b id="confAmount" class="text-emerald-600"></b></div>
-          <div class="flex justify-between"><span class="text-slate-500">Payment</span><b id="confPay"></b></div>
-          <div class="flex justify-between"><span class="text-slate-500">Status</span><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">Hub Processing (Dokkanio)</span></div>
-        </div>
-        <a id="confWaBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-md">
-          📲 <span data-i18n="sendWaReceipt">Send Order Receipt on WhatsApp</span>
-        </a>
-        <button type="button" onclick="closeCheckout()" class="dash-btn-soft font-bold w-full py-2.5 rounded-xl text-xs" data-i18n="continueShop">Continue Shopping</button>
       </div>
     </div>
-  </div>
 
-  <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[60] bg-slate-900/95 backdrop-blur text-white text-sm px-5 py-3 rounded-xl shadow-xl hidden max-w-[90vw] text-center"></div>
+    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[60] bg-slate-900/95 backdrop-blur text-white text-sm px-5 py-3 rounded-xl shadow-xl hidden max-w-[90vw] text-center"></div>
 
-  <script>
+    <script>
     const SUPABASE_URL = "https://aijyvcqpvhwzwtfqpbol.supabase.co";
     const SUPABASE_KEY = "sb_publishable_2DZ9NzgEEzYR3Cf4ZnFGYw_hB3Z1kQW";
     const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-    const BD_DISTRICTS = ["Dhaka","Chattogram","Sylhet","Rajshahi","Khulna","Barishal","Rangpur","Mymensingh","Gazipur","Narayanganj","Cumilla","Bogura","Cox's Bazar","Jashore","Tangail","Narsingdi","Feni","Brahmanbaria","Noakhali","Dinajpur","Pabna","Kushtia","Faridpur","Savar","Bagerhat","Bandarban","Barguna","Bhola","Chandpur","Chapainawabganj","Chuadanga","Gaibandha","Gopalganj","Habiganj","Jamalpur","Jhalokati","Jhenaidah","Joypurhat","Khagrachhari","Kishoreganj","Kurigram","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Naogaon","Narail","Natore","Netrokona","Nilphamari","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rangamati","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Thakurgaon"];
+    const BD_DISTRICTS = ["Dhaka", "Chattogram", "Sylhet", "Rajshahi", "Khulna", "Barishal", "Rangpur", "Mymensingh", "Gazipur", "Narayanganj", "Cumilla", "Bogura", "Cox's Bazar", "Jashore", "Tangail", "Narsingdi", "Feni", "Brahmanbaria", "Noakhali", "Dinajpur", "Pabna", "Kushtia", "Faridpur", "Savar", "Bagerhat", "Bandarban", "Barguna", "Bhola", "Chandpur", "Chapainawabganj", "Chuadanga", "Gaibandha", "Gopalganj", "Habiganj", "Jamalpur", "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachhari", "Kishoreganj", "Kurigram", "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura", "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj", "Naogaon", "Narail", "Natore", "Netrokona", "Nilphamari", "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rangamati", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj", "Thakurgaon"];
 
     const THEME_MAP = {
-      "classic":"classic","luxe":"luxe","soft":"soft","botanical":"botanical","bold":"bold","sunrise":"sunrise","noir":"noir","playful":"playful","mono":"mono","coastal":"coastal","vintage":"vintage","tech":"tech",
-      "Default":"classic","Soft":"soft","Dark":"noir","Cute":"playful","Aesthetic":"botanical","Featured Product":"classic","Many Products":"classic","Comfy Style":"soft","Few Products":"luxe","Cool Style":"tech",
-      "Transparent Glass":"classic","Spice & Bold":"bold","Sense Minimal":"botanical","Aesthetic Cozy":"soft"
+      "classic": "classic",
+      "luxe": "luxe",
+      "soft": "soft",
+      "botanical": "botanical",
+      "bold": "bold",
+      "sunrise": "sunrise",
+      "noir": "noir",
+      "playful": "playful",
+      "mono": "mono",
+      "coastal": "coastal",
+      "vintage": "vintage",
+      "tech": "tech",
+      "Default": "classic",
+      "Soft": "soft",
+      "Dark": "noir",
+      "Cute": "playful",
+      "Aesthetic": "botanical",
+      "Featured Product": "classic",
+      "Many Products": "classic",
+      "Comfy Style": "soft",
+      "Few Products": "luxe",
+      "Cool Style": "tech",
+      "Transparent Glass": "classic",
+      "Spice & Bold": "bold",
+      "Sense Minimal": "botanical",
+      "Aesthetic Cozy": "soft"
     };
 
     const I18N = {
-      en:{
-        loadingStore:"Loading Dokkanio Store...", claimTitle:"Store Not Claimed Yet!", claimSub1:"The store link",
-        claimSub2:"is available! Launch your own online store in 60 seconds with Dokkanio.", claimBtn:"Claim This Store on Dokkanio",
-        searchPh:"Search products...", poweredBy:"Powered by", coTitle:"Express Checkout", coSub:"Fast delivery across all 64 districts of Bangladesh",
-        lblName:"Full Name *", phName:"Your full name", lblPhone:"Phone Number *", lblDistrict:"District (64 Districts) *",
-        lblAddress:"Full Delivery Address *", phAddress:"House, Road, Area / Thana...", lblPayMethod:"Payment Method *",
-        lblTrxId:"Transaction ID (TrxID) *", confirmOrderBtn:"Confirm Order", ordConfirmedTitle:"Order Confirmed!",
-        ordConfirmedSub:"Your order has been received and sent to Dokkanio Hub Processing.", sendWaReceipt:"Send Order Receipt on WhatsApp", continueShop:"Continue Shopping"
+      en: {
+        loadingStore: "Loading Dokkanio Store...",
+        claimTitle: "Store Not Claimed Yet!",
+        claimSub1: "The store link",
+        claimSub2: "is available! Launch your own online store in 60 seconds with Dokkanio.",
+        claimBtn: "Claim This Store on Dokkanio",
+        searchPh: "Search products...",
+        poweredBy: "Powered by",
+        coTitle: "Express Checkout",
+        coSub: "Fast delivery across all 64 districts of Bangladesh",
+        lblName: "Full Name *",
+        phName: "Your full name",
+        lblPhone: "Phone Number *",
+        lblDistrict: "District (64 Districts) *",
+        lblAddress: "Full Delivery Address *",
+        phAddress: "House, Road, Area / Thana...",
+        lblPayMethod: "Payment Method *",
+        lblTrxId: "Transaction ID (TrxID) *",
+        confirmOrderBtn: "Confirm Order",
+        ordConfirmedTitle: "Order Confirmed!",
+        ordConfirmedSub: "Your order has been received and sent to Dokkanio Hub Processing.",
+        sendWaReceipt: "Send Order Receipt on WhatsApp",
+        continueShop: "Continue Shopping"
       },
-      bn:{
-        loadingStore:"দোকানিও স্টোর লোড হচ্ছে...", claimTitle:"এই স্টোরটি এখনো নেওয়া হয়নি!", claimSub1:"স্টোর লিংক",
-        claimSub2:"খালি আছে! দোকানিও-তে ৬০ সেকেন্ডে আপনার নিজের স্টোর চালু করুন।", claimBtn:"দোকানিও-তে এই স্টোরটি নিন",
-        searchPh:"পণ্য খুঁজুন...", poweredBy:"পরিচালনায়", coTitle:"দ্রুত চেকআউট", coSub:"সারা বাংলাদেশের ৬৪ জেলায় দ্রুত ডেলিভারি",
-        lblName:"আপনার নাম *", phName:"পুরো নাম লিখুন", lblPhone:"মোবাইল নম্বর *", lblDistrict:"জেলা (৬৪ জেলা) *",
-        lblAddress:"সম্পূর্ণ ঠিকানা *", phAddress:"বাসা, রোড, এলাকা / থানা...", lblPayMethod:"পেমেন্ট মাধ্যম *",
-        lblTrxId:"ট্রানজেকশন আইডি (TrxID) *", confirmOrderBtn:"অর্ডার কনফার্ম করুন", ordConfirmedTitle:"অর্ডার কনফার্ম হয়েছে!",
-        ordConfirmedSub:"আপনার অর্ডারটি গ্রহণ করা হয়েছে এবং দোকানিও হাব প্রসেসিং-এ পাঠানো হয়েছে।", sendWaReceipt:"হোয়াটসঅ্যাপে রসিদ পাঠান", continueShop:"কেনাকাটা চালিয়ে যান"
+      bn: {
+        loadingStore: "দোকানিও স্টোর লোড হচ্ছে...",
+        claimTitle: "এই স্টোরটি এখনো নেওয়া হয়নি!",
+        claimSub1: "স্টোর লিংক",
+        claimSub2: "খালি আছে! দোকানিও-তে ৬০ সেকেন্ডে আপনার নিজের স্টোর চালু করুন।",
+        claimBtn: "দোকানিও-তে এই স্টোরটি নিন",
+        searchPh: "পণ্য খুঁজুন...",
+        poweredBy: "পরিচালনায়",
+        coTitle: "দ্রুত চেকআউট",
+        coSub: "সারা বাংলাদেশের ৬৪ জেলায় দ্রুত ডেলিভারি",
+        lblName: "আপনার নাম *",
+        phName: "পুরো নাম লিখুন",
+        lblPhone: "মোবাইল নম্বর *",
+        lblDistrict: "জেলা (৬৪ জেলা) *",
+        lblAddress: "সম্পূর্ণ ঠিকানা *",
+        phAddress: "বাসা, রোড, এলাকা / থানা...",
+        lblPayMethod: "পেমেন্ট মাধ্যম *",
+        lblTrxId: "ট্রানজেকশন আইডি (TrxID) *",
+        confirmOrderBtn: "অর্ডার কনফার্ম করুন",
+        ordConfirmedTitle: "অর্ডার কনফার্ম হয়েছে!",
+        ordConfirmedSub: "আপনার অর্ডারটি গ্রহণ করা হয়েছে এবং দোকানিও হাব প্রসেসিং-এ পাঠানো হয়েছে।",
+        sendWaReceipt: "হোয়াটসঅ্যাপে রসিদ পাঠান",
+        continueShop: "কেনাকাটা চালিয়ে যান"
       }
     };
 
-    let lang = "en", storeData = null, storeMeta = {}, studioState = null, products = [], cart = [], checkoutItems = [];
-    let selectedPayMethod = "COD", searchQuery = "", checkoutFromCart = false;
+    let lang = "en",
+      storeData = null,
+      storeMeta = {},
+      studioState = null,
+      products = [],
+      cart = [],
+      checkoutItems = [];
+    let selectedPayMethod = "COD",
+      searchQuery = "",
+      checkoutFromCart = false;
     const $ = id => document.getElementById(id);
-    const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+    const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    } [c]));
     const bdt = n => "৳" + Math.round(Number(n) || 0).toLocaleString("en-US");
     const t = k => (I18N[lang] && I18N[lang][k]) || I18N.en[k] || k;
-    function safeImg(u) { const s = String(u || "").trim(); return /^(https?:\/\/|data:image\/)/i.test(s) ? s : ""; }
-    function toast(msg) { const el = $("toast"); el.textContent = msg; el.classList.remove("hidden"); clearTimeout(el._h); el._h = setTimeout(() => el.classList.add("hidden"), 3000); }
+
+    function safeImg(u) {
+      const s = String(u || "").trim();
+      return /^(https?:\/\/|data:image\/)/i.test(s) ? s : "";
+    }
+
+    function toast(msg) {
+      const el = $("toast");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+      clearTimeout(el._h);
+      el._h = setTimeout(() => el.classList.add("hidden"), 3000);
+    }
 
     function setLang(l) {
-      lang = l; document.documentElement.lang = l === "bn" ? "bn" : "en";
+      lang = l;
+      document.documentElement.lang = l === "bn" ? "bn" : "en";
       document.querySelectorAll(".lang-btn-en").forEach(b => b.className = "lang-btn-en px-2 py-1 rounded-lg transition " + (l === "en" ? "dash-btn-primary" : "text-slate-600"));
       document.querySelectorAll(".lang-btn-bn").forEach(b => b.className = "lang-btn-bn px-2 py-1 rounded-lg transition " + (l === "bn" ? "dash-btn-primary" : "text-slate-600"));
-      document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.getAttribute("data-i18n"); if (I18N[lang][k]) el.textContent = I18N[lang][k]; });
-      document.querySelectorAll("[data-i18n-ph]").forEach(el => { const k = el.getAttribute("data-i18n-ph"); if (I18N[lang][k]) el.placeholder = I18N[lang][k]; });
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (I18N[lang][k]) el.textContent = I18N[lang][k];
+      });
+      document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+        const k = el.getAttribute("data-i18n-ph");
+        if (I18N[lang][k]) el.placeholder = I18N[lang][k];
+      });
     }
 
     function parseCustomCssWithMeta(rawCss = "") {
       const m = rawCss.match(/\/\*DK_META:(.*?)\*\/\n?/);
-      let meta = { logo_url:"", banner_url:"", announcement:"", hero_headline:"", hero_sub:"", cta_text:"Order Now", studio:null };
+      let meta = {
+        logo_url: "",
+        banner_url: "",
+        announcement: "",
+        hero_headline: "",
+        hero_sub: "",
+        cta_text: "Order Now",
+        studio: null
+      };
       let cleanCss = rawCss || "";
-      if (m) { try { meta = { ...meta, ...JSON.parse(m[1]) }; } catch (_) {} cleanCss = rawCss.replace(m[0], ""); }
-      return { meta, cleanCss };
+      if (m) {
+        try {
+          meta = {
+            ...meta,
+            ...JSON.parse(m[1])
+          };
+        } catch (_) {}
+        cleanCss = rawCss.replace(m[0], "");
+      }
+      return {
+        meta,
+        cleanCss
+      };
     }
 
     function parseVariants(raw) {
       return String(raw || "").split(/\n|;/).map(s => s.trim()).filter(Boolean).map(line => {
         const i = line.indexOf(":");
-        if (i < 0) return { name:"Option", values:line.split(/,|·/).map(x=>x.trim()).filter(Boolean) };
-        return { name:line.slice(0,i).trim(), values:line.slice(i+1).split(/,|·/).map(x=>x.trim()).filter(Boolean) };
+        if (i < 0) return {
+          name: "Option",
+          values: line.split(/,|·/).map(x => x.trim()).filter(Boolean)
+        };
+        return {
+          name: line.slice(0, i).trim(),
+          values: line.slice(i + 1).split(/,|·/).map(x => x.trim()).filter(Boolean)
+        };
       }).filter(g => g.values.length);
     }
 
@@ -312,15 +633,17 @@
       const next = $("storeSearchInp");
       if (next) {
         next.focus();
-        try { next.setSelectionRange(pos, pos); } catch (_) {}
+        try {
+          next.setSelectionRange(pos, pos);
+        } catch (_) {}
       }
     }
 
     function renderStorefront() {
       const edits = studioState?.edits || {};
-      const sections = Array.isArray(studioState?.sections) && studioState.sections.length
-        ? studioState.sections
-        : ["Announcement bar","Header","Hero","Featured products","Brand story","Testimonials","Footer"];
+      const sections = Array.isArray(studioState?.sections) && studioState.sections.length ?
+        studioState.sections :
+        ["Announcement bar", "Header", "Hero", "Featured products", "Brand story", "Testimonials", "Footer"];
       const themeKey = THEME_MAP[studioState?.theme || storeData.theme] || "classic";
       document.body.className = `dk-store-root theme-${themeKey}`;
 
@@ -336,9 +659,9 @@
       $("ftYear").textContent = new Date().getFullYear();
       if (edits.sectionTexts?.Footer) $("ftCustomText").textContent = edits.sectionTexts.Footer;
 
-      $("storeLogoWrap").innerHTML = safeImg(storeMeta.logo_url)
-        ? `<img src="${esc(safeImg(storeMeta.logo_url))}" class="w-9 h-9 rounded-full object-cover border border-white shadow" alt="${esc(sName)}">`
-        : `<span class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-sm shadow" style="background:var(--accent);color:var(--btn-text)">${esc(sName.charAt(0).toUpperCase())}</span>`;
+      $("storeLogoWrap").innerHTML = safeImg(storeMeta.logo_url) ?
+        `<img src="${esc(safeImg(storeMeta.logo_url))}" class="w-9 h-9 rounded-full object-cover border border-white shadow" alt="${esc(sName)}">` :
+        `<span class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-sm shadow" style="background:var(--accent);color:var(--btn-text)">${esc(sName.charAt(0).toUpperCase())}</span>`;
 
       if (storeData.whatsapp_number) {
         const waClean = storeData.whatsapp_number.replace(/[^0-9]/g, "");
@@ -363,7 +686,7 @@
       const homeImg = safeImg(edits.homeImage);
       const cols = Math.max(1, Math.min(4, Number(storeMeta.layout_cols || 3)));
 
-      const blocks = sections.filter(s => !["Announcement bar","Header","Footer"].includes(s)).map(sec => {
+      const blocks = sections.filter(s => !["Announcement bar", "Header", "Footer"].includes(s)).map(sec => {
         if (sec === "Hero") {
           return `
             <section id="top" class="dk-hero p-6 sm:p-10 md:p-14 grid md:grid-cols-12 gap-6 items-center shadow-sm">
@@ -380,7 +703,7 @@
         }
         if (sec === "Featured products") {
           const secTitle = edits.sectionTitles?.["Featured products"] || "Curated for everyday";
-          const filtered = products.filter(p => (p.title + " " + (p.category||"")).toLowerCase().includes(searchQuery));
+          const filtered = products.filter(p => (p.title + " " + (p.category || "")).toLowerCase().includes(searchQuery));
           return `
             <section id="shop" class="space-y-5">
               <div class="flex flex-wrap items-center justify-between gap-3">
@@ -411,9 +734,9 @@
                         <button type="button" onclick="buyNowSingle('${esc(String(p.id))}',1)" class="dk-btn py-2 text-[11px] font-bold">Buy Now</button>
                       </div>
                     </article>`;
-                }).join("") : `<div class="col-span-full text-center py-12 dk-card text-sm dk-muted">No products match your search.</div>`}
-              </div>
-            </section>`;
+                }).join("") : ` < div class = "col-span-full text-center py-12 dk-card text-sm dk-muted" > No products match your search. < /div>`} <
+            /div> <
+            /section>`;
         }
         if (sec === "Image with text") {
           const itTitle = edits.homeImageTitle || "A story worth sharing";
@@ -468,8 +791,8 @@
       if (!p) return;
       const img = safeImg(p.image_url);
       const variants = parseVariants(p.variants);
-      const bundleItems = String(p.bundle || "").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
-      const claims = String(p.certifications || "").split(",").map(s=>s.trim()).filter(Boolean);
+      const bundleItems = String(p.bundle || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+      const claims = String(p.certifications || "").split(",").map(s => s.trim()).filter(Boolean);
       $("dmCategory").textContent = p.is_bundle ? "Bundle Deal" : (p.category || "Store Product");
       $("dmBody").innerHTML = `
         <div class="grid sm:grid-cols-2 gap-6 items-start">
@@ -504,38 +827,70 @@
             </div>
           </div>
         </div>`;
-      $("detailModal").classList.remove("hidden"); $("detailModal").classList.add("flex");
+      $("detailModal").classList.remove("hidden");
+      $("detailModal").classList.add("flex");
     }
-    function closeDetailModal() { $("detailModal").classList.add("hidden"); $("detailModal").classList.remove("flex"); }
+
+    function closeDetailModal() {
+      $("detailModal").classList.add("hidden");
+      $("detailModal").classList.remove("flex");
+    }
 
     function getDetailVariantLabel(p) {
       const variants = parseVariants(p.variants);
       if (!variants.length) return "";
       return variants.map((g, idx) => `${g.name}: ${$("dmVar-"+idx)?.value || g.values[0]}`).join(" · ");
     }
+
     function addDetailToBag(id) {
-      const p = products.find(x => String(x.id) === String(id)); if (!p) return;
+      const p = products.find(x => String(x.id) === String(id));
+      if (!p) return;
       const qty = Math.max(1, Number($("dmQty")?.value || 1));
       addToCart(id, qty, getDetailVariantLabel(p));
-      closeDetailModal(); openCartDrawer();
+      closeDetailModal();
+      openCartDrawer();
     }
+
     function buyDetailNow(id) {
-      const p = products.find(x => String(x.id) === String(id)); if (!p) return;
+      const p = products.find(x => String(x.id) === String(id));
+      if (!p) return;
       const qty = Math.max(1, Number($("dmQty")?.value || 1));
       closeDetailModal();
       buyNowSingle(id, qty, getDetailVariantLabel(p));
     }
 
-    function updateBagBadge() { $("bagCountBadge").textContent = String(cart.reduce((s, x) => s + x.qty, 0)); }
+    function updateBagBadge() {
+      $("bagCountBadge").textContent = String(cart.reduce((s, x) => s + x.qty, 0));
+    }
+
     function addToCart(id, qty = 1, variant = "") {
-      const p = products.find(x => String(x.id) === String(id)); if (!p) return;
+      const p = products.find(x => String(x.id) === String(id));
+      if (!p) return;
       const key = `${id}|${variant}`;
       const ex = cart.find(x => x.key === key);
-      if (ex) ex.qty += qty; else cart.push({ key, product: p, qty, variant });
-      updateBagBadge(); renderCartDrawer(); toast(`Added "${p.title}" to bag`);
+      if (ex) ex.qty += qty;
+      else cart.push({
+        key,
+        product: p,
+        qty,
+        variant
+      });
+      updateBagBadge();
+      renderCartDrawer();
+      toast(`Added "${p.title}" to bag`);
     }
-    function openCartDrawer() { renderCartDrawer(); $("cartDrawer").classList.remove("hidden"); $("cartDrawer").classList.add("flex"); }
-    function closeCartDrawer() { $("cartDrawer").classList.add("hidden"); $("cartDrawer").classList.remove("flex"); }
+
+    function openCartDrawer() {
+      renderCartDrawer();
+      $("cartDrawer").classList.remove("hidden");
+      $("cartDrawer").classList.add("flex");
+    }
+
+    function closeCartDrawer() {
+      $("cartDrawer").classList.add("hidden");
+      $("cartDrawer").classList.remove("flex");
+    }
+
     function renderCartDrawer() {
       const sub = cart.reduce((s, x) => s + Number(x.product.price) * x.qty, 0);
       $("cartSubtotal").textContent = bdt(sub);
@@ -556,31 +911,47 @@
           </div>
         </div>`).join("") : `<p class="text-center text-sm text-slate-400 py-12">Your shopping bag is empty.</p>`;
     }
+
     function chgCartQty(key, delta) {
-      const it = cart.find(x => x.key === key); if (!it) return;
+      const it = cart.find(x => x.key === key);
+      if (!it) return;
       it.qty += delta;
       if (it.qty <= 0) cart = cart.filter(x => x.key !== key);
-      updateBagBadge(); renderCartDrawer();
+      updateBagBadge();
+      renderCartDrawer();
     }
 
     function buyNowSingle(id, qty = 1, variant = "") {
-      const p = products.find(x => String(x.id) === String(id)); if (!p) return;
+      const p = products.find(x => String(x.id) === String(id));
+      if (!p) return;
       checkoutFromCart = false;
-      checkoutItems = [{ product: p, qty, variant }];
+      checkoutItems = [{
+        product: p,
+        qty,
+        variant
+      }];
       openCheckoutModal();
     }
+
     function proceedBagToCheckout() {
       if (!cart.length) return;
       checkoutFromCart = true;
-      checkoutItems = cart.map(x => ({ product: x.product, qty: x.qty, variant: x.variant }));
+      checkoutItems = cart.map(x => ({
+        product: x.product,
+        qty: x.qty,
+        variant: x.variant
+      }));
       closeCartDrawer();
       openCheckoutModal();
     }
 
-    function populateDistricts() { $("coDistrict").innerHTML = BD_DISTRICTS.map(d => `<option value="${d}">${d}</option>`).join(""); }
+    function populateDistricts() {
+      $("coDistrict").innerHTML = BD_DISTRICTS.map(d => `<option value="${d}">${d}</option>`).join("");
+    }
 
     function openCheckoutModal() {
-      $("checkoutFormWrap").classList.remove("hidden"); $("checkoutSuccessWrap").classList.add("hidden");
+      $("checkoutFormWrap").classList.remove("hidden");
+      $("checkoutSuccessWrap").classList.add("hidden");
       const total = checkoutItems.reduce((s, x) => s + Number(x.product.price) * x.qty, 0);
       $("coOrderSummary").innerHTML = checkoutItems.map(x => `
         <div class="flex items-center justify-between gap-2 text-xs">
@@ -592,9 +963,14 @@
       $("coSubmitBtn").textContent = ck.buttonText || t("confirmOrderBtn");
       $("coEmailWrap").classList.toggle("hidden", !(ck.fields && ck.fields.Email));
       selectPayMethod("COD");
-      $("checkoutModal").classList.remove("hidden"); $("checkoutModal").classList.add("flex");
+      $("checkoutModal").classList.remove("hidden");
+      $("checkoutModal").classList.add("flex");
     }
-    function closeCheckout() { $("checkoutModal").classList.add("hidden"); $("checkoutModal").classList.remove("flex"); }
+
+    function closeCheckout() {
+      $("checkoutModal").classList.add("hidden");
+      $("checkoutModal").classList.remove("flex");
+    }
 
     function selectPayMethod(pm) {
       selectedPayMethod = pm;
@@ -612,15 +988,19 @@
         $("mpNumber").textContent = num;
       }
     }
+
     function copySellerPayNum() {
       const num = $("mpNumber").textContent.trim();
-      navigator.clipboard?.writeText(num); toast(`Copied ${selectedPayMethod} number: ${num}`);
+      navigator.clipboard?.writeText(num);
+      toast(`Copied ${selectedPayMethod} number: ${num}`);
     }
 
     $("checkoutForm").onsubmit = async e => {
       e.preventDefault();
       if (!checkoutItems.length || !storeData) return;
-      const btn = $("coSubmitBtn"); btn.disabled = true; btn.textContent = "Placing Order...";
+      const btn = $("coSubmitBtn");
+      btn.disabled = true;
+      btn.textContent = "Placing Order...";
       const total = checkoutItems.reduce((s, x) => s + Number(x.product.price) * x.qty, 0);
       const titles = checkoutItems.map(x => `${x.product.title}${x.variant ? ` (${x.variant})` : ""} × ${x.qty}`).join(", ");
       let trxId = "COD";
@@ -647,13 +1027,23 @@
         if (storeData._demo) {
           const key = "dk_demo_orders_" + storeData.slug;
           const prev = JSON.parse(localStorage.getItem(key) || "[]");
-          prev.unshift({ ...orderPayload, id: orderId, created_at: new Date().toISOString() });
+          prev.unshift({
+            ...orderPayload,
+            id: orderId,
+            created_at: new Date().toISOString()
+          });
           localStorage.setItem(key, JSON.stringify(prev));
         } else if (sb) {
-          const { error } = await sb.from("orders").insert([orderPayload]);
+          const {
+            error
+          } = await sb.from("orders").insert([orderPayload]);
           if (error) throw error;
         }
-        if (checkoutFromCart) { cart = []; updateBagBadge(); checkoutFromCart = false; }
+        if (checkoutFromCart) {
+          cart = [];
+          updateBagBadge();
+          checkoutFromCart = false;
+        }
         showOrderConfirmation(orderId, orderPayload);
       } catch (err) {
         toast("Order error: " + (err.message || err));
@@ -665,7 +1055,8 @@
     };
 
     function showOrderConfirmation(orderId, o) {
-      $("checkoutFormWrap").classList.add("hidden"); $("checkoutSuccessWrap").classList.remove("hidden");
+      $("checkoutFormWrap").classList.add("hidden");
+      $("checkoutSuccessWrap").classList.remove("hidden");
       $("confOrderId").textContent = "#" + String(orderId).slice(0, 8).toUpperCase();
       $("confProd").textContent = o.product_title;
       $("confAmount").textContent = bdt(o.amount);
@@ -674,11 +1065,13 @@
       const intlWa = sellerWa.startsWith("88") ? sellerWa : "88" + sellerWa;
       const receiptMsg = encodeURIComponent(`🛍️ *New Order Receipt – ${storeData.store_name}*\nOrder ID: #${String(orderId).slice(0,8).toUpperCase()}\nItems: ${o.product_title}\nAmount: ${bdt(o.amount)}\nPayment: ${o.payment_method} (${o.trx_id})\nCustomer: ${o.customer_name} (${o.customer_phone})\nLocation: ${o.district}, ${o.address}\nStatus: Hub Processing (Dokkanio)`);
       $("confWaBtn").href = `https://wa.me/${intlWa}?text=${receiptMsg}`;
-      $("checkoutForm").reset(); toast("Order placed successfully!");
+      $("checkoutForm").reset();
+      toast("Order placed successfully!");
     }
 
     (async function initStorefront() {
-      setLang("en"); populateDistricts();
+      setLang("en");
+      populateDistricts();
       const params = new URLSearchParams(window.location.search);
       let slug = (params.get("store") || params.get("slug") || "").toLowerCase().trim();
       if (!slug) {
@@ -687,53 +1080,86 @@
       }
       slug = slug.replace(/[^a-z0-9-]/g, "");
       if (!slug) {
-        $("stateLoading").classList.add("hidden"); $("missingSlugBadge").textContent = "dokkanio.com/yourstore";
-        $("stateNotFound").classList.remove("hidden"); return;
+        $("stateLoading").classList.add("hidden");
+        $("missingSlugBadge").textContent = "dokkanio.com/yourstore";
+        $("stateNotFound").classList.remove("hidden");
+        return;
       }
 
       let localPayload = null;
-      try { localPayload = JSON.parse(localStorage.getItem("dk_storefront_" + slug) || "null"); } catch (_) {}
+      try {
+        localPayload = JSON.parse(localStorage.getItem("dk_storefront_" + slug) || "null");
+      } catch (_) {}
 
-      let store = null, prods = [];
+      let store = null,
+        prods = [];
       if (sb) {
         try {
-          const { data, error } = await sb.from("stores")
+          const {
+            data,
+            error
+          } = await sb.from("stores")
             .select("id, store_name, slug, bkash_number, nagad_number, whatsapp_number, theme, custom_css")
             .eq("slug", slug).maybeSingle();
           if (!error && data) {
             store = data;
-            const { data: prodRows } = await sb.from("products")
+            const {
+              data: prodRows
+            } = await sb.from("products")
               .select("id, title, price, image_url, is_bundle")
-              .eq("store_id", store.id).order("id", { ascending:false });
+              .eq("store_id", store.id).order("id", {
+                ascending: false
+              });
             prods = prodRows || [];
           }
         } catch (_) {}
       }
 
       if (!store && localPayload?.store?.slug === slug) {
-        store = { ...localPayload.store, _demo: !!localPayload.demo };
+        store = {
+          ...localPayload.store,
+          _demo: !!localPayload.demo
+        };
         prods = Array.isArray(localPayload.products) ? localPayload.products : [];
       }
 
       if (!store) {
-        $("stateLoading").classList.add("hidden"); $("missingSlugBadge").textContent = `dokkanio.com/${slug}`;
-        $("stateNotFound").classList.remove("hidden"); return;
+        $("stateLoading").classList.add("hidden");
+        $("missingSlugBadge").textContent = `dokkanio.com/${slug}`;
+        $("stateNotFound").classList.remove("hidden");
+        return;
       }
 
       storeData = store;
       const parsed = parseCustomCssWithMeta(store.custom_css || "");
-      storeMeta = parsed.meta; storeData._cleanCss = parsed.cleanCss;
+      storeMeta = parsed.meta;
+      storeData._cleanCss = parsed.cleanCss;
       studioState = storeMeta.studio || null;
 
+      // Keep the full product record and merge editor metadata using every known key.
+      // Older editor versions used sid/title keys; newer versions use database IDs.
       const metaMap = studioState?.productsMeta || {};
       products = (prods || []).map(p => {
-        const m = metaMap[String(p.id)] || metaMap[p.title] || {};
-        return { ...p, description: m.description || "", variants: m.variants || "", bundle: m.bundle || "", certifications: m.certifications || "", category: m.category || "Store Product" };
+        const m = metaMap[String(p.id)] || metaMap[String(p.sid)] || metaMap[p.title] || {};
+        return {
+          ...p,
+          description: p.description || m.description || "",
+          variants: p.variants || m.variants || "",
+          bundle: p.bundle || m.bundle || "",
+          certifications: p.certifications || m.certifications || "",
+          category: m.category || p.category || (p.is_bundle ? "Bundles" : "Store Product"),
+          stock: p.stock ?? m.stock,
+          status: p.status || m.status,
+          sku: p.sku || m.sku
+        };
       });
 
-      $("stateLoading").classList.add("hidden"); $("storeApp").classList.remove("hidden");
+      $("stateLoading").classList.add("hidden");
+      $("storeApp").classList.remove("hidden");
       renderStorefront();
     })();
-  </script>
-</body>
+
+    </script>
+  </body>
+
 </html>
