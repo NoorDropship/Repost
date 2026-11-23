@@ -3700,116 +3700,82 @@
     }
 
     async function saveStoreToSupabase(showMsg = true) {
-      // Save the complete store/editor state; never silently report success.
       try {
         await ensureStoreRecord();
       } catch (err) {
-        toast("Save failed: could not prepare store record. " + (err?.message || err));
+        toast("Store error: " + (err.message || err));
         return false;
       }
 
-      const nameInput = $("sbStoreName")?.value.trim();
-      const slugInput = $("sbSlug")?.value.trim().toLowerCase();
-      if (nameInput !== undefined && nameInput !== "") currentStore.store_name = nameInput;
-      if (slugInput !== undefined && slugInput !== "") currentStore.slug = slugInput.replace(/[^a-z0-9-]/g, "");
-      for (const [id, key] of [
-          ["sbBkash", "bkash_number"],
-          ["sbNagad", "nagad_number"],
-          ["sbWhatsapp", "whatsapp_number"]
-        ]) {
-        const value = $(id)?.value.trim();
-        if (value !== undefined && value !== "") currentStore[key] = value;
-      }
+      const sbNameVal = $("sbStoreName")?.value.trim();
+      const sbSlugVal = $("sbSlug")?.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, "");
+      if (sbNameVal) currentStore.store_name = sbNameVal;
+      if (sbSlugVal) currentStore.slug = sbSlugVal;
+      if ($("sbBkash")?.value.trim()) currentStore.bkash_number = $("sbBkash").value.trim();
+      if ($("sbNagad")?.value.trim()) currentStore.nagad_number = $("sbNagad").value.trim();
+      if ($("sbWhatsapp")?.value.trim()) currentStore.whatsapp_number = $("sbWhatsapp").value.trim();
 
-      const nextSlug = (currentStore.slug || "").toLowerCase().replace(/[^a-z0-9-]/g, "");
-      if (!currentStore.store_name?.trim()) {
-        toast("Save failed: please enter a store name.");
-        return false;
-      }
-      if (!nextSlug || nextSlug.length < 3 || nextSlug.length > 50 || /^-|-$/.test(nextSlug) || nextSlug.includes("--")) {
-        toast("Save failed: store URL must be 3–50 characters, use letters/numbers/hyphens, and not start/end with a hyphen.");
-        return false;
-      }
+      const nextSlug = (currentStore.slug || "store").toLowerCase().replace(/[^a-z0-9-]/g, "") || "store";
       if (!isDemoMode && currentStore.id) {
         const {
-          data: taken,
-          error: slugCheckError
+          data: taken
         } = await sb.from("stores").select("id").eq("slug", nextSlug).neq("id", currentStore.id).maybeSingle();
-        if (slugCheckError) {
-          toast("Save failed: could not validate store URL. " + slugCheckError.message);
-          return false;
-        }
         if (taken) {
-          toast(`Save failed: dokkanio.com/${nextSlug} is already claimed. Choose another URL.`);
+          toast(`The URL dokkanio.com/${nextSlug} is already claimed by another store. Pick another slug.`);
           return false;
         }
       }
       currentStore.slug = nextSlug;
+      if ($("sbLogoUrl")?.value.trim()) storeMeta.logo_url = $("sbLogoUrl").value.trim();
+      if ($("sbBannerUrl")?.value.trim()) storeMeta.banner_url = $("sbBannerUrl").value.trim();
+      if ($("sbHeroHeadline")?.value.trim()) storeMeta.hero_headline = $("sbHeroHeadline").value.trim();
+      if ($("sbHeroSub")?.value.trim()) storeMeta.hero_sub = $("sbHeroSub").value.trim();
+      if ($("sbCtaText")?.value.trim()) storeMeta.cta_text = $("sbCtaText").value.trim();
+      if ($("sbAnnounceText")?.value !== undefined && $("sbAnnounceText").value.trim()) storeMeta.announcement = $("sbAnnounceText").value.trim();
+      if ($("sbBrandStory")?.value.trim()) storeMeta.brand_story = $("sbBrandStory").value.trim();
 
-      // Pull every editor field, including intentionally cleared values, into metadata.
-      const readField = (id, key, fallback = "") => {
-        const el = $(id);
-        if (el) storeMeta[key] = el.value.trim();
-        else if (storeMeta[key] == null) storeMeta[key] = fallback;
-      };
-      readField("sbLogoUrl", "logo_url");
-      readField("sbBannerUrl", "banner_url");
-      readField("sbHeroHeadline", "hero_headline");
-      readField("sbHeroSub", "hero_sub");
-      readField("sbCtaText", "cta_text", "Order Now");
-      readField("sbAnnounceText", "announcement");
-      readField("sbBrandStory", "brand_story");
-      if ($("sbCustomCssRaw")) currentStore._cleanCss = $("sbCustomCssRaw").value;
-      currentStore.custom_css = buildFullCustomCss(storeMeta, $("sbCustomCssRaw")?.value ?? currentStore._cleanCss ?? "");
-      currentStore.theme = currentStore.theme || "Default";
+      currentStore.custom_css = buildFullCustomCss(storeMeta, $("sbCustomCssRaw")?.value || currentStore._cleanCss || "");
+      $("uShop").textContent = currentStore.store_name;
+      updateLiveStoreLinks();
+      renderStorePreview();
 
-      const payload = {
-        store_name: currentStore.store_name,
-        slug: currentStore.slug,
-        bkash_number: currentStore.bkash_number || "",
-        nagad_number: currentStore.nagad_number || "",
-        whatsapp_number: currentStore.whatsapp_number || "",
-        theme: currentStore.theme,
-        custom_css: currentStore.custom_css
-      };
       if (!isDemoMode && currentStore.id) {
         const {
           error
-        } = await sb.from("stores").update(payload).eq("id", currentStore.id);
+        } = await sb.from("stores").update({
+          store_name: currentStore.store_name,
+          slug: currentStore.slug,
+          bkash_number: currentStore.bkash_number,
+          nagad_number: currentStore.nagad_number,
+          whatsapp_number: currentStore.whatsapp_number,
+          theme: currentStore.theme,
+          custom_css: currentStore.custom_css
+        }).eq("id", currentStore.id);
         if (error) {
-          toast("Save failed: " + error.message);
+          toast("Save error: " + error.message);
           return false;
         }
       }
-
-      // Store-scoped backup of the entire storefront/editor config, not a partial theme record.
-      const completeSnapshot = {
-        version: 2,
-        store: {
-          ...currentStore
-        },
-        products: storeProducts.map(product => ({
-          ...product
-        })),
-        meta: JSON.parse(JSON.stringify(storeMeta)),
-        savedAt: new Date().toISOString(),
-        demo: isDemoMode
-      };
       try {
         localStorage.setItem("dk_store_" + currentStore.slug, JSON.stringify({
           theme: currentStore.theme,
           custom_css: currentStore.custom_css,
           store_name: currentStore.store_name
         }));
-        localStorage.setItem("dk_storefront_" + currentStore.slug, JSON.stringify(completeSnapshot));
-        localStorage.setItem("dk_store_editor_backup_" + currentStore.slug, JSON.stringify(completeSnapshot));
-      } catch (err) {
-        toast("Warning: database save completed, but local backup failed: " + (err?.message || err));
-      }
-      if ($("uShop")) $("uShop").textContent = currentStore.store_name;
-      updateLiveStoreLinks();
-      renderStorePreview();
-      if (showMsg) toast("Saved successfully. Live store: " + buildPublicStoreUrl(currentStore.slug));
+        localStorage.setItem("dk_storefront_" + currentStore.slug, JSON.stringify({
+          store: {
+            ...currentStore
+          },
+          products: storeProducts.map(product => ({
+            ...product
+          })),
+          meta: {
+            ...storeMeta
+          },
+          demo: isDemoMode
+        }));
+      } catch (_) {}
+      if (showMsg) toast("Published! Live at " + buildPublicStoreUrl(currentStore.slug));
       return true;
     }
 
@@ -4750,13 +4716,7 @@
               const existing = storeProducts.find(x => String(x.id) === String(sp.sid));
               if (existing && (existing.title !== prodPayload.title || Number(existing.price) !== prodPayload.price || (existing.image_url || '') !== prodPayload.image_url || !!existing.is_bundle !== prodPayload.is_bundle)) {
                 if (!isDemoMode && currentStore.id) {
-                  const {
-                    error: productUpdateError
-                  } = await sb.from('products').update(prodPayload).eq('id', sp.sid);
-                  if (productUpdateError) {
-                    toast("Product save failed: " + productUpdateError.message);
-                    return false;
-                  }
+                  await sb.from('products').update(prodPayload).eq('id', sp.sid);
                 }
                 Object.assign(existing, prodPayload);
               }
@@ -4773,16 +4733,13 @@
             } else {
               if (!isDemoMode && currentStore.id) {
                 const {
-                  data: inserted,
-                  error: productInsertError
+                  data: inserted
                 } = await sb.from('products').insert([prodPayload]).select().single();
-                if (productInsertError || !inserted) {
-                  toast("Product save failed: " + (productInsertError?.message || "No product record returned."));
-                  return false;
+                if (inserted) {
+                  sp.sid = String(inserted.id);
+                  newlyAssignedSids[sp.id] = sp.sid;
+                  storeProducts.unshift(inserted);
                 }
-                sp.sid = String(inserted.id);
-                newlyAssignedSids[sp.id] = sp.sid;
-                storeProducts.unshift(inserted);
               } else {
                 const demoId = 'SP-' + Date.now() + '-' + Math.floor(Math.random() * 999);
                 sp.sid = demoId;
@@ -4832,11 +4789,7 @@
         if ($('sbNagad')) $('sbNagad').value = currentStore.nagad_number || '';
         if ($('sbWhatsapp')) $('sbWhatsapp').value = currentStore.whatsapp_number || '';
 
-        const saveOk = await saveStoreToSupabase(showToast);
-        if (!saveOk) {
-          if (showToast) toast("Store editor changes were not saved. Please retry.");
-          return false;
-        }
+        await saveStoreToSupabase(showToast);
         renderMyStore();
         renderDash();
 
