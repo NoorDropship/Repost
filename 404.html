@@ -135,21 +135,18 @@
       </header>
 
       <!-- Dynamic Store Content -->
-      <main class="dk-store-root flex-1 w-full max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-8">
+      <main class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-8">
         <section id="storeHeroSection"></section>
-        <section id="storeProofSection" aria-label="Store benefits"></section>
-        <section id="storeCollectionsSection" aria-label="Store collections"></section>
 
-        <section id="storeCatalogSection" class="space-y-4">
+        <section class="space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <h2 id="catalogHeading" class="dk-store-title text-lg sm:text-xl font-extrabold">All Products</h2>
             <div class="flex items-center gap-2 w-full sm:w-auto">
-              <input id="storeSearch" type="search" data-i18n-ph="searchPh" placeholder="Search products..." aria-label="Search products" class="w-full sm:w-64 bg-white/85 border border-slate-300/80 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-800 outline-none">
+              <input id="storeSearch" type="search" data-i18n-ph="searchPh" placeholder="Search products..." class="w-full sm:w-64 bg-white/85 border border-slate-300/80 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-800 outline-none">
             </div>
           </div>
           <div id="storeProductsGrid" class="dk-prod-grid grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5"></div>
         </section>
-        <section id="storeStorySection" aria-label="Brand story"></section>
       </main>
 
       <footer class="border-t border-black/10 py-6 px-4 text-center text-xs opacity-75">
@@ -228,8 +225,17 @@
               </div>
             </div>
 
-            <div id="cardPayBox" class="hidden p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200 text-xs leading-relaxed text-blue-950" role="status">
-              Secure card processing is not connected. Place this order request without entering card details; the seller will contact you with secure payment instructions.
+            <!-- Debit / Credit Card (Visa/Mastercard) UI -->
+            <div id="cardPayBox" class="hidden p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-blue-900">Visa / Mastercard Checkout</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white border border-blue-200 text-blue-700">SSL Encrypted</span>
+              </div>
+              <input id="coCardNum" placeholder="Card Number (16 digits)" maxlength="19" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm">
+              <div class="grid grid-cols-2 gap-2.5">
+                <input id="coCardExp" placeholder="MM / YY" maxlength="7" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm">
+                <input id="coCardCvv" placeholder="CVV" maxlength="4" type="password" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm">
+              </div>
             </div>
 
             <button id="coSubmitBtn" type="submit" class="dash-btn-primary font-bold w-full py-3.5 rounded-xl text-sm shadow-lg" data-i18n="confirmOrderBtn">Confirm Order</button>
@@ -387,150 +393,6 @@
         radius: "14px",
         cols: 3,
         font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      classic: {
-        label: "Classic clean",
-        layout: "standard",
-        bg: "linear-gradient(135deg,#f1eee9,#fff)",
-        card: "#fff",
-        text: "#191a1d",
-        accent: "#6758df",
-        btnText: "#fff",
-        radius: "14px",
-        cols: 3,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      luxe: {
-        label: "Luxury editorial",
-        layout: "aesthetic",
-        bg: "#ece8e1",
-        card: "#fff",
-        text: "#202020",
-        accent: "#171717",
-        btnText: "#fff",
-        radius: "4px",
-        cols: 2,
-        font: "'Playfair Display','Hind Siliguri',Georgia,serif"
-      },
-      soft: {
-        label: "Soft pastel",
-        layout: "comfy",
-        bg: "#f7eae5",
-        card: "#fffaf8",
-        text: "#382c2a",
-        accent: "#d28b78",
-        btnText: "#fff",
-        radius: "18px",
-        cols: 2,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      botanical: {
-        label: "Botanical",
-        layout: "aesthetic",
-        bg: "#e7ede6",
-        card: "#fbfdfb",
-        text: "#23332a",
-        accent: "#456e54",
-        btnText: "#fff",
-        radius: "12px",
-        cols: 2,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      bold: {
-        label: "Bold studio",
-        layout: "featured",
-        bg: "#f7e5dc",
-        card: "#fff",
-        text: "#171717",
-        accent: "#e65331",
-        btnText: "#fff",
-        radius: "10px",
-        cols: 3,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      sunrise: {
-        label: "Sunrise market",
-        layout: "featured",
-        bg: "#f8dfc7",
-        card: "#fffaf4",
-        text: "#3a2018",
-        accent: "#e76b43",
-        btnText: "#fff",
-        radius: "20px",
-        cols: 3,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      noir: {
-        label: "Noir gold",
-        layout: "cool",
-        bg: "#171717",
-        card: "#202020",
-        text: "#f5f0e7",
-        accent: "#d6b46a",
-        btnText: "#171717",
-        radius: "2px",
-        cols: 3,
-        font: "'Playfair Display','Hind Siliguri',Georgia,serif"
-      },
-      playful: {
-        label: "Playful pop",
-        layout: "comfy",
-        bg: "#e7e2ff",
-        card: "#fff",
-        text: "#2b2450",
-        accent: "#7056e8",
-        btnText: "#fff",
-        radius: "24px",
-        cols: 2,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      mono: {
-        label: "Monochrome",
-        layout: "aesthetic",
-        bg: "#f4f4f4",
-        card: "#fff",
-        text: "#111",
-        accent: "#111",
-        btnText: "#fff",
-        radius: "0px",
-        cols: 2,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      coastal: {
-        label: "Coastal calm",
-        layout: "standard",
-        bg: "#d9eef0",
-        card: "#f8fcfc",
-        text: "#153e47",
-        accent: "#317b88",
-        btnText: "#fff",
-        radius: "14px",
-        cols: 3,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
-      },
-      vintage: {
-        label: "Vintage craft",
-        layout: "aesthetic",
-        bg: "#eadbc6",
-        card: "#fbf4e9",
-        text: "#503524",
-        accent: "#9b573b",
-        btnText: "#fff",
-        radius: "7px",
-        cols: 2,
-        font: "'Playfair Display','Hind Siliguri',Georgia,serif"
-      },
-      tech: {
-        label: "Tech future",
-        layout: "cool",
-        bg: "#111e2a",
-        card: "#152432",
-        text: "#edf8f6",
-        accent: "#20c7a5",
-        btnText: "#111e2a",
-        radius: "12px",
-        cols: 3,
-        font: "'Plus Jakarta Sans','Hind Siliguri',sans-serif"
       }
     };
 
@@ -635,11 +497,7 @@
         hero_headline: "",
         hero_sub: "",
         cta_text: "Order Now",
-        brand_story: "",
-        colors: null,
-        layout_cols: null,
-        quantity_discounts: {},
-        product_details: {}
+        layout_cols: null
       };
       let cleanCss = rawCss || "";
       if (m) {
@@ -657,117 +515,115 @@
       };
     }
 
-    function escapeStoreHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, ch => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      } [ch]));
-    }
-
-    function safeStoreImage(value) {
-      const url = String(value || "").trim();
-      return /^(https?:\/\/|data:image\/)/i.test(url) ? url : "";
-    }
-
-    function productOfferText(product) {
-      const deals = Array.isArray(product?.quantity_discounts) ? product.quantity_discounts : [];
-      const firstDeal = deals.find(deal => Number.isInteger(Number(deal?.quantity)) && Number(deal.quantity) >= 2 && Number.isInteger(Number(deal?.discount_percent)) && Number(deal.discount_percent) > 0);
-      return firstDeal ? `Buy ${Number(firstDeal.quantity)}, save ${Number(firstDeal.discount_percent)}%` : "";
-    }
-
-    function getStorePalette(themeName, meta = {}) {
-      const theme = THEMES[themeName] || THEMES.Default;
-      const saved = meta.colors && typeof meta.colors === "object" ? meta.colors : {};
-      const validColor = (value, fallback) => /^#[0-9a-f]{6}$/i.test(String(value || "")) ? String(value) : fallback;
-      const accentFallback = theme.swatch || String(theme.accent || "").match(/#[0-9a-f]{6}/i)?.[0] || "#6758df";
-      return {
-        bg: validColor(saved.bg, theme.bg),
-        card: validColor(saved.card, theme.card),
-        text: validColor(saved.text, theme.text),
-        accent: validColor(saved.accent, accentFallback),
-        buttonText: validColor(saved.buttonText, theme.btnText)
-      };
-    }
-
-    function buildStorefrontView(store, list, meta, rootId) {
-      const themeName = THEMES[store.theme] ? store.theme : "Default";
-      const th = THEMES[themeName];
-      const palette = getStorePalette(themeName, meta);
-      const customCss = (store._cleanCss || "").replace(/#storePreviewRoot\s+\.dk-store-root/g, `#${rootId}`).replace(/#storePreviewRoot/g, `#${rootId}`).replace(/\.dk-store-root/g, `#${rootId}`).replace(/\.dk-prod-card/g, `#${rootId} .dk-store-card`).replace(/\.dk-buy-btn/g, `#${rootId} .dk-store-button`).replace(/\.dk-prod-grid/g, `#${rootId} .dk-product-grid`);
-      const storeName = escapeStoreHTML(store.store_name || "Online Store");
-      const heroHead = escapeStoreHTML(meta.hero_headline || store.store_name || "Discover Our Collection");
-      const heroSub = escapeStoreHTML(meta.hero_sub || "Thoughtfully selected products, clear pricing and convenient delivery across Bangladesh.");
-      const ctaText = escapeStoreHTML(meta.cta_text || "Shop now");
-      const announcement = escapeStoreHTML(meta.announcement || "");
-      const brandStory = escapeStoreHTML(meta.brand_story || `Welcome to ${store.store_name || "our store"}. We bring together products selected with care and a smooth shopping experience.`);
-      const logoUrl = safeStoreImage(meta.logo_url);
-      const bannerUrl = safeStoreImage(meta.banner_url);
-      const products = Array.isArray(list) ? list : [];
-      const cols = Math.max(1, Math.min(4, Number(meta.layout_cols || th.cols || 3)));
-      const featured = products[0];
-      const waNumber = String(store.whatsapp_number || "").replace(/[^0-9]/g, "");
-      const waLink = waNumber ? `https://wa.me/${waNumber.startsWith("88") ? waNumber : "88" + waNumber}` : "";
-      const logo = logoUrl ? `<img src="${escapeStoreHTML(logoUrl)}" alt="${storeName} logo" class="w-10 h-10 rounded-full object-cover" loading="lazy">` : `<span class="w-10 h-10 rounded-full grid place-items-center font-black" style="background:var(--dk-accent);color:var(--dk-btn-text)">${escapeStoreHTML((store.store_name || "S").trim().charAt(0).toUpperCase())}</span>`;
-      const productCard = product => {
-        const image = safeStoreImage(product.image_url);
-        const productId = escapeStoreHTML(String(product.id ?? product.title ?? ""));
-        return `<button type="button" class="dk-checkout-trigger dk-store-card text-left flex flex-col" data-product-id="${productId}" data-product-search="${escapeStoreHTML(String(product.title || "").toLowerCase())}" aria-label="Order ${escapeStoreHTML(product.title || "product")}">
-          <span class="dk-product-image">${image ? `<img loading="lazy" src="${escapeStoreHTML(image)}" alt="${escapeStoreHTML(product.title || "Product")}">` : `<span class="text-4xl">${product.is_bundle ? "Bundle" : "✦"}</span>`}</span>
-          <span class="p-3 sm:p-4 flex flex-col flex-1 w-full"><span class="text-[9px] font-extrabold uppercase tracking-widest opacity-60">${product.is_bundle ? "Bundle deal" : "Featured"}</span>
-            <span class="font-extrabold text-xs sm:text-sm leading-snug mt-1 line-clamp-2">${escapeStoreHTML(product.title || "Product")}</span><span class="font-black text-sm sm:text-base mt-2">${bdt(product.price)}</span>
-            ${productOfferText(product) ? `<span class="mt-1 text-[10px] font-bold" style="color:var(--dk-accent)">${escapeStoreHTML(productOfferText(product))}</span>` : ""}
-            <span class="dk-store-button w-full mt-3">${ctaText}</span></span></button>`;
-      };
-      const collectionNames = [...new Set(products.map(product => product.category).filter(Boolean))].slice(0, 4);
-      const collections = (collectionNames.length ? collectionNames : ["Bestsellers", "New Arrivals", "Everyday Essentials", "Special Picks"]).map((name, index) => `<a href="#dk-products-${rootId}" class="dk-store-card dk-collection-tile"><span><span class="text-[10px] font-bold uppercase tracking-widest opacity-60">Collection ${index + 1}</span><span class="block font-extrabold text-lg">${escapeStoreHTML(name)}</span></span></a>`).join("");
-      const heroImage = bannerUrl ? `<img src="${escapeStoreHTML(bannerUrl)}" alt="${heroHead}" class="w-full h-full object-cover" loading="lazy">` : `<div class="h-full grid place-items-center text-6xl" style="background:linear-gradient(145deg,${palette.accent}24,${palette.card})">✦</div>`;
-      const hero = th.layout === "featured" && featured ? `<section class="dk-section"><div class="grid lg:grid-cols-2 gap-7 items-center dk-mobile-stack"><div><span class="dk-pill">Featured collection</span><h1 class="dk-section-title mt-5">${heroHead}</h1><p class="mt-4 text-sm sm:text-base dk-muted leading-relaxed">${heroSub}</p><a class="dk-store-button mt-6" href="#dk-products-${rootId}">${ctaText} <span aria-hidden="true">→</span></a></div><div class="dk-store-card p-3"><div class="h-[260px] sm:h-[350px] rounded-xl overflow-hidden">${safeStoreImage(featured.image_url) ? `<img src="${escapeStoreHTML(safeStoreImage(featured.image_url))}" alt="${escapeStoreHTML(featured.title)}" class="w-full h-full object-cover" loading="lazy">` : `<div class="h-full grid place-items-center text-6xl">✦</div>`}</div><div class="flex justify-between items-center gap-3 p-3"><div><b class="block text-sm">${escapeStoreHTML(featured.title)}</b><b class="block mt-1">${bdt(featured.price)}</b></div><button class="dk-checkout-trigger dk-store-button" type="button" data-product-id="${escapeStoreHTML(String(featured.id ?? featured.title))}">Order now</button></div></div></div></section>` : `<section class="dk-section"><div class="grid lg:grid-cols-2 gap-8 items-center dk-mobile-stack"><div><span class="dk-pill">${escapeStoreHTML(th.label)}</span><h1 class="dk-section-title mt-5">${heroHead}</h1><p class="mt-4 text-sm sm:text-base dk-muted leading-relaxed max-w-xl">${heroSub}</p><div class="flex flex-wrap items-center gap-3 mt-6"><a class="dk-store-button" href="#dk-products-${rootId}">${ctaText} <span aria-hidden="true">→</span></a><span class="text-[11px] font-bold dk-muted">Secure checkout · COD available</span></div></div><div class="h-[220px] sm:h-[300px] rounded-2xl overflow-hidden">${heroImage}</div></div></section>`;
-      const trust = `<section class="px-4 sm:px-8 py-4 border-y" style="border-color:var(--dk-border)"><div class="grid grid-cols-2 lg:grid-cols-4 gap-2"><div class="dk-trust-item"><span aria-hidden="true" class="text-2xl">✓</span><span><b class="block text-xs">Carefully selected</b><small class="dk-muted">Products chosen with care</small></span></div><div class="dk-trust-item"><span aria-hidden="true" class="text-2xl">৳</span><span><b class="block text-xs">Clear pricing</b><small class="dk-muted">No hidden product costs</small></span></div><div class="dk-trust-item"><span aria-hidden="true" class="text-2xl">→</span><span><b class="block text-xs">Bangladesh delivery</b><small class="dk-muted">Delivery options at checkout</small></span></div><div class="dk-trust-item"><span aria-hidden="true" class="text-2xl">♡</span><span><b class="block text-xs">Seller support</b><small class="dk-muted">Contact the store directly</small></span></div></div></section>`;
-      const story = `<section id="dk-story-${rootId}" class="dk-section"><div class="dk-store-card p-6 sm:p-10 grid lg:grid-cols-2 gap-7 items-center dk-mobile-stack"><div><span class="dk-pill">Our story</span><h2 class="dk-section-title mt-4">A little about our brand</h2><p class="text-sm sm:text-base leading-relaxed dk-muted mt-4">${brandStory}</p></div><div class="rounded-2xl min-h-[180px] grid place-items-center" style="background:linear-gradient(145deg,${palette.accent}20,transparent)"><div class="text-center p-6"><div class="text-5xl" aria-hidden="true">✧</div><b class="block mt-3 text-lg">${storeName}</b><span class="text-xs dk-muted">Made for your everyday</span></div></div></div></section>`;
-      const faq = `<section id="dk-faq-${rootId}" class="dk-section"><div class="max-w-3xl mx-auto"><span class="dk-pill">Need to know</span><h2 class="dk-section-title mt-4 mb-6">Frequently asked questions</h2><div class="space-y-3"><details class="dk-store-card p-4"><summary class="cursor-pointer font-bold text-sm">How do I place an order?</summary><p class="text-sm dk-muted mt-3">Choose a product and use the checkout form to place your order request.</p></details><details class="dk-store-card p-4"><summary class="cursor-pointer font-bold text-sm">Which payment methods are available?</summary><p class="text-sm dk-muted mt-3">bKash, Nagad and cash on delivery are available. Card payment requests are confirmed securely by the seller.</p></details><details class="dk-store-card p-4"><summary class="cursor-pointer font-bold text-sm">Where do you deliver?</summary><p class="text-sm dk-muted mt-3">Delivery details are collected for all 64 districts at checkout.</p></details></div></div></section>`;
-      const productList = products.length ? products.map(productCard).join("") : `<div class="col-span-full dk-store-card p-10 text-center"><div class="text-4xl" aria-hidden="true">✦</div><h3 class="font-extrabold mt-3">Products coming soon</h3><p class="text-sm dk-muted mt-1">This store is getting ready for its first collection.</p></div>`;
-      const announcementBar = announcement ? `<div class="text-center text-[11px] sm:text-xs font-extrabold py-2.5 px-4" style="background:var(--dk-accent);color:var(--dk-btn-text)">${announcement}</div>` : "";
-      const footer = `<footer class="px-5 sm:px-10 py-10 border-t" style="border-color:var(--dk-border);background:var(--dk-card)"><div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between gap-5"><div><b class="text-lg">${storeName}</b><p class="text-xs dk-muted mt-2">A storefront powered by Dokkanio</p></div><div class="flex flex-wrap gap-4 text-xs font-bold"><a href="#dk-products-${rootId}">Shop</a><a href="#dk-story-${rootId}">Our Story</a><a href="#dk-faq-${rootId}">FAQ</a>${waLink ? `<a href="${escapeStoreHTML(waLink)}" target="_blank" rel="noopener noreferrer">WhatsApp</a>` : ""}</div></div><p class="text-center text-[10px] dk-muted mt-8">Powered by Dokkanio · Fulfillment support by Dokkanio Hub</p></footer>`;
-      const html = `${announcementBar}<header class="px-5 sm:px-10 py-4 flex items-center justify-between gap-4 border-b" style="border-color:var(--dk-border);background:var(--dk-card)"><a href="#top-${rootId}" class="flex items-center gap-3 min-w-0">${logo}<b class="text-base sm:text-lg truncate">${storeName}</b></a><nav class="dk-desktop-nav flex items-center gap-6 text-xs font-bold"><a href="#dk-products-${rootId}">Shop</a><a href="#dk-story-${rootId}">Our Story</a><a href="#dk-faq-${rootId}">FAQ</a></nav><div class="flex items-center gap-2"><button type="button" onclick="setLang('en')" class="text-xs font-bold px-2 py-1" aria-label="English">EN</button><button type="button" onclick="setLang('bn')" class="text-xs font-bold px-2 py-1" aria-label="Bangla">বাংলা</button>${waLink ? `<a href="${escapeStoreHTML(waLink)}" target="_blank" rel="noopener noreferrer" class="dk-store-button !py-2.5 !px-4 !text-[11px]">WhatsApp</a>` : `<a href="#dk-products-${rootId}" class="dk-store-button !py-2.5 !px-4 !text-[11px]">Shop now</a>`}</div></header><div id="top-${rootId}">${hero}</div>${trust}<section id="dk-products-${rootId}" class="dk-section"><div class="flex flex-wrap items-end justify-between gap-4 mb-7"><div><span class="dk-pill">Handpicked for you</span><h2 id="catalogHeading" class="dk-section-title mt-3">Bestsellers &amp; favorites (${products.length})</h2><p class="text-sm dk-muted mt-2">Explore the store&apos;s current collection.</p></div><label class="sr-only" for="storeSearch">Search products</label><input id="storeSearch" type="search" data-i18n-ph="searchPh" placeholder="Search products..." class="w-full sm:w-64 bg-white/85 border border-slate-300/80 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-800 outline-none"></div><div class="dk-product-grid" data-cols="${cols}" style="--dk-cols:${cols}">${productList}</div></section><section class="dk-section pt-0"><div class="flex items-end justify-between gap-3 mb-5"><div><span class="dk-pill">Discover</span><h2 class="dk-section-title mt-3">Shop by collection</h2></div></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-3">${collections}</div></section>${story}${faq}${footer}`;
-      const borderColor = ["Cool Style", "noir", "tech"].includes(themeName) ? "rgba(255,255,255,.16)" : "rgba(15,23,42,.12)";
-      const style = `#${rootId}{--dk-bg:${palette.bg};--dk-card:${palette.card};--dk-text:${palette.text};--dk-accent:${palette.accent};--dk-btn-text:${palette.buttonText};--dk-border:${borderColor};--dk-radius:${th.radius};background:${palette.bg};color:${palette.text};font-family:${th.font};width:100%;overflow:hidden}#${rootId} a{color:inherit;text-decoration:none}#${rootId} .dk-section{padding:clamp(24px,5vw,64px) clamp(16px,4vw,48px)}#${rootId} .dk-store-card{background:var(--dk-card);color:var(--dk-text);border:1px solid var(--dk-border);border-radius:${th.radius};overflow:hidden;${th.glass ? "backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);" : ""}}#${rootId} .dk-store-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--dk-accent);color:var(--dk-btn-text);border-radius:${th.radius};padding:12px 20px;font-size:13px;font-weight:800;transition:transform .2s,filter .2s}#${rootId} .dk-store-button:hover{filter:brightness(1.06);transform:translateY(-1px)}#${rootId} .dk-checkout-trigger{cursor:pointer;text-align:left;width:100%;transition:transform .18s,box-shadow .18s}#${rootId} .dk-checkout-trigger:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(15,23,42,.08)}#${rootId} .dk-product-grid{display:grid;grid-template-columns:repeat(${cols},minmax(0,1fr));gap:16px}#${rootId} .dk-product-image{aspect-ratio:1/1;background:rgba(148,163,184,.12);display:flex;align-items:center;justify-content:center;overflow:hidden}#${rootId} .dk-product-image img{width:100%;height:100%;object-fit:cover}#${rootId} .dk-muted{opacity:.72}#${rootId} .dk-pill{display:inline-flex;align-items:center;border:1px solid var(--dk-border);border-radius:999px;padding:6px 11px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}#${rootId} .dk-section-title{font-size:clamp(22px,3vw,34px);font-weight:900;letter-spacing:-.04em;line-height:1.1}#${rootId} .dk-trust-item{display:flex;align-items:center;gap:10px;padding:16px 10px}#${rootId} .dk-collection-tile{min-height:130px;padding:20px;display:flex;align-items:flex-end;background:linear-gradient(145deg,${palette.accent}22,${palette.card})}@media(max-width:640px){#${rootId} .dk-section{padding:28px 16px}#${rootId} .dk-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#${rootId} .dk-mobile-stack{grid-template-columns:1fr!important}#${rootId} .dk-desktop-nav{display:none!important}}${customCss}`;
-      return {
-        html,
-        style
-      };
-    }
-
-    function filterStorefrontProducts(query) {
-      const normalizedQuery = String(query || "").trim().toLowerCase();
-      let visibleCount = 0;
-      document.querySelectorAll("#publicStoreRoot [data-product-search]").forEach(card => {
-        const visible = card.dataset.productSearch.includes(normalizedQuery);
-        card.hidden = !visible;
-        if (visible) visibleCount += 1;
-      });
-      const heading = $("catalogHeading");
-      if (heading) heading.textContent = `Bestsellers & favorites (${visibleCount})`;
+    function applyThemeAndCss(themeName, cleanCss) {
+      const th = THEMES[themeName] || THEMES.Default;
+      const cols = storeMeta.layout_cols || th.cols || 3;
+      $("storeThemeCss").textContent = `
+        .dk-store-root { background: ${th.bg}; color: ${th.text}; font-family: ${th.font}; }
+        .dk-prod-card { background: ${th.card}; color: ${th.text}; border-radius: ${th.radius}; }
+        .dk-buy-btn { background: ${th.accent}; color: ${th.btnText}; border-radius: ${th.radius}; transition: all .2s ease; }
+        .dk-buy-btn:hover { filter: brightness(1.07); transform: translateY(-1px); }
+        @media (min-width: 768px) { .dk-prod-grid { grid-template-columns: repeat(${cols}, minmax(0, 1fr)); } }
+      `;
+      $("storeCustomCss").textContent = cleanCss || "";
+      return th;
     }
 
     function renderStorefront() {
-      const result = buildStorefrontView(storeData, products, storeMeta, "publicStoreRoot");
-      document.title = `${storeData.store_name || "Online Store"} – Dokkanio`;
-      $("storeApp").innerHTML = `<div id="publicStoreRoot" class="dk-store-root">${result.html}</div>`;
-      $("storeThemeCss").textContent = result.style;
-      const search = $("storeSearch");
-      if (search) search.addEventListener("input", event => filterStorefrontProducts(event.currentTarget.value));
-      const root = $("publicStoreRoot");
-      root.addEventListener("click", event => {
-        const trigger = event.target.closest(".dk-checkout-trigger");
-        if (trigger) openCheckout(trigger.dataset.productId);
-      });
-      root.querySelectorAll(".dk-checkout-trigger").forEach(button => {
-        if (button.tagName === "BUTTON") button.type = "button";
-      });
+      const th = applyThemeAndCss(storeData.theme, storeData._cleanCss);
+      const sName = storeData.store_name || "Dokkanio Store";
+      document.title = `${sName} – Dokkanio`;
+      $("navStoreName").textContent = sName;
+      $("ftStoreName").textContent = sName;
+      $("ftYear").textContent = new Date().getFullYear();
+
+      // Logo
+      $("storeLogoWrap").innerHTML = storeMeta.logo_url ?
+        `<img src="${storeMeta.logo_url}" class="w-9 h-9 rounded-full object-cover border border-white shadow" alt="${sName}">` :
+        `<span class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-sm shadow" style="background:${th.accent};color:${th.btnText}">${sName.charAt(0).toUpperCase()}</span>`;
+
+      // WhatsApp nav button
+      if (storeData.whatsapp_number) {
+        const waClean = storeData.whatsapp_number.replace(/[^0-9]/g, "");
+        $("navWaBtn").href = `https://wa.me/${waClean.startsWith("88") ? waClean : "88" + waClean}`;
+        $("navWaBtn").classList.remove("hidden");
+      }
+
+      // Announcement Bar
+      if (storeMeta.announcement) {
+        $("announceBar").textContent = storeMeta.announcement;
+        $("announceBar").style.background = th.accent;
+        $("announceBar").style.color = th.btnText;
+        $("announceBar").classList.remove("hidden");
+      }
+
+      const heroHead = storeMeta.hero_headline || sName;
+      const heroSub = storeMeta.hero_sub || "Authentic products with fast 64-district Cash on Delivery, bKash, Nagad & Card checkout.";
+      const ctaText = storeMeta.cta_text || "Order Now";
+      const isDark = th.layout === "cool";
+      const borderSub = isDark ? "border-white/10" : "border-black/10";
+
+      // Hero / Featured Spotlight
+      let gridItems = products;
+      if (th.layout === "featured" && products.length) {
+        const feat = products[0];
+        gridItems = products.slice(1).length ? products.slice(1) : products;
+        $("storeHeroSection").innerHTML = `
+          <div class="dk-prod-card border ${borderSub} p-5 sm:p-7 grid md:grid-cols-5 gap-6 items-center shadow-lg">
+            <div class="md:col-span-2 h-56 sm:h-64 rounded-2xl bg-slate-100 overflow-hidden flex items-center justify-center">
+              ${feat.image_url ? `<img src="${feat.image_url}" class="w-full h-full object-cover" alt="${feat.title}">` : `<span class="text-6xl">✨</span>`}
+            </div>
+            <div class="md:col-span-3 space-y-3">
+              <span class="inline-block text-xs font-extrabold uppercase px-3 py-1 rounded-full bg-amber-100 text-amber-800">⭐ Featured Product</span>
+              <h2 class="dk-store-title text-2xl sm:text-3xl font-extrabold leading-tight">${feat.title}</h2>
+              <p class="text-sm opacity-80">${heroSub}</p>
+              <div class="flex flex-wrap items-center gap-4 pt-2">
+                <span class="text-2xl sm:text-3xl font-extrabold">${bdt(feat.price)}</span>
+                <button onclick="openCheckout('${feat.id}')" class="dk-buy-btn px-7 py-3 text-sm font-bold shadow-lg">${ctaText}</button>
+              </div>
+            </div>
+          </div>`;
+      } else if (storeMeta.banner_url) {
+        $("storeHeroSection").innerHTML = `
+          <div class="dk-prod-card border ${borderSub} overflow-hidden shadow-md">
+            <img src="${storeMeta.banner_url}" class="w-full h-44 sm:h-64 object-cover" alt="${sName}">
+            <div class="p-5 sm:p-6 text-center">
+              <h2 class="dk-store-title text-2xl sm:text-3xl font-extrabold">${heroHead}</h2>
+              <p class="text-xs sm:text-sm opacity-75 mt-1 max-w-xl mx-auto">${heroSub}</p>
+            </div>
+          </div>`;
+      } else {
+        $("storeHeroSection").innerHTML = `
+          <div class="dk-prod-card border ${borderSub} p-6 sm:p-10 text-center shadow-sm" style="${isDark ? 'background:linear-gradient(135deg,rgba(6,182,212,.14),rgba(99,102,241,.2))' : ''}">
+            <span class="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${borderSub} opacity-80 mb-3">Welcome to ${sName}</span>
+            <h2 class="dk-store-title text-2xl sm:text-4xl font-extrabold">${heroHead}</h2>
+            <p class="text-xs sm:text-base opacity-75 mt-2 max-w-xl mx-auto">${heroSub}</p>
+          </div>`;
+      }
+
+      renderProductGrid(gridItems, ctaText, th, borderSub);
     }
+
+    function renderProductGrid(list, ctaText, th, borderSub) {
+      const q = ($("storeSearch").value || "").toLowerCase();
+      const filtered = list.filter(p => p.title.toLowerCase().includes(q));
+      $("catalogHeading").textContent = `${th.layout === "few" ? "Curated Collection" : "Store Products"} (${filtered.length})`;
+      $("storeProductsGrid").innerHTML = filtered.length ? filtered.map(p => `
+        <article class="dk-prod-card border ${borderSub} p-3 sm:p-4 shadow-sm flex flex-col justify-between gap-3">
+          <div class="${th.layout==='few'?'h-48 sm:h-56':'h-36 sm:h-44'} rounded-xl bg-slate-100/80 overflow-hidden flex items-center justify-center relative">
+            ${p.is_bundle ? `<span class="absolute top-2 left-2 z-10 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 shadow-sm">Bundle</span>` : ""}
+            ${p.image_url ? `<img src="${p.image_url}" class="w-full h-full object-cover" alt="${p.title}">` : `<span class="text-4xl">🧴</span>`}
+          </div>
+          <div class="flex-1 flex flex-col">
+            <h3 class="font-bold text-xs sm:text-sm leading-snug line-clamp-2">${p.title}</h3>
+            <p class="font-extrabold text-base sm:text-lg mt-1.5">${bdt(p.price)}</p>
+          </div>
+          <button onclick="openCheckout('${p.id}')" class="dk-buy-btn w-full py-2.5 text-xs sm:text-sm font-bold shadow-sm">${ctaText}</button>
+        </article>
+      `).join("") : `<div class="col-span-full text-center py-12 opacity-65 text-sm">No products listed in this store yet.</div>`;
+    }
+
+    $("storeSearch").oninput = () => renderStorefront();
 
     /* ---------- CHECKOUT MODAL ---------- */
     function populateDistricts() {
@@ -803,6 +659,9 @@
       $("mobilePayBox").classList.toggle("hidden", !isMobilePay);
       $("cardPayBox").classList.toggle("hidden", pm !== "Card");
       $("coTrxId").required = isMobilePay;
+      $("coCardNum").required = pm === "Card";
+      $("coCardExp").required = pm === "Card";
+      $("coCardCvv").required = pm === "Card";
 
       if (isMobilePay) {
         const num = pm === "bKash" ? (storeData.bkash_number || "Contact Seller") : (storeData.nagad_number || "Contact Seller");
@@ -828,7 +687,8 @@
       if (selectedPayMethod === "bKash" || selectedPayMethod === "Nagad") {
         trxId = $("coTrxId").value.trim().toUpperCase();
       } else if (selectedPayMethod === "Card") {
-        trxId = "CARD_REQUESTED";
+        const rawCard = $("coCardNum").value.replace(/\s+/g, "");
+        trxId = "CARD-" + (rawCard.slice(-4) || "VISA");
       }
 
       const orderPayload = {
