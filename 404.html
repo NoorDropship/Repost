@@ -1136,21 +1136,16 @@
       storeData._cleanCss = parsed.cleanCss;
       studioState = storeMeta.studio || null;
 
-      // Keep the full product record and merge editor metadata using every known key.
-      // Older editor versions used sid/title keys; newer versions use database IDs.
       const metaMap = studioState?.productsMeta || {};
       products = (prods || []).map(p => {
-        const m = metaMap[String(p.id)] || metaMap[String(p.sid)] || metaMap[p.title] || {};
+        const m = metaMap[String(p.id)] || metaMap[p.title] || {};
         return {
           ...p,
-          description: p.description || m.description || "",
-          variants: p.variants || m.variants || "",
-          bundle: p.bundle || m.bundle || "",
-          certifications: p.certifications || m.certifications || "",
-          category: m.category || p.category || (p.is_bundle ? "Bundles" : "Store Product"),
-          stock: p.stock ?? m.stock,
-          status: p.status || m.status,
-          sku: p.sku || m.sku
+          description: m.description || "",
+          variants: m.variants || "",
+          bundle: m.bundle || "",
+          certifications: m.certifications || "",
+          category: m.category || "Store Product"
         };
       });
 
