@@ -3147,7 +3147,7 @@
     }
 
     function nav() {
-      return `<header class="topbar"><button class="studio-back" aria-label="Back to dashboard" onclick="try{parent.postMessage({type:'dokkanio-studio-exit'},'*')}catch(e){}">←<span class="bl"> Dashboard</span></button><div class="brand"><span class="brand-mark">D</span> Dokkanio</div><div class="workspace-switch">${[['editor','Website editor'],['products','Products'],['checkout','Checkout']].map(([v,l])=>`<button class="${workspace===v?'active':''}" onclick="switchWorkspace('${v}')">${l}</button>`).join('')}</div><div class="top-actions"><button class="btn secondary" onclick="openStorePreview()">↗ Preview</button><button class="btn primary" onclick="save();toast('Changes saved')">Save</button><div class="avatar">JD</div></div></header>`
+      return `<header class="topbar"><button class="studio-back" aria-label="Back to dashboard" onclick="try{parent.postMessage({type:'dokkanio-studio-exit'},'*')}catch(e){}">←<span class="bl"> Dashboard</span></button><div class="brand"><span class="brand-mark">D</span> Dokkanio</div><div class="workspace-switch">${[['editor','Website editor'],['products','Products'],['checkout','Checkout']].map(([v,l])=>`<button class="${workspace===v?'active':''}" onclick="switchWorkspace('${v}')">${l}</button>`).join('')}</div><div class="top-actions"><button class="btn secondary" onclick="openStorePreview()">↗ Preview</button><button class="btn primary" onclick="save();toast('Publishing changes…')">Save</button><div class="avatar">JD</div></div></header>`
     }
 
     function sidebar() {
@@ -3156,7 +3156,7 @@
     }
 
     function editor() {
-      return `<div class="page-head"><div><h1>Website editor</h1><p>Shape your storefront with a live, visual canvas.</p></div><div style="display:flex;gap:8px"><button class="btn secondary" onclick="undo()">↶</button><button class="btn secondary" onclick="redo()">↷</button><button class="btn primary" onclick="save();toast('Storefront saved')">Save changes</button></div></div><div class="m-tabs">${[['sections','Sections'],['preview','Preview'],['settings','Settings'],['ai','✦ AI']].map(([k,l])=>`<button data-t="${k}" class="${mTab===k?'active':''}" onclick="setMTab('${k}')">${l}</button>`).join('')}</div><div class="panel editor-shell" data-mtab="${mTab}"><div class="editor-left"><div class="panel-title">Store sections <span style="float:right;color:#aaa;font-size:11px">☷</span></div>${sections.map((s,i)=>`<div draggable="true" class="section-row ${s===selected?'selected':''}" onclick="selectSection('${s}')" ondragstart="dragSection(event,'${s}')" ondragover="allowSectionDrop(event)" ondrop="dropSection(event,'${s}')"><span class="dots" title="Drag to reorder">⠿</span><span style="flex:1">${s}</span><button class="move-section" title="Move up" onclick="event.stopPropagation();moveSection('${s}',-1)">↑</button><button class="move-section" title="Move down" onclick="event.stopPropagation();moveSection('${s}',1)">↓</button><button class="remove" title="Delete section" onclick="event.stopPropagation();removeSection('${s}')">×</button></div>`).join('')}<button class="add-section" onclick="addSection()">＋ Add section</button><div class="divider"></div><div class="mini-note">Drag sections to reorder. Select a section to edit its content and style.</div><div class="pane-sections-only">${photoTools()}</div><div class="pane-ai-only">${websiteAI()}</div></div><div class="canvas-wrap"><div class="m-edit-chip"><span>Editing <b>${selected}</b></span><button class="btn primary" onclick="setMTab('settings')">Edit settings</button></div><div class="dbl-hint">Tip: double-click (or double-tap) any text to edit it</div><div class="canvas-toolbar"><button class="${device==='desktop'?'active':''}" onclick="setDevice('desktop')">▣ Desktop</button><button class="${device==='tablet'?'active':''}" onclick="setDevice('tablet')">▤ Tablet</button><button class="${device==='mobile'?'active':''}" onclick="setDevice('mobile')">▯ Mobile</button></div><div class="preview ${device} theme-${theme}" id="preview">${storePreview()}</div></div><div class="editor-right"><div class="panel-title">Section settings</div><div class="tag">${selected}</div><div class="divider"></div><div class="panel-title">Store style</div>${themeSettings()}<div class="divider"></div>${settings()}</div></div>`
+      return `<div class="page-head"><div><h1>Website editor</h1><p>Shape your storefront with a live, visual canvas.</p></div><div style="display:flex;gap:8px"><button class="btn secondary" onclick="undo()">↶</button><button class="btn secondary" onclick="redo()">↷</button><button class="btn primary" onclick="save();toast('Publishing changes…')">Save changes</button></div></div><div class="m-tabs">${[['sections','Sections'],['preview','Preview'],['settings','Settings'],['ai','✦ AI']].map(([k,l])=>`<button data-t="${k}" class="${mTab===k?'active':''}" onclick="setMTab('${k}')">${l}</button>`).join('')}</div><div class="panel editor-shell" data-mtab="${mTab}"><div class="editor-left"><div class="panel-title">Store sections <span style="float:right;color:#aaa;font-size:11px">☷</span></div>${sections.map((s,i)=>`<div draggable="true" class="section-row ${s===selected?'selected':''}" onclick="selectSection('${s}')" ondragstart="dragSection(event,'${s}')" ondragover="allowSectionDrop(event)" ondrop="dropSection(event,'${s}')"><span class="dots" title="Drag to reorder">⠿</span><span style="flex:1">${s}</span><button class="move-section" title="Move up" onclick="event.stopPropagation();moveSection('${s}',-1)">↑</button><button class="move-section" title="Move down" onclick="event.stopPropagation();moveSection('${s}',1)">↓</button><button class="remove" title="Delete section" onclick="event.stopPropagation();removeSection('${s}')">×</button></div>`).join('')}<button class="add-section" onclick="addSection()">＋ Add section</button><div class="divider"></div><div class="mini-note">Drag sections to reorder. Select a section to edit its content and style.</div><div class="pane-sections-only">${photoTools()}</div><div class="pane-ai-only">${websiteAI()}</div></div><div class="canvas-wrap"><div class="m-edit-chip"><span>Editing <b>${selected}</b></span><button class="btn primary" onclick="setMTab('settings')">Edit settings</button></div><div class="dbl-hint">Tip: double-click (or double-tap) any text to edit it</div><div class="canvas-toolbar"><button class="${device==='desktop'?'active':''}" onclick="setDevice('desktop')">▣ Desktop</button><button class="${device==='tablet'?'active':''}" onclick="setDevice('tablet')">▤ Tablet</button><button class="${device==='mobile'?'active':''}" onclick="setDevice('mobile')">▯ Mobile</button></div><div class="preview ${device} theme-${theme}" id="preview">${storePreview()}</div></div><div class="editor-right"><div class="panel-title">Section settings</div><div class="tag">${selected}</div><div class="divider"></div><div class="panel-title">Store style</div>${themeSettings()}<div class="divider"></div>${settings()}</div></div>`
     }
 
     function storePreview() {
@@ -3819,7 +3819,16 @@
     function openStorePreview() {
       let w = window.open('', 'forma-preview', 'width=1200,height=850');
       if (!w) return toast('Allow popups to open preview');
-      w.document.write('<title>Store preview</title>' + document.getElementById('preview')?.outerHTML || storePreview());
+      const preview = document.getElementById('preview')?.cloneNode(true);
+      if (preview) {
+        preview.classList.remove('selected');
+        preview.querySelectorAll('.selected').forEach(element => element.classList.remove('selected'));
+        preview.querySelectorAll('[onclick]').forEach(element => element.removeAttribute('onclick'))
+      }
+      const markup = preview?.outerHTML || `<div class="preview">${storePreview()}</div>`;
+      const styles = [...document.querySelectorAll('style')].map(style => style.textContent).join('\n');
+      w.document.open();
+      w.document.write(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Store preview</title><style>${styles}</style></head><body>${markup}</body></html>`);
       w.document.close()
     }
 
@@ -4365,6 +4374,10 @@
         }
         return
       }
+      if (data?.type === 'dokkanio-studio-persisted') {
+        if (data.error) return toast(data.error);
+        return toast(data.demo ? 'Demo changes are saved on this device. Sign in to publish them.' : 'Changes published to your live storefront.')
+      }
       if (data?.type === 'dokkanio-studio-product-saved' && pendingStudioProduct?.requestId === data.requestId) {
         if (data.error) {
           pendingStudioProduct = null;
@@ -4589,7 +4602,7 @@
       } else if (k === 's') {
         e.preventDefault();
         save();
-        toast('Changes saved')
+        toast('Publishing changes…')
       }
     });
 
