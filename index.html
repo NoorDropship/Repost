@@ -3210,22 +3210,35 @@
         toast("Add a store slug before opening your storefront.");
         return;
       }
+      // Open the tab synchronously during the click gesture. Browsers block
+      // window.open() when it is called after an awaited Supabase request.
+      const previewWindow = window.open("about:blank", "_blank");
+      if (previewWindow) {
+        try {
+          previewWindow.document.title = "Opening your Dokkanio store…";
+        } catch (_) {}
+      }
       toast("Saving website to Supabase first…");
       const saved = await saveStoreToSupabase(false);
+      const liveUrl = buildPublicStoreUrl(currentStore.slug || slug);
       if (!saved) {
+        if (previewWindow) previewWindow.close();
         toast("Save failed — live store was NOT opened. Fix the save error and try again.");
         return;
       }
-      const liveUrl = buildPublicStoreUrl(slug);
-      const previewWindow = window.open(liveUrl, "_blank");
-      if (!previewWindow) {
-        toast("Pop-up blocked — click here to open your live store: " + buildPublicStoreUrl(slug));
+      if (previewWindow) {
         try {
-          await navigator.clipboard.writeText(buildPublicStoreUrl(slug));
+          previewWindow.location.replace(liveUrl);
+        } catch (_) {
+          previewWindow.location.href = liveUrl;
+        }
+      } else {
+        toast("Pop-up blocked. Copy this live store link: " + liveUrl);
+        try {
+          await navigator.clipboard.writeText(liveUrl);
         } catch (_) {}
-        return;
       }
-      toast(`Store saved. Live at ${buildPublicStoreUrl(slug)}`);
+      toast(`Store saved. Live at ${liveUrl}`);
     }
     async function copyLiveStoreLink() {
       const slug = ($("sbSlug")?.value || currentStore.slug || "store").toLowerCase().replace(/[^a-z0-9-]/g, "");
