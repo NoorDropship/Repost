@@ -3165,8 +3165,10 @@
     }
 
     function buildPublicStoreUrl(slug) {
-      const storeSlug = String(slug || "store").toLowerCase().replace(/[^a-z0-9-]/g, "");
-      return new URL(`/${encodeURIComponent(storeSlug)}`, window.location.origin).toString();
+      // Storefronts must open on the deployed Dokkanio domain, not the local
+      // editor origin (which can be file://, about:blank, or a preview host).
+      const storeSlug = String(slug || "store").trim().toLowerCase().replace(/[^a-z0-9-]/g, "");
+      return `https://dokkanio.com/${encodeURIComponent(storeSlug)}`;
     }
 
     function updateLiveStoreLinks() {
@@ -3214,8 +3216,8 @@
         toast("Save failed — live store was NOT opened. Fix the save error and try again.");
         return;
       }
-      const livePath = "/" + encodeURIComponent(slug);
-      const previewWindow = window.open(livePath, "_blank");
+      const liveUrl = buildPublicStoreUrl(slug);
+      const previewWindow = window.open(liveUrl, "_blank");
       if (!previewWindow) {
         toast("Pop-up blocked — click here to open your live store: " + buildPublicStoreUrl(slug));
         try {
