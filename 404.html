@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dokkanio Storefront</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Static stylesheet fallback if the Tailwind browser script is blocked -->
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -754,11 +756,15 @@
       populateDistricts();
 
       let slug = window.location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+      try {
+        slug = decodeURIComponent(slug);
+      } catch (_) {}
       if (!slug || slug === "404.html" || slug === "index.html") {
         slug = new URLSearchParams(window.location.search).get("slug")?.toLowerCase() || "";
       } else if (slug.includes("/")) {
         slug = slug.split("/")[0];
       }
+      slug = String(slug || "").trim().replace(/[^a-z0-9-]/g, "");
 
       if (!slug) {
         $("stateLoading").classList.add("hidden");
