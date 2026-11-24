@@ -27,8 +27,6 @@
 
     body {
       font-family: 'DM Sans', 'Plus Jakarta Sans', 'Hind Siliguri', system-ui, sans-serif;
-      background: #fff;
-      color: #191a1d;
       min-height: 100dvh
     }
 
@@ -36,177 +34,206 @@
       background: linear-gradient(135deg, #6979F5, #04C9F6)
     }
 
-    .glass-card {
-      background: rgba(255, 255, 255, .84);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, .9);
-      box-shadow: 0 12px 32px -12px rgba(30, 64, 175, .16)
-    }
-
-    .dash-btn-primary {
-      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #04C9F6 100%);
-      color: #fff;
-      box-shadow: 0 8px 20px -6px rgba(37, 99, 235, .45);
-      transition: all .2s ease
-    }
-
-    .dash-btn-primary:hover {
-      filter: brightness(1.07);
-      transform: translateY(-1px)
-    }
-
-    .dash-btn-soft {
-      background: linear-gradient(135deg, rgba(30, 58, 138, .09), rgba(4, 201, 246, .16));
-      border: 1px solid rgba(56, 189, 248, .45);
-      color: #1e3a8a;
-      transition: all .2s ease
-    }
-
-    /* Studio + Legacy Storefront Themes */
+    /* Full-width shaded themes matching Studio */
     .dk-store-root {
       --accent: #6758df;
-      --hero: #f1eee9;
-      --surface: #ffffff;
-      --text: #191a1d;
-      --muted: #666666;
-      --line: #ececf0;
+      --surface: #f8f8fb;
+      --card: rgba(255, 255, 255, 0.88);
+      --text: #18191f;
+      --muted: #636673;
+      --line: rgba(15, 23, 42, 0.09);
       --radius: 14px;
       --btn-text: #ffffff;
-      background: var(--surface);
+      --hero-bg: radial-gradient(circle at 82% 22%, rgba(103, 88, 223, 0.18), transparent 52%), radial-gradient(circle at 12% 85%, rgba(4, 201, 246, 0.13), transparent 50%), linear-gradient(135deg, #f5f2ed 0%, #eae5dc 55%, #e4e2f3 100%);
+      --page-bg: radial-gradient(circle at 10% 25%, rgba(103, 88, 223, 0.05), transparent 45%), radial-gradient(circle at 90% 75%, rgba(4, 201, 246, 0.05), transparent 45%), #f8f8fb;
+      background: var(--page-bg);
       color: var(--text);
-      min-height: 100dvh
+      min-height: 100dvh;
     }
 
     .dk-store-root.theme-classic,
     .dk-store-root.theme-default {
       --accent: #6758df;
-      --hero: #f1eee9;
-      --surface: #ffffff;
+      --surface: #f8f8fb;
+      --card: rgba(255, 255, 255, 0.92);
       --text: #191a1d;
-      --radius: 14px
+      --radius: 14px;
+      --hero-bg: radial-gradient(circle at 82% 20%, rgba(103, 88, 223, 0.18), transparent 50%), linear-gradient(135deg, #f4f1ec 0%, #e9e4dc 60%, #ebe9f7 100%)
     }
 
     .dk-store-root.theme-luxe,
     .dk-store-root.theme-few {
       --accent: #181818;
-      --hero: #ece8e1;
-      --surface: #ffffff;
-      --text: #202020;
-      --radius: 4px
+      --surface: #faf8f5;
+      --card: #ffffff;
+      --text: #1e1e1e;
+      --radius: 4px;
+      --hero-bg: radial-gradient(circle at 80% 30%, rgba(190, 175, 150, 0.28), transparent 55%), linear-gradient(135deg, #f2eee7 0%, #e6e0d5 100%)
     }
 
     .dk-store-root.theme-soft,
     .dk-store-root.theme-comfy {
       --accent: #d28b78;
-      --hero: #f7eae5;
       --surface: #fffaf8;
+      --card: rgba(255, 255, 255, 0.88);
       --text: #382c2a;
-      --radius: 18px
+      --radius: 18px;
+      --hero-bg: radial-gradient(circle at 80% 20%, rgba(210, 139, 120, 0.26), transparent 52%), linear-gradient(135deg, #fbf1ed 0%, #f5e3dc 100%)
     }
 
     .dk-store-root.theme-botanical,
     .dk-store-root.theme-aesthetic {
       --accent: #456e54;
-      --hero: #e7ede6;
-      --surface: #fbfdfb;
-      --text: #23332a;
-      --radius: 10px
+      --surface: #f8fbf9;
+      --card: rgba(255, 255, 255, 0.9);
+      --text: #203027;
+      --radius: 12px;
+      --hero-bg: radial-gradient(circle at 82% 20%, rgba(69, 110, 84, 0.22), transparent 52%), linear-gradient(135deg, #eef4ee 0%, #dde8de 100%)
     }
 
     .dk-store-root.theme-bold {
       --accent: #e65331;
-      --hero: #f7e5dc;
-      --surface: #ffffff;
+      --surface: #fffbfa;
+      --card: #ffffff;
       --text: #171717;
-      --radius: 12px
+      --radius: 12px;
+      --hero-bg: radial-gradient(circle at 85% 25%, rgba(230, 83, 49, 0.24), transparent 50%), linear-gradient(135deg, #fbf0ea 0%, #f5dad0 100%)
     }
 
     .dk-store-root.theme-sunrise {
       --accent: #e76b43;
-      --hero: linear-gradient(120deg, #f8dfc7, #f5b987);
       --surface: #fffaf4;
+      --card: rgba(255, 255, 255, 0.88);
       --text: #3a2018;
-      --radius: 20px
+      --radius: 20px;
+      --hero-bg: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.45), transparent 45%), linear-gradient(125deg, #fbe5d0 0%, #f6c396 55%, #f2a472 100%)
     }
 
     .dk-store-root.theme-noir,
     .dk-store-root.theme-dark {
       --accent: #d6b46a;
-      --hero: #171717;
-      --surface: #202020;
+      --surface: #161618;
+      --card: rgba(32, 32, 36, 0.92);
       --text: #f5f0e7;
-      --muted: #bcb8b0;
-      --line: #333333;
+      --muted: #b5b0a6;
+      --line: rgba(255, 255, 255, 0.1);
       --btn-text: #171717;
-      --radius: 4px
+      --radius: 4px;
+      --page-bg: radial-gradient(circle at 20% 10%, rgba(214, 180, 106, 0.07), transparent 45%), #141416;
+      --hero-bg: radial-gradient(circle at 80% 25%, rgba(214, 180, 106, 0.18), transparent 50%), linear-gradient(135deg, #1d1d21 0%, #101012 100%)
     }
 
     .dk-store-root.theme-playful,
     .dk-store-root.theme-cute {
       --accent: #7056e8;
-      --hero: linear-gradient(135deg, #e7e2ff, #ffd9e8);
-      --surface: #ffffff;
+      --surface: #fdfbff;
+      --card: rgba(255, 255, 255, 0.9);
       --text: #2b2450;
-      --radius: 24px
+      --radius: 24px;
+      --hero-bg: radial-gradient(circle at 20% 20%, rgba(112, 86, 232, 0.18), transparent 45%), linear-gradient(135deg, #ebe6ff 0%, #ffe1ee 100%)
     }
 
     .dk-store-root.theme-mono {
       --accent: #111111;
-      --hero: #f4f4f4;
       --surface: #ffffff;
+      --card: #ffffff;
       --text: #111111;
-      --radius: 0px
+      --radius: 0px;
+      --page-bg: #ffffff;
+      --hero-bg: linear-gradient(135deg, #f6f6f6 0%, #e9e9e9 100%)
     }
 
     .dk-store-root.theme-coastal {
       --accent: #317b88;
-      --hero: linear-gradient(135deg, #d9eef0, #b6dce0);
-      --surface: #f8fcfc;
+      --surface: #f6fbfb;
+      --card: rgba(255, 255, 255, 0.88);
       --text: #153e47;
-      --radius: 14px
+      --radius: 14px;
+      --hero-bg: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.5), transparent 45%), linear-gradient(135deg, #dff2f4 0%, #b8dfe3 100%)
     }
 
     .dk-store-root.theme-vintage {
       --accent: #9b573b;
-      --hero: #eadbc6;
-      --surface: #fbf4e9;
+      --surface: #faf3e7;
+      --card: rgba(255, 250, 242, 0.92);
       --text: #503524;
-      --radius: 7px
+      --radius: 8px;
+      --hero-bg: radial-gradient(circle at 82% 24%, rgba(155, 87, 59, 0.18), transparent 52%), linear-gradient(135deg, #f0e3cf 0%, #e2ceb0 100%)
     }
 
     .dk-store-root.theme-tech,
     .dk-store-root.theme-cool {
       --accent: #20c7a5;
-      --hero: #111e2a;
-      --surface: #152432;
+      --surface: #0e1822;
+      --card: rgba(21, 36, 50, 0.86);
       --text: #edf8f6;
       --muted: #9fb5c3;
-      --line: #253a48;
-      --radius: 12px
+      --line: rgba(32, 199, 165, 0.18);
+      --btn-text: #0b151d;
+      --radius: 12px;
+      --page-bg: radial-gradient(circle at 80% 10%, rgba(32, 199, 165, 0.08), transparent 45%), #0d1720;
+      --hero-bg: radial-gradient(circle at 80% 25%, rgba(32, 199, 165, 0.22), transparent 50%), linear-gradient(135deg, #132434 0%, #0b141e 100%)
     }
 
     .dk-store-nav {
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--line)
     }
 
-    .dk-hero {
-      background: var(--hero);
-      border-radius: calc(var(--radius) + 6px);
+    .theme-noir .dk-store-nav,
+    .theme-dark .dk-store-nav,
+    .theme-tech .dk-store-nav,
+    .theme-cool .dk-store-nav {
+      background: rgba(16, 22, 29, 0.78)
+    }
+
+    .dk-hero-full {
+      background: var(--hero-bg);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .dk-hero-art-card {
+      background: linear-gradient(140deg, #e4dbce, #c6baa9);
+      position: relative;
       overflow: hidden
     }
 
+    .dk-hero-art-card::before {
+      content: '';
+      position: absolute;
+      width: 160px;
+      height: 200px;
+      border-radius: 42% 42% 18% 18%;
+      background: linear-gradient(125deg, #a9a08e, #5c5549);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
+      transform: rotate(-9deg)
+    }
+
+    .dk-hero-art-card::after {
+      content: 'FORM / OBJECT';
+      position: absolute;
+      bottom: 16px;
+      letter-spacing: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(60, 52, 42, 0.7)
+    }
+
     .dk-card {
-      background: var(--surface);
+      background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      transition: transform .18s ease, box-shadow .18s ease
+      backdrop-filter: blur(10px);
+      transition: transform .2s ease, box-shadow .2s ease
     }
 
     .dk-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, .08)
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.09)
     }
 
     .dk-btn {
@@ -218,8 +245,27 @@
     }
 
     .dk-btn:hover {
-      filter: brightness(1.07);
+      filter: brightness(1.08);
       transform: translateY(-1px)
+    }
+
+    .dk-btn-outline {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      border-radius: var(--radius);
+      font-weight: 700;
+      transition: background .18s ease
+    }
+
+    .dk-btn-outline:hover {
+      background: rgba(128, 128, 128, 0.08)
+    }
+
+    .dk-transparent-band {
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important
     }
 
     .dk-store-root.theme-luxe h1,
@@ -233,8 +279,8 @@
 
     .dk-store-root.theme-tech h1,
     .dk-store-root.theme-tech h2 {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      text-transform: uppercase
+      font-family: 'Manrope', sans-serif;
+      letter-spacing: -0.02em
     }
 
     .dk-store-root.theme-playful .dk-btn,
@@ -247,7 +293,7 @@
     }
 
     :focus-visible {
-      outline: 3px solid #04C9F6;
+      outline: 3px solid var(--accent);
       outline-offset: 2px
     }
 
@@ -256,7 +302,7 @@
   </head>
 
   <body class="dk-store-root theme-classic">
-    <!-- Loading State -->
+    <!-- Loading -->
     <div id="stateLoading" class="min-h-[100dvh] flex flex-col items-center justify-center p-6 text-center bg-slate-50 text-slate-900">
       <div class="w-12 h-12 rounded-2xl grad flex items-center justify-center shadow-lg animate-pulse mb-4">
         <svg width="26" height="26" viewBox="0 0 40 40">
@@ -266,9 +312,9 @@
       <p class="font-bold text-sm text-slate-600" data-i18n="loadingStore">Loading Dokkanio Store...</p>
     </div>
 
-    <!-- Not Found / Claim Slug State -->
+    <!-- Not Found -->
     <div id="stateNotFound" class="hidden min-h-[100dvh] flex items-center justify-center p-4 bg-slate-50 text-slate-900">
-      <div class="glass-card rounded-3xl max-w-md w-full p-7 text-center space-y-4">
+      <div class="bg-white border border-slate-200 rounded-3xl max-w-md w-full p-7 text-center space-y-4 shadow-xl">
         <div class="w-16 h-16 rounded-2xl grad text-white flex items-center justify-center text-2xl mx-auto shadow-lg">🏪</div>
         <h1 class="text-2xl font-extrabold text-slate-900" data-i18n="claimTitle">Store Not Claimed Yet!</h1>
         <p class="text-sm text-slate-600">
@@ -276,18 +322,16 @@
           <b id="missingSlugBadge" class="inline-block px-2.5 py-0.5 rounded-lg bg-blue-50 text-blue-700 font-mono text-xs border border-blue-200">dokkanio.com/store</b>
           <span data-i18n="claimSub2">is available! Launch your own online store in 60 seconds with Dokkanio.</span>
         </p>
-        <a href="/" class="dash-btn-primary font-bold w-full py-3 rounded-xl text-sm inline-flex items-center justify-center gap-2">
-          🚀 <span data-i18n="claimBtn">Claim This Store on Dokkanio</span>
-        </a>
+        <a href="/" class="grad text-white font-bold w-full py-3 rounded-xl text-sm inline-flex items-center justify-center gap-2 shadow-lg">🚀 <span data-i18n="claimBtn">Claim This Store on Dokkanio</span></a>
       </div>
     </div>
 
-    <!-- Live Storefront Container -->
+    <!-- Live Storefront -->
     <div id="storeApp" class="hidden min-h-[100dvh] flex flex-col">
-      <div id="announceBar" class="hidden text-center text-xs font-bold py-2.5 px-4" style="background:var(--accent);color:var(--btn-text)"></div>
+      <div id="announceBar" class="hidden w-full text-center text-xs font-bold py-2.5 px-4 shadow-sm" style="background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 82%,#000));color:var(--btn-text)"></div>
 
-      <header id="storeHeader" class="sticky top-0 z-30 dk-store-nav">
-        <div class="max-w-6xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <header id="storeHeader" class="sticky top-0 z-30 w-full dk-store-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-3">
           <a href="#top" class="flex items-center gap-2.5 min-w-0">
             <div id="storeLogoWrap" class="shrink-0"></div>
             <div class="min-w-0">
@@ -295,7 +339,7 @@
               <p class="text-[10px] dk-muted truncate">64-District COD • bKash • Nagad • Card</p>
             </div>
           </a>
-          <nav class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-wider dk-muted">
+          <nav class="hidden md:flex items-center gap-7 text-xs font-bold uppercase tracking-wider dk-muted">
             <a href="#shop" class="hover:opacity-100">Shop</a>
             <a href="#story" class="hover:opacity-100">Story</a>
             <a href="#faq" class="hover:opacity-100">FAQ</a>
@@ -306,22 +350,27 @@
               <button type="button" onclick="setLang('bn')" class="lang-btn-bn px-2 py-1 rounded-lg transition">বাংলা</button>
             </div>
             <a id="navWaBtn" href="#" target="_blank" class="hidden sm:inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm">📲 WhatsApp</a>
-            <button type="button" onclick="openCartDrawer()" class="dk-btn px-3 sm:px-4 py-2 text-xs flex items-center gap-1.5">
+            <button type="button" onclick="openCartDrawer()" class="dk-btn px-3 sm:px-4 py-2 text-xs flex items-center gap-1.5 shadow-sm">
               🛍️ <span class="hidden sm:inline">Bag</span> <span id="bagCountBadge" class="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px]">0</span>
             </button>
           </div>
         </div>
       </header>
 
-      <main id="storeSectionsRoot" class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-8"></main>
+      <!-- Full-bleed sections root -->
+      <main id="storeSectionsRoot" class="flex-1 w-full"></main>
 
-      <footer id="storeFooter" class="border-t py-8 px-4 text-center text-xs dk-muted" style="border-color:var(--line)">
-        <p>© <span id="ftYear">2026</span> <b id="ftStoreName">Dokkanio Store</b> • <span id="ftCustomText">Designed to last</span> • <span data-i18n="poweredBy">Powered by</span> <a href="/" class="underline font-bold">Dokkanio.com</a></p>
+      <!-- Transparent bottom footer -->
+      <footer id="storeFooter" class="w-full dk-transparent-band border-t py-10 px-4 text-center text-xs dk-muted" style="border-top:1px solid var(--line)!important">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© <span id="ftYear">2026</span> <b id="ftStoreName">Dokkanio Store</b> • <span id="ftCustomText">Designed to last</span></p>
+          <p><span data-i18n="poweredBy">Powered by</span> <a href="/" class="underline font-bold">Dokkanio.com</a></p>
+        </div>
       </footer>
     </div>
 
-    <!-- ============ PRODUCT DETAIL MODAL ============ -->
-    <div id="detailModal" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeDetailModal()">
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="detailModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeDetailModal()">
       <div class="bg-white text-slate-900 rounded-3xl w-full max-w-3xl max-h-[92dvh] overflow-y-auto shadow-2xl overflow-hidden" role="dialog" aria-modal="true">
         <div class="sticky top-0 z-10 bg-white/95 backdrop-blur px-5 py-3 border-b border-slate-200 flex items-center justify-between">
           <span id="dmCategory" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Product</span>
@@ -331,8 +380,8 @@
       </div>
     </div>
 
-    <!-- ============ SHOPPING BAG DRAWER ============ -->
-    <div id="cartDrawer" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm justify-end" onclick="if(event.target===this)closeCartDrawer()">
+    <!-- SHOPPING BAG DRAWER -->
+    <div id="cartDrawer" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm justify-end" onclick="if(event.target===this)closeCartDrawer()">
       <div class="bg-white text-slate-900 w-full max-w-md h-full flex flex-col shadow-2xl">
         <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
           <h3 class="text-lg font-extrabold">🛍️ Your Shopping Bag</h3>
@@ -342,61 +391,77 @@
         <div class="p-5 border-t border-slate-200 bg-slate-50 space-y-3">
           <div class="flex justify-between items-center text-sm font-bold">
             <span>Subtotal</span>
-            <span id="cartSubtotal" class="text-lg font-extrabold text-blue-700">৳0</span>
+            <span id="cartSubtotal" class="text-lg font-extrabold" style="color:var(--accent)">৳0</span>
           </div>
-          <button id="cartCheckoutBtn" type="button" onclick="proceedBagToCheckout()" class="dash-btn-primary w-full py-3.5 rounded-xl font-bold text-sm">Proceed to Checkout →</button>
+          <button id="cartCheckoutBtn" type="button" onclick="proceedBagToCheckout()" class="dk-btn w-full py-3.5 text-sm shadow-lg">Proceed to Checkout →</button>
         </div>
       </div>
     </div>
 
-    <!-- ============ ONE-STEP EXPRESS CHECKOUT MODAL ============ -->
-    <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeCheckout()">
-      <div class="bg-white/95 backdrop-blur-xl border border-white rounded-3xl w-full max-w-lg max-h-[94dvh] overflow-y-auto shadow-2xl p-5 sm:p-6 text-slate-900" role="dialog" aria-modal="true">
+    <!-- CHECKOUT MODAL (Synced with Studio Checkout Designer) -->
+    <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeCheckout()">
+      <div class="bg-white rounded-3xl w-full max-w-lg max-h-[94dvh] overflow-y-auto shadow-2xl p-5 sm:p-6 text-slate-900" role="dialog" aria-modal="true">
         <div id="checkoutFormWrap">
           <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-200">
             <div>
+              <p id="coStoreBrand" class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Dokkanio Store</p>
               <h3 class="text-lg font-extrabold" data-i18n="coTitle">Express Checkout</h3>
-              <p class="text-xs text-slate-500" data-i18n="coSub">Fast delivery across all 64 districts of Bangladesh</p>
             </div>
-            <button onclick="closeCheckout()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-xl leading-none" aria-label="Close">×</button>
+            <button type="button" onclick="closeCheckout()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-xl leading-none">×</button>
           </div>
 
-          <div id="coOrderSummary" class="mt-4 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2"></div>
+          <div id="coOrderSummary" class="mt-4 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2"></div>
 
           <form id="checkoutForm" class="mt-4 space-y-3">
+            <div id="coEmailWrap">
+              <label class="block text-[11px] font-bold text-slate-500 mb-1">Email</label>
+              <input id="coEmail" type="email" placeholder="you@example.com" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+            </div>
+
             <div class="grid sm:grid-cols-2 gap-3">
-              <div>
+              <div id="coNameWrap">
                 <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblName">Full Name *</label>
                 <input id="coName" required data-i18n-ph="phName" placeholder="Your full name" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
               </div>
-              <div>
+              <div id="coPhoneWrap">
                 <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblPhone">Phone Number *</label>
                 <input id="coPhone" required pattern="01[0-9]{9}" placeholder="01XXXXXXXXX" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
               </div>
             </div>
 
-            <div id="coEmailWrap" class="hidden">
-              <label class="block text-[11px] font-bold text-slate-500 mb-1">Email (optional)</label>
-              <input id="coEmail" type="email" placeholder="you@example.com" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
-            </div>
-
             <div>
               <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblDistrict">District (64 Districts) *</label>
-              <select id="coDistrict" required class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></select>
+              <select id="coDistrict" required onchange="updateCheckoutTotals()" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></select>
             </div>
 
-            <div>
+            <div id="coAddressWrap">
               <label class="block text-[11px] font-bold text-slate-500 mb-1" data-i18n="lblAddress">Full Delivery Address *</label>
               <textarea id="coAddress" required rows="2" data-i18n-ph="phAddress" placeholder="House, Road, Area / Thana..." class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></textarea>
+            </div>
+
+            <div id="coAptWrap" class="hidden">
+              <label class="block text-[11px] font-bold text-slate-500 mb-1">Apartment / suite (optional)</label>
+              <input id="coApt" placeholder="Floor, Flat, Suite..." class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+            </div>
+
+            <div id="coCityPostRow" class="hidden grid grid-cols-2 gap-3">
+              <div id="coCityWrap" class="hidden">
+                <label class="block text-[11px] font-bold text-slate-500 mb-1">City / Area</label>
+                <input id="coCity" placeholder="City" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+              </div>
+              <div id="coPostalWrap" class="hidden">
+                <label class="block text-[11px] font-bold text-slate-500 mb-1">Postal code</label>
+                <input id="coPostal" placeholder="1205" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+              </div>
             </div>
 
             <div>
               <label class="block text-[11px] font-bold text-slate-500 mb-2" data-i18n="lblPayMethod">Payment Method *</label>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold" id="payMethodBtns">
-                <button type="button" onclick="selectPayMethod('COD')" data-pm="COD" class="pm-btn dash-btn-primary py-2.5 px-2 rounded-xl text-center">🚚 COD</button>
-                <button type="button" onclick="selectPayMethod('bKash')" data-pm="bKash" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">💗 bKash</button>
-                <button type="button" onclick="selectPayMethod('Nagad')" data-pm="Nagad" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">🧡 Nagad</button>
-                <button type="button" onclick="selectPayMethod('Card')" data-pm="Card" class="pm-btn dash-btn-soft py-2.5 px-2 rounded-xl text-center">💳 Card</button>
+                <button type="button" onclick="selectPayMethod('COD')" data-pm="COD" class="pm-btn py-2.5 px-2 rounded-xl text-center">🚚 COD</button>
+                <button type="button" onclick="selectPayMethod('bKash')" data-pm="bKash" class="pm-btn py-2.5 px-2 rounded-xl text-center">💗 bKash</button>
+                <button type="button" onclick="selectPayMethod('Nagad')" data-pm="Nagad" class="pm-btn py-2.5 px-2 rounded-xl text-center">🧡 Nagad</button>
+                <button type="button" onclick="selectPayMethod('Card')" data-pm="Card" class="pm-btn py-2.5 px-2 rounded-xl text-center">💳 Card</button>
               </div>
             </div>
 
@@ -414,15 +479,15 @@
               </div>
             </div>
 
-            <div id="cardPayBox" class="hidden p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2">
+            <div id="cardPayBox" class="hidden p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-1.5">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-extrabold text-blue-900">Visa / Mastercard Request</span>
+                <span class="text-xs font-extrabold text-blue-900">Visa / Mastercard Payment</span>
                 <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white border border-blue-200 text-blue-700">Arranged by Seller</span>
               </div>
-              <p class="text-[11px] text-slate-600">Submit your order below and the seller will send you a secure card payment link via phone/WhatsApp.</p>
+              <p class="text-[11px] text-slate-600">Submit your order below and the seller will send your secure card payment link via phone/WhatsApp.</p>
             </div>
 
-            <button id="coSubmitBtn" type="submit" class="dash-btn-primary font-bold w-full py-3.5 rounded-xl text-sm shadow-lg" data-i18n="confirmOrderBtn">Confirm Order</button>
+            <button id="coSubmitBtn" type="submit" class="dk-btn w-full py-3.5 text-sm shadow-lg" data-i18n="confirmOrderBtn">Complete order</button>
           </form>
         </div>
 
@@ -435,14 +500,12 @@
           <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4 text-left text-xs space-y-2">
             <div class="flex justify-between"><span class="text-slate-500">Order ID</span><b id="confOrderId" class="font-mono text-blue-700">#0000</b></div>
             <div class="flex justify-between"><span class="text-slate-500">Items</span><b id="confProd" class="text-right max-w-[210px] truncate"></b></div>
-            <div class="flex justify-between"><span class="text-slate-500">Amount</span><b id="confAmount" class="text-emerald-600"></b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Total Paid / Due</span><b id="confAmount" class="text-emerald-600"></b></div>
             <div class="flex justify-between"><span class="text-slate-500">Payment</span><b id="confPay"></b></div>
             <div class="flex justify-between"><span class="text-slate-500">Status</span><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">Hub Processing (Dokkanio)</span></div>
           </div>
-          <a id="confWaBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-md">
-            📲 <span data-i18n="sendWaReceipt">Send Order Receipt on WhatsApp</span>
-          </a>
-          <button type="button" onclick="closeCheckout()" class="dash-btn-soft font-bold w-full py-2.5 rounded-xl text-xs" data-i18n="continueShop">Continue Shopping</button>
+          <a id="confWaBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-md">📲 <span data-i18n="sendWaReceipt">Send Order Receipt on WhatsApp</span></a>
+          <button type="button" onclick="closeCheckout()" class="w-full border border-slate-300 font-bold py-2.5 rounded-xl text-xs" data-i18n="continueShop">Continue Shopping</button>
         </div>
       </div>
     </div>
@@ -495,7 +558,6 @@
         searchPh: "Search products...",
         poweredBy: "Powered by",
         coTitle: "Express Checkout",
-        coSub: "Fast delivery across all 64 districts of Bangladesh",
         lblName: "Full Name *",
         phName: "Your full name",
         lblPhone: "Phone Number *",
@@ -504,7 +566,7 @@
         phAddress: "House, Road, Area / Thana...",
         lblPayMethod: "Payment Method *",
         lblTrxId: "Transaction ID (TrxID) *",
-        confirmOrderBtn: "Confirm Order",
+        confirmOrderBtn: "Complete order",
         ordConfirmedTitle: "Order Confirmed!",
         ordConfirmedSub: "Your order has been received and sent to Dokkanio Hub Processing.",
         sendWaReceipt: "Send Order Receipt on WhatsApp",
@@ -519,7 +581,6 @@
         searchPh: "পণ্য খুঁজুন...",
         poweredBy: "পরিচালনায়",
         coTitle: "দ্রুত চেকআউট",
-        coSub: "সারা বাংলাদেশের ৬৪ জেলায় দ্রুত ডেলিভারি",
         lblName: "আপনার নাম *",
         phName: "পুরো নাম লিখুন",
         lblPhone: "মোবাইল নম্বর *",
@@ -545,6 +606,7 @@
       checkoutItems = [];
     let selectedPayMethod = "COD",
       searchQuery = "",
+      activeCat = "All",
       checkoutFromCart = false;
     const $ = id => document.getElementById(id);
     const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({
@@ -573,8 +635,8 @@
     function setLang(l) {
       lang = l;
       document.documentElement.lang = l === "bn" ? "bn" : "en";
-      document.querySelectorAll(".lang-btn-en").forEach(b => b.className = "lang-btn-en px-2 py-1 rounded-lg transition " + (l === "en" ? "dash-btn-primary" : "text-slate-600"));
-      document.querySelectorAll(".lang-btn-bn").forEach(b => b.className = "lang-btn-bn px-2 py-1 rounded-lg transition " + (l === "bn" ? "dash-btn-primary" : "text-slate-600"));
+      document.querySelectorAll(".lang-btn-en").forEach(b => b.className = "lang-btn-en px-2 py-1 rounded-lg transition " + (l === "en" ? "dk-btn" : "dk-muted"));
+      document.querySelectorAll(".lang-btn-bn").forEach(b => b.className = "lang-btn-bn px-2 py-1 rounded-lg transition " + (l === "bn" ? "dk-btn" : "dk-muted"));
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const k = el.getAttribute("data-i18n");
         if (I18N[lang][k]) el.textContent = I18N[lang][k];
@@ -649,7 +711,7 @@
 
       let dynCss = storeData._cleanCss || "";
       if (edits.accent) dynCss += `\n.dk-store-root{--accent:${edits.accent};}`;
-      if (edits.heroBg) dynCss += `\n.dk-store-root{--hero:${edits.heroBg};}`;
+      if (edits.heroBg) dynCss += `\n.dk-store-root{--hero-bg:radial-gradient(circle at 82% 22%,rgba(255,255,255,0.28),transparent 55%),linear-gradient(135deg,${edits.heroBg} 0%,color-mix(in srgb,${edits.heroBg} 82%,#000) 100%);}`;
       $("storeCustomCss").textContent = dynCss;
 
       const sName = edits.brand || storeData.store_name || "Dokkanio Store";
@@ -660,7 +722,7 @@
       if (edits.sectionTexts?.Footer) $("ftCustomText").textContent = edits.sectionTexts.Footer;
 
       $("storeLogoWrap").innerHTML = safeImg(storeMeta.logo_url) ?
-        `<img src="${esc(safeImg(storeMeta.logo_url))}" class="w-9 h-9 rounded-full object-cover border border-white shadow" alt="${esc(sName)}">` :
+        `<img src="${esc(safeImg(storeMeta.logo_url))}" class="w-9 h-9 rounded-full object-cover border border-white/60 shadow" alt="${esc(sName)}">` :
         `<span class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-sm shadow" style="background:var(--accent);color:var(--btn-text)">${esc(sName.charAt(0).toUpperCase())}</span>`;
 
       if (storeData.whatsapp_number) {
@@ -669,7 +731,7 @@
         $("navWaBtn").classList.remove("hidden");
       }
 
-      const announceText = edits.bannerText || storeMeta.announcement || "";
+      const announceText = edits.bannerText !== undefined ? edits.bannerText : (storeMeta.announcement || "");
       if (sections.includes("Announcement bar") && announceText) {
         $("announceBar").textContent = announceText;
         $("announceBar").classList.remove("hidden");
@@ -685,100 +747,136 @@
       const heroImg = safeImg(edits.heroImage) || safeImg(storeMeta.banner_url);
       const homeImg = safeImg(edits.homeImage);
       const cols = Math.max(1, Math.min(4, Number(storeMeta.layout_cols || 3)));
+      const categories = ["All", ...new Set(products.map(p => p.is_bundle ? "Bundles" : (p.category || "Store products")))];
 
       const blocks = sections.filter(s => !["Announcement bar", "Header", "Footer"].includes(s)).map(sec => {
         if (sec === "Hero") {
           return `
-            <section id="top" class="dk-hero p-6 sm:p-10 md:p-14 grid md:grid-cols-12 gap-6 items-center shadow-sm">
-              <div class="${heroImg ? 'md:col-span-7' : 'md:col-span-12 text-center max-w-2xl mx-auto'} space-y-4">
-                <span class="inline-block text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-black/5">64-District COD Available</span>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">${esc(heroTitle)}</h2>
-                <p class="text-sm sm:text-base dk-muted leading-relaxed">${esc(heroSub)}</p>
-                <div class="pt-2 flex flex-wrap gap-3 ${heroImg ? '' : 'justify-center'}">
-                  <a href="#shop" class="dk-btn px-6 py-3 text-sm inline-flex items-center gap-2 shadow">${esc(ctaText)} →</a>
+            <section id="top" class="dk-hero-full w-full py-14 sm:py-24 px-4 sm:px-8">
+              <div class="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div class="md:col-span-6 space-y-5">
+                  <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-black/5 border border-black/5">64-District COD Available</span>
+                  <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.06] tracking-tight">${esc(heroTitle)}</h2>
+                  <p class="text-sm sm:text-base dk-muted leading-relaxed max-w-xl">${esc(heroSub)}</p>
+                  <div class="pt-2 flex flex-wrap gap-3">
+                    <a href="#shop" class="dk-btn px-7 py-3.5 text-sm inline-flex items-center gap-2 shadow-lg">${esc(ctaText)} →</a>
+                  </div>
+                </div>
+                <div class="md:col-span-6">
+                  ${heroImg
+                    ? `<div class="h-64 sm:h-80 lg:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/25"><img src="${esc(heroImg)}" class="w-full h-full object-cover" alt="${esc(heroTitle)}"></div>`
+                    : `<div class="dk-hero-art-card h-64 sm:h-80 lg:h-[360px] rounded-2xl shadow-2xl flex items-center justify-center border border-white/30"></div>`}
                 </div>
               </div>
-              ${heroImg ? `<div class="md:col-span-5 h-56 sm:h-72 rounded-2xl overflow-hidden shadow-lg"><img src="${esc(heroImg)}" class="w-full h-full object-cover" alt="${esc(heroTitle)}"></div>` : ""}
             </section>`;
         }
+
         if (sec === "Featured products") {
           const secTitle = edits.sectionTitles?.["Featured products"] || "Curated for everyday";
-          const filtered = products.filter(p => (p.title + " " + (p.category || "")).toLowerCase().includes(searchQuery));
+          const filtered = products.filter(p => {
+            const catName = p.is_bundle ? "Bundles" : (p.category || "Store products");
+            const catOk = activeCat === "All" || catName === activeCat;
+            const qOk = (p.title + " " + catName + " " + (p.description || "")).toLowerCase().includes(searchQuery);
+            return catOk && qOk;
+          });
           return `
-            <section id="shop" class="space-y-5">
-              <div class="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <h2 class="text-xl sm:text-2xl font-extrabold">${esc(secTitle)}</h2>
-                  <p class="text-xs dk-muted mt-0.5">${filtered.length} product${filtered.length===1?"":"s"} available</p>
+            <section id="shop" class="w-full py-12 sm:py-16 px-4 sm:px-8">
+              <div class="max-w-7xl mx-auto space-y-6">
+                <div class="flex flex-wrap items-end justify-between gap-4">
+                  <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">${esc(secTitle)}</h2>
+                    <p class="text-xs dk-muted mt-1">${filtered.length} item${filtered.length===1?"":"s"} available</p>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                    <div class="flex flex-wrap gap-1.5">
+                      ${categories.map(c => `<button type="button" onclick="activeCat='${esc(c)}';renderStorefront()" class="px-3 py-1.5 rounded-full text-xs font-bold transition ${activeCat===c?'dk-btn':'dk-btn-outline'}">${esc(c)}</button>`).join("")}
+                    </div>
+                    <input id="storeSearchInp" type="search" value="${esc(searchQuery)}" oninput="onSearchInput(this)" placeholder="${esc(t('searchPh'))}" class="w-full sm:w-60 bg-white/90 border border-slate-300 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-900 outline-none">
+                  </div>
                 </div>
-                <input id="storeSearchInp" type="search" value="${esc(searchQuery)}" oninput="onSearchInput(this)" placeholder="${esc(t('searchPh'))}" class="w-full sm:w-64 bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-900 outline-none">
-              </div>
-              <div class="grid grid-cols-2 md:grid-cols-${cols} gap-3 sm:gap-5">
-                ${filtered.length ? filtered.map(p => {
-                  const img = safeImg(p.image_url);
-                  return `
-                    <article class="dk-card p-3 sm:p-4 flex flex-col justify-between gap-3">
-                      <button type="button" onclick="openDetailModal('${esc(String(p.id))}')" class="text-left group space-y-2.5">
-                        <div class="h-36 sm:h-48 rounded-xl bg-black/5 overflow-hidden flex items-center justify-center relative">
-                          ${p.is_bundle ? `<span class="absolute top-2 left-2 z-10 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 shadow-sm">Bundle</span>` : ""}
-                          ${img ? `<img src="${esc(img)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="${esc(p.title)}">` : `<span class="text-4xl opacity-60">✦</span>`}
+                <div class="grid grid-cols-2 md:grid-cols-${cols} gap-4 sm:gap-6">
+                  ${filtered.length ? filtered.map(p => {
+                    const img = safeImg(p.image_url);
+                    const bItems = String(p.bundle || "").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+                    return `
+                      <article class="dk-card p-3 sm:p-4 flex flex-col justify-between gap-3">
+                        <button type="button" onclick="openDetailModal('${esc(String(p.id))}')" class="text-left group space-y-3">
+                          <div class="h-40 sm:h-52 rounded-xl bg-black/5 overflow-hidden flex items-center justify-center relative">
+                            ${(p.is_bundle || bItems.length) ? `<span class="absolute top-2.5 left-2.5 z-10 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 shadow-sm">🎁 Bundle${bItems.length?` (${bItems.length})`:""}</span>` : ""}
+                            ${img ? `<img src="${esc(img)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="${esc(p.title)}">` : `<span class="text-4xl opacity-60">${p.is_bundle?"🎁":"✦"}</span>`}
+                          </div>
+                          <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider dk-muted">${esc(p.category || (p.is_bundle ? "Bundles" : "Store product"))}</span>
+                            <h3 class="font-bold text-sm sm:text-base leading-snug line-clamp-2 mt-0.5">${esc(p.title)}</h3>
+                            ${bItems.length ? `<p class="text-[11px] dk-muted mt-1 truncate">Includes: ${esc(bItems.join(", "))}</p>` : ""}
+                            <p class="font-extrabold text-base sm:text-lg mt-1.5">${bdt(p.price)}</p>
+                          </div>
+                        </button>
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                          <button type="button" onclick="addToCart('${esc(String(p.id))}',1)" class="dk-btn-outline py-2 text-xs">+ Bag</button>
+                          <button type="button" onclick="buyNowSingle('${esc(String(p.id))}',1)" class="dk-btn py-2 text-xs shadow-sm">Buy Now</button>
                         </div>
-                        <div>
-                          <span class="text-[10px] font-bold uppercase tracking-wider dk-muted">${esc(p.category || "Store Product")}</span>
-                          <h3 class="font-bold text-xs sm:text-sm leading-snug line-clamp-2 mt-0.5">${esc(p.title)}</h3>
-                          <p class="font-extrabold text-base sm:text-lg mt-1">${bdt(p.price)}</p>
-                        </div>
-                      </button>
-                      <div class="grid grid-cols-2 gap-1.5">
-                        <button type="button" onclick="addToCart('${esc(String(p.id))}',1)" class="py-2 rounded-xl border text-[11px] font-bold hover:opacity-80" style="border-color:var(--line)">+ Bag</button>
-                        <button type="button" onclick="buyNowSingle('${esc(String(p.id))}',1)" class="dk-btn py-2 text-[11px] font-bold">Buy Now</button>
-                      </div>
-                    </article>`;
-                }).join("") : ` < div class = "col-span-full text-center py-12 dk-card text-sm dk-muted" > No products match your search. < /div>`} <
+                      </article>`;
+                  }).join("") : ` < div class = "col-span-full text-center py-14 dk-card text-sm dk-muted" > No products match your search. < /div>`} <
+            /div> <
             /div> <
             /section>`;
         }
+
         if (sec === "Image with text") {
           const itTitle = edits.homeImageTitle || "A story worth sharing";
           const itText = edits.homeImageText || "Showcase a product, your brand story, or a moment from your collection.";
           return `
-            <section class="dk-card p-5 sm:p-8 grid md:grid-cols-2 gap-6 items-center">
-              <div class="h-56 sm:h-64 rounded-2xl overflow-hidden bg-black/5 flex items-center justify-center">
-                ${homeImg ? `<img src="${esc(homeImg)}" class="w-full h-full object-cover" alt="${esc(itTitle)}">` : `<span class="text-4xl dk-muted">🖼️</span>`}
-              </div>
-              <div class="space-y-3">
-                <h2 class="text-xl sm:text-2xl font-extrabold">${esc(itTitle)}</h2>
-                <p class="text-sm dk-muted leading-relaxed">${esc(itText)}</p>
+            <section class="w-full py-12 px-4 sm:px-8">
+              <div class="max-w-7xl mx-auto dk-card p-6 sm:p-10 grid md:grid-cols-2 gap-8 items-center">
+                <div class="h-60 sm:h-80 rounded-2xl overflow-hidden bg-black/5 flex items-center justify-center shadow-lg">
+                  ${homeImg ? `<img src="${esc(homeImg)}" class="w-full h-full object-cover" alt="${esc(itTitle)}">` : `<span class="text-4xl dk-muted">🖼️</span>`}
+                </div>
+                <div class="space-y-4">
+                  <h2 class="text-2xl sm:text-3xl font-extrabold">${esc(itTitle)}</h2>
+                  <p class="text-sm sm:text-base dk-muted leading-relaxed">${esc(itText)}</p>
+                </div>
               </div>
             </section>`;
         }
+
         if (sec === "Proof cards" || sec === "Testimonials") {
           const title = edits.sectionTitles?.[sec] || "Why customers choose us";
           const sub = edits.sectionTexts?.[sec] || "Confidence built into every order.";
           return `
-            <section class="dk-card p-6 sm:p-8 space-y-5">
-              <div><h2 class="text-xl font-extrabold">${esc(title)}</h2><p class="text-xs dk-muted mt-1">${esc(sub)}</p></div>
-              <div class="grid sm:grid-cols-3 gap-4">
-                <div class="p-4 rounded-xl border" style="border-color:var(--line)"><b class="text-sm">Quality first</b><p class="text-xs dk-muted mt-1.5">Thoughtful products and carefully inspected items.</p></div>
-                <div class="p-4 rounded-xl border" style="border-color:var(--line)"><b class="text-sm">Easy &amp; flexible pay</b><p class="text-xs dk-muted mt-1.5">Pay via bKash, Nagad, Card, or Cash on Delivery.</p></div>
-                <div class="p-4 rounded-xl border" style="border-color:var(--line)"><b class="text-sm">64-District Delivery</b><p class="text-xs dk-muted mt-1.5">Reliable courier fulfillment across Bangladesh.</p></div>
+            <section class="w-full py-12 px-4 sm:px-8">
+              <div class="max-w-7xl mx-auto space-y-6">
+                <div><h2 class="text-2xl font-extrabold">${esc(title)}</h2><p class="text-xs sm:text-sm dk-muted mt-1">${esc(sub)}</p></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  <div class="dk-card p-6 space-y-2"><b class="text-base">Quality first</b><p class="text-xs sm:text-sm dk-muted leading-relaxed">Thoughtful products and carefully inspected items.</p></div>
+                  <div class="dk-card p-6 space-y-2"><b class="text-base">Easy &amp; flexible pay</b><p class="text-xs sm:text-sm dk-muted leading-relaxed">Pay via bKash, Nagad, Card, or Cash on Delivery.</p></div>
+                  <div class="dk-card p-6 space-y-2"><b class="text-base">64-District Delivery</b><p class="text-xs sm:text-sm dk-muted leading-relaxed">Reliable courier fulfillment across Bangladesh.</p></div>
+                </div>
               </div>
             </section>`;
         }
+
         if (sec === "FAQ") {
           return `
-            <section id="faq" class="dk-card p-6 sm:p-8 space-y-3">
-              <h2 class="text-xl font-extrabold">Frequently Asked Questions</h2>
-              <details class="border-b py-3" style="border-color:var(--line)"><summary class="cursor-pointer font-bold text-sm">How do I pay for my order?</summary><p class="text-xs dk-muted mt-2">Choose Cash on Delivery (COD), bKash, Nagad, or Card during checkout.</p></details>
-              <details class="border-b py-3" style="border-color:var(--line)"><summary class="cursor-pointer font-bold text-sm">Do you deliver outside Dhaka?</summary><p class="text-xs dk-muted mt-2">Yes! We deliver across all 64 districts of Bangladesh.</p></details>
+            <section id="faq" class="w-full py-12 px-4 sm:px-8">
+              <div class="max-w-4xl mx-auto dk-transparent-band space-y-4">
+                <h2 class="text-2xl font-extrabold text-center">Frequently Asked Questions</h2>
+                <details class="dk-card px-5 py-4"><summary class="cursor-pointer font-bold text-sm">How do I pay for my order?</summary><p class="text-xs sm:text-sm dk-muted mt-2">Choose Cash on Delivery (COD), bKash, Nagad, or Card during checkout.</p></details>
+                <details class="dk-card px-5 py-4"><summary class="cursor-pointer font-bold text-sm">Do you deliver outside Dhaka?</summary><p class="text-xs sm:text-sm dk-muted mt-2">Yes! We deliver across all 64 districts of Bangladesh.</p></details>
+              </div>
             </section>`;
         }
+
+        /* Transparent Brand Story ("Made with intention") & editorial text sections */
         const tSec = edits.sectionTitles?.[sec] || (sec === "Brand story" ? "Made with intention" : sec);
         const pSec = edits.sectionTexts?.[sec] || "Thoughtfully curated for a better everyday experience.";
         return `
-          <section id="${sec==='Brand story'?'story':''}" class="dk-card p-6 sm:p-10 text-center space-y-2">
-            <h2 class="text-xl sm:text-2xl font-extrabold">${esc(tSec)}</h2>
-            <p class="text-sm dk-muted max-w-2xl mx-auto leading-relaxed">${esc(pSec)}</p>
+          <section id="${sec==='Brand story'?'story':''}" class="w-full dk-transparent-band py-14 sm:py-18 px-4 sm:px-8 text-center">
+            <div class="max-w-3xl mx-auto space-y-3">
+              <span class="inline-block text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-black/5 dk-muted">${esc(sec)}</span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold">${esc(tSec)}</h2>
+              <p class="text-sm sm:text-base dk-muted leading-relaxed">${esc(pSec)}</p>
+            </div>
           </section>`;
       });
 
@@ -793,11 +891,11 @@
       const variants = parseVariants(p.variants);
       const bundleItems = String(p.bundle || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
       const claims = String(p.certifications || "").split(",").map(s => s.trim()).filter(Boolean);
-      $("dmCategory").textContent = p.is_bundle ? "Bundle Deal" : (p.category || "Store Product");
+      $("dmCategory").textContent = (p.is_bundle || bundleItems.length) ? "Bundle Deal" : (p.category || "Store Product");
       $("dmBody").innerHTML = `
         <div class="grid sm:grid-cols-2 gap-6 items-start">
           <div class="aspect-square rounded-2xl bg-slate-100 overflow-hidden flex items-center justify-center">
-            ${img ? `<img src="${esc(img)}" class="w-full h-full object-cover" alt="${esc(p.title)}">` : `<span class="text-6xl text-slate-300">✦</span>`}
+            ${img ? `<img src="${esc(img)}" class="w-full h-full object-cover" alt="${esc(p.title)}">` : `<span class="text-6xl text-slate-300">${p.is_bundle?"🎁":"✦"}</span>`}
           </div>
           <div class="space-y-4">
             <div>
@@ -811,7 +909,7 @@
                 <label class="block text-xs font-bold text-slate-700 mb-1">${esc(g.name)}</label>
                 <select id="dmVar-${idx}" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm">${g.values.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("")}</select>
               </div>`).join("")}</div>` : ""}
-            ${bundleItems.length ? `<div class="space-y-1.5"><p class="text-xs font-bold uppercase tracking-wider text-slate-500">Bundle Contents</p>${bundleItems.map(it=>`<div class="flex items-center gap-2 text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"><span class="text-blue-600 font-bold">✓</span><span>${esc(it)}</span></div>`).join("")}</div>` : ""}
+            ${bundleItems.length ? `<div class="space-y-1.5"><p class="text-xs font-bold uppercase tracking-wider text-slate-500">Bundle Contents (${bundleItems.length})</p>${bundleItems.map(it=>`<div class="flex items-center gap-2 text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"><span class="text-blue-600 font-bold">✓</span><span>${esc(it)}</span></div>`).join("")}</div>` : ""}
             ${claims.length ? `<div class="flex flex-wrap gap-1.5">${claims.map(c=>`<span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">✓ ${esc(c)}</span>`).join("")}</div>` : ""}
             <div class="flex items-center gap-3 pt-1">
               <span class="text-xs font-bold text-slate-500">Qty</span>
@@ -822,8 +920,8 @@
               </div>
             </div>
             <div class="grid grid-cols-2 gap-2.5 pt-2">
-              <button type="button" onclick="addDetailToBag('${esc(String(p.id))}')" class="dash-btn-soft py-3 rounded-xl font-bold text-sm">Add to Bag</button>
-              <button type="button" onclick="buyDetailNow('${esc(String(p.id))}')" class="dash-btn-primary py-3 rounded-xl font-bold text-sm">Buy Now →</button>
+              <button type="button" onclick="addDetailToBag('${esc(String(p.id))}')" class="border border-slate-300 py-3 rounded-xl font-bold text-sm hover:bg-slate-50">Add to Bag</button>
+              <button type="button" onclick="buyDetailNow('${esc(String(p.id))}')" class="dk-btn py-3 text-sm shadow">Buy Now →</button>
             </div>
           </div>
         </div>`;
@@ -902,7 +1000,7 @@
           <div class="min-w-0 flex-1">
             <p class="font-bold text-sm truncate">${esc(it.product.title)}</p>
             ${it.variant ? `<p class="text-[11px] text-slate-500">${esc(it.variant)}</p>` : ""}
-            <p class="text-xs font-extrabold text-blue-700 mt-0.5">${bdt(it.product.price)}</p>
+            <p class="text-xs font-extrabold mt-0.5" style="color:var(--accent)">${bdt(it.product.price)}</p>
           </div>
           <div class="flex items-center gap-1.5 shrink-0">
             <button type="button" onclick="chgCartQty('${esc(it.key)}',-1)" class="w-7 h-7 rounded-lg border font-bold">−</button>
@@ -949,20 +1047,64 @@
       $("coDistrict").innerHTML = BD_DISTRICTS.map(d => `<option value="${d}">${d}</option>`).join("");
     }
 
+    function getDeliveryFee() {
+      const dist = $("coDistrict")?.value || "Dhaka";
+      return dist === "Dhaka" ? 70 : 130;
+    }
+
+    function updateCheckoutTotals() {
+      const sub = checkoutItems.reduce((s, x) => s + Number(x.product.price) * x.qty, 0);
+      const fee = getDeliveryFee();
+      const total = sub + fee;
+      $("coOrderSummary").innerHTML = checkoutItems.map(x => `
+        <div class="flex items-center justify-between gap-2.5 text-xs">
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="w-9 h-9 rounded-lg bg-slate-200 overflow-hidden shrink-0 flex items-center justify-center">${safeImg(x.product.image_url)?`<img src="${esc(safeImg(x.product.image_url))}" class="w-full h-full object-cover">`:`✦`}</div>
+            <span class="truncate"><b>${esc(x.product.title)}</b> × ${x.qty}${x.variant ? ` (${esc(x.variant)})` : ""}</span>
+          </div>
+          <b class="shrink-0">${bdt(Number(x.product.price) * x.qty)}</b>
+        </div>`).join("") + `
+        <div class="border-t border-slate-200 pt-2 space-y-1 text-xs">
+          <div class="flex justify-between text-slate-500"><span>Subtotal</span><span>${bdt(sub)}</span></div>
+          <div class="flex justify-between text-slate-500"><span>Delivery (${esc($("coDistrict")?.value || "Dhaka")})</span><span>${bdt(fee)}</span></div>
+          <div class="flex justify-between font-extrabold text-sm pt-1"><span>Total</span><span style="color:var(--accent)">${bdt(total)}</span></div>
+        </div>`;
+    }
+
     function openCheckoutModal() {
       $("checkoutFormWrap").classList.remove("hidden");
       $("checkoutSuccessWrap").classList.add("hidden");
-      const total = checkoutItems.reduce((s, x) => s + Number(x.product.price) * x.qty, 0);
-      $("coOrderSummary").innerHTML = checkoutItems.map(x => `
-        <div class="flex items-center justify-between gap-2 text-xs">
-          <span class="truncate"><b>${esc(x.product.title)}</b> × ${x.qty}${x.variant ? ` (${esc(x.variant)})` : ""}</span>
-          <b class="shrink-0">${bdt(Number(x.product.price) * x.qty)}</b>
-        </div>`).join("") + `<div class="border-t border-slate-200 pt-2 flex justify-between font-extrabold text-sm"><span>Total</span><span class="text-blue-700">${bdt(total)}</span></div>`;
+      const edits = studioState?.edits || {};
+      $("coStoreBrand").textContent = edits.brand || storeData.store_name || "Dokkanio Store";
 
-      const ck = studioState?.checkout || studioState?.edits?.checkout || {};
+      const ck = studioState?.checkout || edits.checkout || {};
+      const f = ck.fields || {};
+      const p = ck.payments || {};
+
       $("coSubmitBtn").textContent = ck.buttonText || t("confirmOrderBtn");
-      $("coEmailWrap").classList.toggle("hidden", !(ck.fields && ck.fields.Email));
-      selectPayMethod("COD");
+      $("coEmailWrap").classList.toggle("hidden", f.Email === false);
+      $("coNameWrap").classList.toggle("hidden", f["Full name"] === false);
+      $("coName").required = f["Full name"] !== false;
+      $("coPhoneWrap").classList.toggle("hidden", f["Phone number"] === false);
+      $("coPhone").required = f["Phone number"] !== false;
+      $("coAddressWrap").classList.toggle("hidden", f.Address === false);
+      $("coAddress").required = f.Address !== false;
+      $("coAptWrap").classList.toggle("hidden", !f["Apartment / suite"]);
+      $("coCityWrap").classList.toggle("hidden", !f.City);
+      $("coPostalWrap").classList.toggle("hidden", !f["Postal code"]);
+      $("coCityPostRow").classList.toggle("hidden", !f.City && !f["Postal code"]);
+
+      const allowCod = p["Cash on delivery"] !== false;
+      const allowCard = p["Card payment"] !== false;
+      const allowMobile = p["Mobile banking"] !== false;
+      document.querySelector('[data-pm="COD"]').classList.toggle("hidden", !allowCod);
+      document.querySelector('[data-pm="Card"]').classList.toggle("hidden", !allowCard);
+      document.querySelector('[data-pm="bKash"]').classList.toggle("hidden", !allowMobile);
+      document.querySelector('[data-pm="Nagad"]').classList.toggle("hidden", !allowMobile);
+
+      const firstPm = allowCod ? "COD" : (allowMobile ? "bKash" : "Card");
+      selectPayMethod(firstPm);
+      updateCheckoutTotals();
       $("checkoutModal").classList.remove("hidden");
       $("checkoutModal").classList.add("flex");
     }
@@ -976,7 +1118,7 @@
       selectedPayMethod = pm;
       document.querySelectorAll(".pm-btn").forEach(btn => {
         const active = btn.dataset.pm === pm;
-        btn.className = "pm-btn py-2.5 px-2 rounded-xl text-center " + (active ? "dash-btn-primary" : "dash-btn-soft");
+        btn.className = "pm-btn py-2.5 px-2 rounded-xl text-center border transition " + (active ? "dk-btn border-transparent shadow-sm" : "bg-white border-slate-300 text-slate-700 hover:bg-slate-50");
       });
       const isMobilePay = pm === "bKash" || pm === "Nagad";
       $("mobilePayBox").classList.toggle("hidden", !isMobilePay);
@@ -1001,8 +1143,10 @@
       const btn = $("coSubmitBtn");
       btn.disabled = true;
       btn.textContent = "Placing Order...";
-      const total = checkoutItems.reduce((s, x) => s + Number(x.product.price) * x.qty, 0);
+      const sub = checkoutItems.reduce((s, x) => s + Number(x.product.price) * x.qty, 0);
+      const total = sub + getDeliveryFee();
       const titles = checkoutItems.map(x => `${x.product.title}${x.variant ? ` (${x.variant})` : ""} × ${x.qty}`).join(", ");
+      const fullAddr = [$("coAddress").value.trim(), $("coApt")?.value.trim(), $("coCity")?.value.trim(), $("coPostal")?.value.trim()].filter(Boolean).join(", ");
       let trxId = "COD";
       if (selectedPayMethod === "bKash" || selectedPayMethod === "Nagad") trxId = $("coTrxId").value.trim().toUpperCase();
       else if (selectedPayMethod === "Card") trxId = "CARD_REQUESTED";
@@ -1011,10 +1155,10 @@
         store_id: storeData.id,
         product_title: titles,
         amount: Math.round(total),
-        customer_name: $("coName").value.trim(),
-        customer_phone: $("coPhone").value.trim(),
+        customer_name: $("coName").value.trim() || "Customer",
+        customer_phone: $("coPhone").value.trim() || "01700000000",
         district: $("coDistrict").value,
-        address: $("coAddress").value.trim(),
+        address: fullAddr || "Dhaka",
         payment_method: selectedPayMethod,
         trx_id: trxId,
         status: selectedPayMethod === "bKash" || selectedPayMethod === "Nagad" ? "Paid" : "Confirmed",
@@ -1063,7 +1207,7 @@
       $("confPay").textContent = `${o.payment_method}${o.trx_id && o.trx_id !== "COD" ? " (" + o.trx_id + ")" : ""}`;
       const sellerWa = (storeData.whatsapp_number || storeData.bkash_number || "").replace(/[^0-9]/g, "");
       const intlWa = sellerWa.startsWith("88") ? sellerWa : "88" + sellerWa;
-      const receiptMsg = encodeURIComponent(`🛍️ *New Order Receipt – ${storeData.store_name}*\nOrder ID: #${String(orderId).slice(0,8).toUpperCase()}\nItems: ${o.product_title}\nAmount: ${bdt(o.amount)}\nPayment: ${o.payment_method} (${o.trx_id})\nCustomer: ${o.customer_name} (${o.customer_phone})\nLocation: ${o.district}, ${o.address}\nStatus: Hub Processing (Dokkanio)`);
+      const receiptMsg = encodeURIComponent(`🛍️ *New Order Receipt – ${storeData.store_name}*\nOrder ID: #${String(orderId).slice(0,8).toUpperCase()}\nItems: ${o.product_title}\nTotal: ${bdt(o.amount)}\nPayment: ${o.payment_method} (${o.trx_id})\nCustomer: ${o.customer_name} (${o.customer_phone})\nLocation: ${o.district}, ${o.address}\nStatus: Hub Processing (Dokkanio)`);
       $("confWaBtn").href = `https://wa.me/${intlWa}?text=${receiptMsg}`;
       $("checkoutForm").reset();
       toast("Order placed successfully!");
@@ -1145,7 +1289,7 @@
           variants: m.variants || "",
           bundle: m.bundle || "",
           certifications: m.certifications || "",
-          category: m.category || "Store Product"
+          category: m.category || (p.is_bundle ? "Bundles" : "Store Product")
         };
       });
 
