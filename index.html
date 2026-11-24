@@ -1184,6 +1184,13 @@
                   '    var info = window._dkStoreInfo || {};',
                   '    var slug = (info.slug || "yourstore").toLowerCase();',
                   '    var ta = document.querySelector(".top-actions");',
+                  '    if(ta && !document.getElementById("dkStudioAiWizardBtn")){',
+                  '      var wiz = document.createElement("button");',
+                  '      wiz.id = "dkStudioAiWizardBtn"; wiz.type = "button"; wiz.className = "dk-studio-domain-pill";',
+                  '      wiz.innerHTML = "✨ AI Store Wizard";',
+                  '      wiz.onclick = function(){ try{ localStorage.removeItem("forma_onboarded"); }catch(_){} if(typeof openStoreOnboarding==="function") openStoreOnboarding(); };',
+                  '      ta.insertBefore(wiz, ta.firstChild);',
+                  '    }',
                   '    if(ta && !document.getElementById("dkStudioDomainPill")){',
                   '      var pill = document.createElement("button");',
                   '      pill.id = "dkStudioDomainPill"; pill.type = "button"; pill.className = "dk-studio-domain-pill";',
@@ -1268,7 +1275,7 @@
                   '      var mm = ss.productsMeta || {};',
                   '      products = d.products.map(function(p){ var m = mm[String(p.sid)] || mm[p.name] || {}; return Object.assign({}, p, { description: p.description||m.description||"", variants: p.variants||m.variants||"", bundle: p.bundle||m.bundle||"", certifications: p.certifications||m.certifications||"", category: m.category||p.category||"Store products", stock: m.stock!=null?m.stock:p.stock, status: m.status||p.status||"Active", sku: m.sku||p.sku||"DK-001" }); });',
                   '    }',
-                  '    if(d.hasSavedState || (Array.isArray(d.products) && d.products.length)){',
+                  '    if(d.hasSavedState){',
                   '      try{ localStorage.setItem("forma_onboarded","1"); }catch(_){};',
                   '      var ob = document.getElementById("storeOnboarding"); if(ob) ob.remove();',
                   '    }',
@@ -3726,12 +3733,12 @@
         }
       }
       currentStore.slug = nextSlug;
-      if ($("sbLogoUrl")?.value.trim()) storeMeta.logo_url = $("sbLogoUrl").value.trim();
-      if ($("sbBannerUrl")?.value.trim()) storeMeta.banner_url = $("sbBannerUrl").value.trim();
+      if ($("sbLogoUrl")) storeMeta.logo_url = $("sbLogoUrl").value.trim();
+      if ($("sbBannerUrl")) storeMeta.banner_url = $("sbBannerUrl").value.trim();
       if ($("sbHeroHeadline")?.value.trim()) storeMeta.hero_headline = $("sbHeroHeadline").value.trim();
       if ($("sbHeroSub")?.value.trim()) storeMeta.hero_sub = $("sbHeroSub").value.trim();
       if ($("sbCtaText")?.value.trim()) storeMeta.cta_text = $("sbCtaText").value.trim();
-      if ($("sbAnnounceText")?.value !== undefined && $("sbAnnounceText").value.trim()) storeMeta.announcement = $("sbAnnounceText").value.trim();
+      if ($("sbAnnounceText")) storeMeta.announcement = $("sbAnnounceText").value.trim();
       if ($("sbBrandStory")?.value.trim()) storeMeta.brand_story = $("sbBrandStory").value.trim();
 
       currentStore.custom_css = buildFullCustomCss(storeMeta, $("sbCustomCssRaw")?.value || currentStore._cleanCss || "");
@@ -4606,19 +4613,21 @@
       if (!frame) return;
       let timer;
       const DEMO_SKUS = ['CUP-001', 'THR-002', 'LMP-003', 'BAG-004', 'SET-005'];
-      const strip = v => (typeof v === 'string' && v.startsWith('data:') && v.length > 25000) ? '' : v;
+      const strip = v => (typeof v === 'string' && v.startsWith('data:') && v.length > 250000) ? '' : v;
+      const stripAuth = v => (typeof v === 'string' && v.startsWith('data:') && v.length > 12000) ? '' : v;
 
-      function cleanState(st) {
+      function cleanState(st, forAuth = false) {
+        const fn = forAuth ? stripAuth : strip;
         return {
           ...st,
           products: (st.products || []).map(p => ({
             ...p,
-            image: strip(p.image)
+            image: fn(p.image)
           })),
           edits: {
             ...(st.edits || {}),
-            heroImage: strip((st.edits || {}).heroImage),
-            homeImage: strip((st.edits || {}).homeImage)
+            heroImage: fn((st.edits || {}).heroImage),
+            homeImage: fn((st.edits || {}).homeImage)
           }
         };
       }
@@ -4629,21 +4638,27 @@
         return 1000 + Math.abs(h) % 900000;
       };
 
-      const mapProducts = () => (typeof storeProducts !== 'undefined' ? storeProducts : []).map((p, i) => ({
-        id: hid(p.id),
-        sid: String(p.id),
-        name: p.title || 'Product',
-        category: p.category || (p.is_bundle ? 'Bundles' : 'Store products'),
-        price: Number(p.price) || 0,
-        stock: p.stock != null ? Number(p.stock) : 50,
-        status: 'Active',
-        sku: 'DK-' + String(i + 1).padStart(3, '0'),
-        variants: '',
-        description: p.description || '',
-        bundle: '',
-        certifications: '',
-        image: p.image_url || ''
-      }));
+      const mapProducts = () => {
+        const mm = storeMeta.studio?.productsMeta || {};
+        return (typeof storeProducts !== 'undefined' ? storeProducts : []).map((p, i) => {
+          const m = mm[String(p.id)] || mm[p.title] || {};
+          return {
+            id: hid(p.id),
+            sid: String(p.id),
+            name: p.title || 'Product',
+            category: m.category || p.category || (p.is_bundle ? 'Bundles' : 'Store products'),
+            price: Number(p.price) || 0,
+            stock: m.stock != null ? Number(m.stock) : (p.stock != null ? Number(p.stock) : 50),
+            status: m.status || 'Active',
+            sku: m.sku || ('DK-' + String(i + 1).padStart(3, '0')),
+            variants: m.variants || '',
+            description: m.description || p.description || '',
+            bundle: m.bundle || '',
+            certifications: m.certifications || '',
+            image: p.image_url || ''
+          };
+        });
+      };
 
       async function studioPull() {
         let studioState = storeMeta.studio || null;
@@ -4694,7 +4709,7 @@
         storeMeta.hero_sub = ed.heroSub || storeMeta.hero_sub;
         storeMeta.cta_text = ed.button || storeMeta.cta_text;
         storeMeta.announcement = ed.bannerText !== undefined ? ed.bannerText : storeMeta.announcement;
-        if (ed.heroImage && !ed.heroImage.startsWith('data:')) storeMeta.banner_url = ed.heroImage;
+        if (ed.heroImage !== undefined) storeMeta.banner_url = strip(ed.heroImage) || '';
 
         const productsMeta = {
           ...(storeMeta.studio?.productsMeta || {})
@@ -4702,8 +4717,9 @@
         const newlyAssignedSids = {};
         if (Array.isArray(state.products)) {
           await ensureStoreRecord();
+          const hadProducts = storeProducts.length > 0;
           for (const sp of state.products) {
-            const isStarterDemo = !sp.sid && DEMO_SKUS.includes(sp.sku) && !sp._userEdited;
+            const isStarterDemo = !sp.sid && DEMO_SKUS.includes(sp.sku) && !sp._userEdited && hadProducts;
             if (isStarterDemo) continue;
             const prodPayload = {
               store_id: currentStore.id,
@@ -4773,7 +4789,8 @@
           } catch (_) {}
         }
 
-        const cleaned = cleanState(state);
+        const cleaned = cleanState(state, false);
+        const cleanedAuth = cleanState(state, true);
         storeMeta.studio = {
           theme: cleaned.theme,
           sections: cleaned.sections,
@@ -4788,6 +4805,11 @@
         if ($('sbBkash')) $('sbBkash').value = currentStore.bkash_number || '';
         if ($('sbNagad')) $('sbNagad').value = currentStore.nagad_number || '';
         if ($('sbWhatsapp')) $('sbWhatsapp').value = currentStore.whatsapp_number || '';
+        if ($('sbHeroHeadline')) $('sbHeroHeadline').value = storeMeta.hero_headline || '';
+        if ($('sbHeroSub')) $('sbHeroSub').value = storeMeta.hero_sub || '';
+        if ($('sbCtaText')) $('sbCtaText').value = storeMeta.cta_text || '';
+        if ($('sbAnnounceText')) $('sbAnnounceText').value = storeMeta.announcement || '';
+        if ($('sbBannerUrl')) $('sbBannerUrl').value = storeMeta.banner_url || '';
 
         await saveStoreToSupabase(showToast);
         renderMyStore();
@@ -4797,7 +4819,7 @@
           try {
             await sb.auth.updateUser({
               data: {
-                dokkanio_studio: cleaned
+                dokkanio_studio: cleanedAuth
               }
             });
           } catch (_) {}
