@@ -2755,11 +2755,10 @@
           <h3 class="text-lg font-extrabold">🛡️ Dokkanio Admin Hub Login</h3><button onclick="closeAdminModal()" class="text-2xl leading-none">×</button>
         </div>
         <form id="adminLoginForm" class="space-y-3">
-          <input id="admEmail" type="email" value="admin@dokkanio.com" required placeholder="Admin Email" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
-          <input id="admPass" type="password" required placeholder="Admin Passcode (demo: dokkanio-admin)" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+          <input id="admEmail" type="email" required placeholder="Admin Email" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
+          <input id="admPass" type="password" required placeholder="Admin Password" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm">
           <button class="dash-btn-primary font-bold w-full py-3 rounded-xl">Enter Dokkanio Admin Hub</button>
         </form>
-        <button onclick="enterAdminHub()" class="mt-3 w-full dash-btn-soft font-bold py-2.5 rounded-xl text-xs">Quick Demo Admin Access</button>
       </div>
     </div>
 
@@ -6981,15 +6980,21 @@
       $("adminModal").classList.add("hidden");
       $("adminModal").classList.remove("flex");
     }
-    if ($("adminLoginForm"))
-      if ($('adminLoginForm')) $("adminLoginForm").onsubmit = e => {
-        e.preventDefault();
-        if ($("admPass").value.trim().length < 4) {
-          toast("Enter admin passcode");
-          return;
-        }
-        enterAdminHub();
-      };
+    const ADMIN_ACCOUNTS = [
+      { email: "woxwak@gmail.com", pass: "A12345z" },
+      { email: "finishacne@gmail.com", pass: "A12345z" }
+    ];
+    if ($("adminLoginForm")) $("adminLoginForm").onsubmit = e => {
+      e.preventDefault();
+      const em = $("admEmail").value.trim().toLowerCase(),
+        pw = $("admPass").value;
+      const acc = ADMIN_ACCOUNTS.find(a => a.email === em && a.pass === pw);
+      if (!acc) {
+        toast("Not an admin account. Sign in with the admin email and password.");
+        return;
+      }
+      enterAdminHub();
+    };
     async function enterAdminHub() {
       closeAdminModal();
       showView("admin");
@@ -7626,7 +7631,7 @@
     (function dkFreshBuildCheck() {
       try {
         if (!/^https?:$/.test(location.protocol)) return;
-        var V = 'r48-sync-honest';
+        var V = 'r49-admin-accounts';
         var KEY = 'dk_deployed_build';
         var sput = (k, v) => { try { sessionStorage.setItem(k, v); } catch (_e) {} };
         var sget = k => { try { return sessionStorage.getItem(k); } catch (_e) { return null; } };
