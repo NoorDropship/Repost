@@ -7525,6 +7525,46 @@
       else initDkLaptopFill();
     })();
   </script>
+  <script>
+    /* --- ADDITIVE: STALE-SNAPSHOT NOTICE (if a device shows an offline copy of a store address that no longer exists live, say so instead of silently looking like an old version) --- */
+    (function dkStaleSnapshotNotice() {
+      const path = location.pathname.replace(/^\/+|\/+$/g, '');
+      if (!path || path === 'index.html' || path === '404.html') return;
+      const SB = 'https://aijyvcqpvhwzwtfqpbol.supabase.co/rest/v1';
+      const KEY = 'sb_publishable_2DZ9NzgEEzYR3Cf4ZnFGYw_hB3Z1kQW';
+      let checked = false;
+      const tick = setInterval(() => {
+        try {
+          const mount = document.getElementById('publicStoreMount');
+          if (!mount || !mount.querySelector('.store-nav')) return;
+          clearInterval(tick);
+          if (checked) return;
+          checked = true;
+          fetch(SB + '/stores?slug=eq.' + encodeURIComponent(path) + '&select=id', { headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY } })
+            .then(r => (r.ok ? r.json() : []))
+            .then(rows => {
+              if (Array.isArray(rows) && rows.length) return;
+              const bar = document.createElement('div');
+              bar.id = 'dkStaleSnapshotBar';
+              bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:2147483000;background:#111318;color:#f5f5f7;font:600 12.5px/1.45 Inter,system-ui,sans-serif;padding:10px 40px 10px 14px;text-align:center;';
+              const span = document.createElement('span');
+              span.innerHTML = 'Offline preview saved on this device — this address is not live. <a href="/" style="color:#8ab4ff;text-decoration:underline;">Go to Dokkanio</a>';
+              const x = document.createElement('button');
+              x.type = 'button';
+              x.textContent = '\u2715';
+              x.setAttribute('aria-label', 'Dismiss');
+              x.style.cssText = 'position:absolute;right:8px;top:8px;background:none;border:none;color:#f5f5f7;font-size:14px;cursor:pointer;padding:2px 6px;';
+              x.addEventListener('click', () => { bar.remove(); });
+              bar.appendChild(span);
+              bar.appendChild(x);
+              document.body.appendChild(bar);
+            })
+            .catch(() => {});
+        } catch (_e) { clearInterval(tick); }
+      }, 1200);
+      setTimeout(() => clearInterval(tick), 45000);
+    })();
+  </script>
 </body>
 
 </html>
