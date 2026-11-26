@@ -1936,6 +1936,17 @@
         touch-action: manipulation;
         -webkit-tap-highlight-color: rgba(45, 95, 224, 0.18);
       }
+
+      /* --- ADDITIVE: MOBILE FIT GUARD (long titles/links can push the store wider than a phone screen; clip sideways overflow without breaking sticky, and wrap long words) --- */
+      .dk-store-root { overflow-x: clip; }
+      .dk-store-root .dk-cat-title,
+      .dk-store-root .product-title,
+      .dk-store-root .product-config-card,
+      .dk-store-root .dk-mirror-card {
+        overflow-wrap: break-word;
+        word-break: normal;
+        max-width: 100%;
+      }
     </style>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap">
@@ -6230,10 +6241,17 @@
         const origView = buildStorefrontView;
         window.buildStorefrontView = function(store, products, meta, rootId, context, device) {
           try {
-            if (context === 'live' && meta && meta.dk_theme && meta.dk_theme.vars) {
+            if ((context === 'live' || context === 'preview') && meta && meta.dk_theme && meta.dk_theme.vars) {
               const res = dkMirrorView(store, products, meta, rootId);
               setTimeout(() => {
-                try { const r = document.getElementById(rootId); if (r) dkApplyRootTheme(r, meta.dk_theme.vars); } catch (_e) {}
+                try {
+                  const r = document.getElementById(rootId);
+                  if (r) {
+                    r.__dkProducts = Array.isArray(products) ? products.slice() : [];
+                    dkApplyRootTheme(r, meta.dk_theme.vars);
+                    dkWireMirror(r);
+                  }
+                } catch (_e) {}
               }, 60);
               return res;
             }
@@ -6252,10 +6270,10 @@
       } catch (_e) {}
 
       function dkWireMirror(root) {
-        if (!root || root.dataset.dkMirrorWired === '1') return;
+        if (!root) return;
         const canvas = root.querySelector('#storeCanvas[data-dk-mirror="1"]');
-        if (!canvas) return;
-        root.dataset.dkMirrorWired = '1';
+        if (!canvas || canvas.dataset.dkMirrorWired === '1') return;
+        canvas.dataset.dkMirrorWired = '1';
         try { const bag = document.getElementById('publicBagButton'); if (bag) bag.style.display = 'none'; } catch (_e) {}
         try {
           const nav = canvas.querySelector('.store-nav');
@@ -6408,6 +6426,7 @@
         function mSync(p) {
           if (!p) return;
           st.product = p;
+          try { if (root) root.__dkCurrent = p; } catch (_e) {}
           st.basePrice = Math.round(Number(p.price) || 0);
           st.qty = 1;
           st.discount = 0;
@@ -6450,7 +6469,10 @@
 
         function mSelect(pid) {
           let p = null;
-          try { p = (typeof publicStoreProducts !== 'undefined' ? publicStoreProducts : []).find(x => String(x.id) === String(pid)) || null; } catch (_e) {}
+          try {
+            const list = (root && root.__dkProducts && root.__dkProducts.length) ? root.__dkProducts : (typeof publicStoreProducts !== 'undefined' ? publicStoreProducts : []);
+            p = list.find(x => String(x.id) === String(pid)) || null;
+          } catch (_e) {}
           if (!p) return;
           mSync(p);
           try { closeCheckout(); } catch (_e) {}
@@ -6547,7 +6569,7 @@
           }
         });
 
-        root.addEventListener('click', function(e) {
+        canvas.addEventListener('click', function(e) {
           const thumb = e.target.closest('.dk-thumb');
           if (thumb) {
             e.preventDefault();
@@ -6662,7 +6684,9 @@
         });
 
         try {
-          const firstP = (typeof publicStoreProducts !== 'undefined' ? publicStoreProducts : [])[0];
+          const list = (root && root.__dkProducts && root.__dkProducts.length) ? root.__dkProducts : (typeof publicStoreProducts !== 'undefined' ? publicStoreProducts : []);
+          const cur = root && root.__dkCurrent;
+          const firstP = (cur && list.find(x => String(x.id) === String(cur.id))) || list[0];
           if (firstP) mSync(firstP);
         } catch (_e) {}
       }
@@ -7580,7 +7604,7 @@
     (function dkFreshBuildCheck() {
       try {
         if (!/^https?:$/.test(location.protocol)) return;
-        var V = 'r41-store-parity';
+        var V = 'r42-preview-mirror';
         var KEY = 'dk_deployed_build';
         var sput = (k, v) => { try { sessionStorage.setItem(k, v); } catch (_e) {} };
         var sget = k => { try { return sessionStorage.getItem(k); } catch (_e) { return null; } };
