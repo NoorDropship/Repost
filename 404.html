@@ -1655,25 +1655,36 @@
     </style>
     <style id="dkHeroPhone">
       /* --- ADDITIVE: HERO PHONE MOCKUP (phone storefront preview instead of the orbit illustration) --- */
-      .dk-hero-phone-tilt { height: 100%; display: flex; align-items: center; justify-content: center; transform: rotate(-2.5deg); }
-      .dk-phone {
-        width: min(268px, 68vw);
-        border-radius: 2.6rem;
+      .dk-hero-phone-tilt { height: 100%; display: flex; align-items: center; justify-content: center; transform: rotate(-1.5deg); }
+      .dk-laptop { width: min(500px, 94%); margin: 0 auto; }
+      .dk-laptop-screen {
         background: #0b1220;
-        padding: 10px;
-        box-shadow: 0 40px 90px rgba(2, 6, 23, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.14);
+        border-radius: 14px 14px 4px 4px;
+        padding: 9px 9px 10px;
+        box-shadow: 0 40px 90px rgba(2, 6, 23, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.14);
       }
-      .dk-phone-screen {
+      .dk-laptop-display {
         background: #ffffff;
-        border-radius: 2.1rem;
+        border-radius: 7px;
         overflow: hidden;
         position: relative;
         padding-bottom: 14px;
       }
-      .dk-phone-url {
-        display: flex; align-items: center; justify-content: center; gap: 6px;
-        background: #f1f5f9; margin: 10px 12px 0; border-radius: 9999px;
-        padding: 6px 10px; font-size: 10.5px; font-weight: 700; color: #475569;
+      .dk-laptop-bar {
+        display: flex; align-items: center; gap: 10px;
+        background: #f1f5f9;
+        padding: 6px 10px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .dk-laptop-dots { display: inline-flex; gap: 4px; }
+      .dk-laptop-dots i { width: 7px; height: 7px; border-radius: 9999px; background: #cbd5e1; display: inline-block; }
+      .dk-laptop-dots i:first-child { background: #fca5a5; }
+      .dk-laptop-dots i:nth-child(2) { background: #fcd34d; }
+      .dk-laptop-dots i:nth-child(3) { background: #86efac; }
+      .dk-laptop-url {
+        flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+        background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px;
+        padding: 4px 10px; font-size: 10px; font-weight: 700; color: #475569;
       }
       .dk-phone-lock {
         width: 8px; height: 10px; border: 1.5px solid #64748b;
@@ -1684,42 +1695,54 @@
         width: 5px; height: 6px; border: 1.5px solid #64748b; border-bottom: none;
         border-radius: 4px 4px 0 0;
       }
-      .dk-phone-store { display: flex; align-items: center; gap: 8px; padding: 12px 16px 6px; font-size: 12px; color: #0f172a; }
+      .dk-phone-store { display: flex; align-items: center; gap: 8px; padding: 10px 14px 6px; font-size: 11.5px; color: #0f172a; }
       .dk-phone-avatar {
-        width: 26px; height: 26px; border-radius: 9999px; flex-shrink: 0;
+        width: 24px; height: 24px; border-radius: 9999px; flex-shrink: 0;
         background: linear-gradient(135deg, #4d8bff, #2d5fe0); color: #fff;
-        font-weight: 800; font-size: 12px; display: grid; place-items: center;
+        font-weight: 800; font-size: 11px; display: grid; place-items: center;
       }
       .dk-phone-open {
-        color: #059669; font-size: 9.5px; font-weight: 800;
+        color: #059669; font-size: 9px; font-weight: 800;
         background: #ecfdf5; border: 1px solid #a7f3d0;
         padding: 1px 7px; border-radius: 9999px; white-space: nowrap;
       }
-      .dk-phone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 4px 12px 0; }
-      .dk-phone-card { margin: 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+      .dk-laptop-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 4px 12px 0; }
+      .dk-phone-card { margin: 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
       .dk-phone-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: #eef2f7; }
-      .dk-phone-card figcaption { padding: 6px 8px 8px; display: flex; flex-direction: column; gap: 2px; }
-      .dk-phone-card b { font-size: 10px; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .dk-phone-card figcaption span:last-child { font-size: 10px; color: #2d5fe0; font-weight: 800; }
+      .dk-phone-card figcaption { padding: 5px 7px 7px; display: flex; flex-direction: column; gap: 1px; }
+      .dk-phone-card b { font-size: 9px; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .dk-phone-card figcaption span:last-child { font-size: 9.5px; color: #2d5fe0; font-weight: 800; }
       .dk-phone-toast {
         position: absolute; left: 10px; right: 10px; bottom: 10px;
         background: linear-gradient(135deg, #047857, #059669);
-        color: #ecfdf5; border-radius: 12px; padding: 8px 10px;
+        color: #ecfdf5; border-radius: 12px; padding: 7px 10px;
         display: flex; gap: 8px; align-items: center;
         box-shadow: 0 12px 28px rgba(6, 95, 70, 0.35);
         animation: dkToastLoop 6s ease infinite;
       }
       .dk-phone-toast > span:first-child {
-        background: #34d399; color: #064e3b; width: 18px; height: 18px;
+        background: #34d399; color: #064e3b; width: 17px; height: 17px;
         border-radius: 9999px; flex-shrink: 0; display: grid; place-items: center;
-        font-size: 11px; font-weight: 900;
+        font-size: 10px; font-weight: 900;
       }
-      .dk-phone-toast b { font-size: 10.5px; display: block; white-space: nowrap; }
-      .dk-phone-toast div > span { font-size: 9.5px; color: #a7f3d0; }
+      .dk-phone-toast b { font-size: 10px; display: block; white-space: nowrap; }
+      .dk-phone-toast div > span { font-size: 9px; color: #a7f3d0; }
+      .dk-laptop-base {
+        height: 15px;
+        background: linear-gradient(180deg, #26314a, #0b1220);
+        border-radius: 2px 2px 14px 14px;
+        margin: 0 -36px;
+        box-shadow: 0 18px 34px rgba(2, 6, 23, 0.4);
+        display: flex; align-items: flex-start; justify-content: center;
+      }
+      .dk-laptop-notch { width: 92px; height: 6px; background: #04070f; border-radius: 0 0 8px 8px; }
       @keyframes dkToastLoop {
         0%, 12% { opacity: 0; transform: translateY(14px); }
         22%, 78% { opacity: 1; transform: translateY(0); }
         92%, 100% { opacity: 0; transform: translateY(14px); }
+      }
+      @media (max-width: 640px) {
+        .dk-laptop-base { margin: 0 -16px; }
       }
     </style>
     <style id="dkProductRestyle">
@@ -1872,22 +1895,22 @@
               </div>
             </div>
             <div class="relative h-[360px] sm:h-[440px] md:h-[520px] w-full max-w-[420px] mx-auto px-2" aria-hidden="true">
-              <div class="dk-hero-phone-tilt">
-                <div class="dk-phone">
-                  <div class="dk-phone-screen">
-                    <div class="dk-phone-url"><span class="dk-phone-lock"></span>dokkanio.com/rimonshop</div>
+              <div class="dk-laptop" aria-hidden="true">
+                <div class="dk-laptop-screen">
+                  <div class="dk-laptop-display">
+                    <div class="dk-laptop-bar"><span class="dk-laptop-dots"><i></i><i></i><i></i></span><span class="dk-laptop-url"><span class="dk-phone-lock"></span>dokkanio.com/rimonshop</span></div>
                     <div class="dk-phone-store"><span class="dk-phone-avatar">R</span><div class="min-w-0 flex items-center gap-1.5"><b class="truncate">Rima's Store</b><span class="dk-phone-open">Open</span></div></div>
-                    <div class="dk-phone-grid">
-                      <figure class="dk-phone-card"><img id="dkPhoneImg1" alt="" loading="lazy"><figcaption><b id="dkPhoneName1">Local bestseller</b><span id="dkPhonePrice1">৳ —</span></figcaption></figure>
-                      <figure class="dk-phone-card"><img id="dkPhoneImg2" alt="" loading="lazy"><figcaption><b id="dkPhoneName2">Local bestseller</b><span id="dkPhonePrice2">৳ —</span></figcaption></figure>
+                    <div class="dk-laptop-grid">
+                      <figure class="dk-phone-card"><img id="dkLaptopImg1" alt="" loading="lazy"><figcaption><b id="dkLaptopName1">Bestseller</b><span id="dkLaptopPrice1">৳ —</span></figcaption></figure>
+                      <figure class="dk-phone-card"><img id="dkLaptopImg2" alt="" loading="lazy"><figcaption><b id="dkLaptopName2">Bestseller</b><span id="dkLaptopPrice2">৳ —</span></figcaption></figure>
+                      <figure class="dk-phone-card"><img id="dkLaptopImg3" alt="" loading="lazy"><figcaption><b id="dkLaptopName3">Bestseller</b><span id="dkLaptopPrice3">৳ —</span></figcaption></figure>
                     </div>
-                    <div class="dk-phone-toast" id="dkPhoneToast"><span>✓</span><div class="min-w-0"><b>bKash payment received</b><span>৳890 • order confirmed</span></div></div>
+                    <div class="dk-phone-toast"><span>✓</span><div class="min-w-0"><b>bKash payment received</b><span>৳890 • order confirmed</span></div></div>
                   </div>
                 </div>
+                <div class="dk-laptop-base"><span class="dk-laptop-notch"></span></div>
               </div>
-            </div>
               <div class="fl absolute right-[4%] top-1 bg-white text-slate-900 rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 shadow-xl flex items-center gap-2" style="animation-delay:1.6s"><span class="bg-emerald-100 text-emerald-600 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full">LIVE</span><span><span data-i18n="heroBadge1" class="block text-[9px] sm:text-[10px] text-slate-500">Free Hosting &amp; AI Builder</span><b class="text-xs sm:text-sm">dokkanio.com/store</b></span></div>
-              <div class="fl absolute left-[4%] bottom-1 bg-white text-slate-900 rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 shadow-xl flex items-center gap-2" style="animation-delay:.3s"><span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full grad text-white flex items-center justify-center text-xs sm:text-sm">🇧🇩</span><span><span data-i18n="heroBadge2" class="block text-[9px] sm:text-[10px] text-slate-500">bKash, Nagad, Card &amp; COD</span><b data-i18n="heroBadge2Val" class="text-xs sm:text-sm">All 64 Districts</b></span></div>
             </div>
           </div>
         </section>
@@ -7332,32 +7355,32 @@
     </script>
 
     <script>
-    /* --- ADDITIVE: HERO PHONE MOCKUP FILL (real Dokkanio catalog photos and prices) --- */
+    /* --- ADDITIVE: HERO LAPTOP MOCKUP FILL (real Dokkanio catalog photos and prices) --- */
     (function() {
-      function initDkPhoneFill() {
+      function initDkLaptopFill() {
         try {
           var P = (typeof PRODUCTS_DATA !== 'undefined') ? PRODUCTS_DATA : (window.PRODUCTS_DATA || null);
-          if (!P || P.length < 2) return;
+          if (!P || P.length < 3) return;
           function titleOf(p) { return (p.brand ? p.brand + ' ' : '') + (p.name || ''); }
           function imgOf(p) {
             try { return (window.dkCatalogPhotoFor ? window.dkCatalogPhotoFor(titleOf(p)) : '') || ''; }
             catch (_e) { return ''; }
           }
           function bdt(n) { return '\u09f3' + Number(n).toLocaleString('en-IN'); }
-          var a = P[0], b = P[1];
-          var im1 = document.getElementById('dkPhoneImg1');
-          var im2 = document.getElementById('dkPhoneImg2');
-          var u1 = imgOf(a), u2 = imgOf(b);
-          if (im1 && u1) im1.setAttribute('src', u1);
-          if (im2 && u2) im2.setAttribute('src', u2);
-          var n1 = document.getElementById('dkPhoneName1'); if (n1) n1.textContent = a.name || 'Bestseller';
-          var n2 = document.getElementById('dkPhoneName2'); if (n2) n2.textContent = b.name || 'Bestseller';
-          var pr1 = document.getElementById('dkPhonePrice1'); if (pr1) pr1.textContent = bdt(a.retail);
-          var pr2 = document.getElementById('dkPhonePrice2'); if (pr2) pr2.textContent = bdt(b.retail);
+          for (var k = 0; k < 3; k++) {
+            var pr = P[k];
+            var im = document.getElementById('dkLaptopImg' + (k + 1));
+            var u = imgOf(pr);
+            if (im && u) im.setAttribute('src', u);
+            var nm = document.getElementById('dkLaptopName' + (k + 1));
+            if (nm) nm.textContent = pr.name || 'Bestseller';
+            var prEl = document.getElementById('dkLaptopPrice' + (k + 1));
+            if (prEl) prEl.textContent = bdt(pr.retail);
+          }
         } catch (_e) {}
       }
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDkPhoneFill);
-      else initDkPhoneFill();
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDkLaptopFill);
+      else initDkLaptopFill();
     })();
   </script>
 </body>
