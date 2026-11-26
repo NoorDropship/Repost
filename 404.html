@@ -6342,7 +6342,7 @@
           returnView = 'home';
         }
 
-        /* ADDITIVE: product detail opens as an overlay on the page the visitor is on (same as the Store Editor) */
+        /* ADDITIVE: product details open as the SAME in-page product view the Store Editor shows (identical layout, no cramped overlay sheet) */
         const productPanel = show('#view-product');
         let productOverlay = null;
         let productSheet = null;
@@ -6444,7 +6444,9 @@
           try { p = (typeof publicStoreProducts !== 'undefined' ? publicStoreProducts : []).find(x => String(x.id) === String(pid)) || null; } catch (_e) {}
           if (!p) return;
           mSync(p);
-          openProductOverlay();
+          try { closeCheckout(); } catch (_e) {}
+          try { closeProductOverlay(); } catch (_e) {}
+          mSwitch('product');
         }
 
         function showSuccess() {
@@ -6473,6 +6475,7 @@
             success.innerHTML = '';
             if (grid) grid.style.display = '';
             closeCheckout();
+            try { mSwitch('home'); } catch (_e4) {}
           });
         }
 
@@ -6550,7 +6553,7 @@
             return;
           }
           const proceed = e.target.closest('#dkMirrorProceed');
-          if (proceed) { e.preventDefault(); closeProductOverlay(); openCheckout('home'); return; }
+          if (proceed) { e.preventDefault(); try { closeCheckout(); } catch (_e2) {} try { closeProductOverlay(); } catch (_e3) {} mSwitch('checkout'); return; }
           const cardPill = e.target.closest('.var-pill[data-card-var]');
           if (cardPill) {
             e.preventDefault();
@@ -6583,9 +6586,7 @@
             e.preventDefault();
             e.stopPropagation();
             const card = now.closest('[data-product-id]');
-            if (card) mSelect(card.getAttribute('data-product-id'));
-            closeProductOverlay();
-            openCheckout('home');
+            if (card) { mSelect(card.getAttribute('data-product-id')); mSwitch('checkout'); }
             return;
           }
           const cardEl = e.target.closest('.dk-mirror-card[data-product-id]');
@@ -6639,7 +6640,7 @@
           if (navBtn) {
             e.preventDefault();
             const nav = navBtn.getAttribute('data-nav');
-            if (nav === 'checkout') openCheckout(canvas.querySelector('.view-panel.active') && canvas.querySelector('.view-panel.active').id.replace('view-', '') || 'home');
+            if (nav === 'checkout') mSwitch('checkout');
             else if (nav === 'product') mSwitch('product');
             else mSwitch('home');
             return;
