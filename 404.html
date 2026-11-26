@@ -1927,6 +1927,15 @@
         #view-product .sync-spec-card { position: static !important; }
         #view-product .sync-spec-card .dk-prod-desc { padding: 12px 14px 16px; }
       }
+
+      /* --- ADDITIVE: MOBILE TAP FIX (product cards and CTAs are clearly tappable on phones) --- */
+      .dk-mirror-card[data-product-id],
+      .dk-cat-cta,
+      .dk-real-checkout {
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(45, 95, 224, 0.18);
+      }
     </style>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap">
@@ -7564,6 +7573,34 @@
         } catch (_e) { clearInterval(tick); }
       }, 1200);
       setTimeout(() => clearInterval(tick), 45000);
+    })();
+  </script>
+  <script>
+    /* --- ADDITIVE: FRESH BUILD CHECK (if a device is running a cached older copy of Dokkanio, auto-reload once so every visitor sees the newest version) --- */
+    (function dkFreshBuildCheck() {
+      try {
+        if (!/^https?:$/.test(location.protocol)) return;
+        var V = 'r41-store-parity';
+        var KEY = 'dk_deployed_build';
+        var sput = (k, v) => { try { sessionStorage.setItem(k, v); } catch (_e) {} };
+        var sget = k => { try { return sessionStorage.getItem(k); } catch (_e) { return null; } };
+        var seen = sget(KEY);
+        if (seen && seen !== V && sget(KEY + '_tried') !== seen) {
+          sput(KEY + '_tried', seen);
+          location.reload();
+          return;
+        }
+        fetch('/build.txt?dkv=' + Date.now(), { cache: 'no-store' })
+          .then(r => (r.ok ? r.text() : ''))
+          .then(t => {
+            var latest = String(t || '').trim();
+            if (!latest) return;
+            if (latest === V) { if (sget(KEY) !== V) sput(KEY, V); return; }
+            sput(KEY, latest);
+            if (sget(KEY + '_tried') !== latest) { sput(KEY + '_tried', latest); location.reload(); }
+          })
+          .catch(() => {});
+      } catch (_e) {}
     })();
   </script>
 </body>
