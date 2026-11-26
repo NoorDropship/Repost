@@ -1,1 +1,1 @@
-r52-store-address
+r53-brand-schema
