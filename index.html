@@ -5407,7 +5407,7 @@
               const {
                 data: productData,
                 error: productError
-              } = await sb.from("products").select("id,store_id,title,price,image_url,is_bundle").eq("store_id", storeData.id).order("id", {
+              } = await sb.from("products").select("id,store_id,title,price,image_url,is_bundle,description").eq("store_id", storeData.id).order("id", {
                 ascending: false
               });
               if (!productError) products = productData || [];
@@ -7604,7 +7604,7 @@
     (function dkFreshBuildCheck() {
       try {
         if (!/^https?:$/.test(location.protocol)) return;
-        var V = 'r42-preview-mirror';
+        var V = 'r43-desc-live';
         var KEY = 'dk_deployed_build';
         var sput = (k, v) => { try { sessionStorage.setItem(k, v); } catch (_e) {} };
         var sget = k => { try { return sessionStorage.getItem(k); } catch (_e) { return null; } };
