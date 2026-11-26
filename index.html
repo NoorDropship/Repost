@@ -2714,13 +2714,13 @@
           <button type="button" id="syncTabWoo" onclick="setSyncPlatform('woo')" class="dash-btn-soft py-2.5 rounded-xl">🟣 WooCommerce</button>
         </div>
         <form id="shopSyncForm" class="space-y-3">
-          <div><label class="block text-xs font-bold text-slate-600 mb-1" id="syncUrlLabel">Shopify Store Domain</label><input id="syncStoreUrl" required placeholder="https://yourstore.myshopify.com" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"></div>
-          <div id="syncShopifyWrap"><label class="block text-xs font-bold text-slate-600 mb-1">Shopify Admin API Access Token</label><input id="syncShopifyToken" placeholder="shpat_xxxxxxxxxxxxxxxxx" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"></div>
+          <div id="syncUrlWrap"><label class="block text-xs font-bold text-slate-600 mb-1" id="syncUrlLabel">Shopify Store Domain</label><input id="syncStoreUrl" placeholder="https://yourstore.myshopify.com" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"></div>
+          <div id="syncShopifyWrap" class="hidden"><div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-800"><b>Shopify imports happen through the CSV below.</b> Shopify blocks direct browser pushes for security, so Dokkanio gives you a ready-made import file: download the Shopify CSV, then in Shopify Admin go to <b>Products → Import</b> and upload it. All products, prices and images come across in one click.</div></div>
           <div id="syncWooWrap" class="hidden grid grid-cols-2 gap-2.5">
             <div><label class="block text-xs font-bold text-slate-600 mb-1">Consumer Key (ck_...)</label><input id="syncWooCk" placeholder="ck_xxxxxxxx" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs"></div>
             <div><label class="block text-xs font-bold text-slate-600 mb-1">Consumer Secret (cs_...)</label><input id="syncWooCs" placeholder="cs_xxxxxxxx" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs"></div>
           </div>
-          <button type="submit" class="dash-btn-primary font-bold w-full py-2.5 rounded-xl text-sm">🚀 Push Products via API</button>
+          <button type="submit" id="syncSubmitBtn" class="dash-btn-primary font-bold w-full py-2.5 rounded-xl text-sm">🚀 Push Products via API</button>
         </form>
         <div class="mt-4 pt-4 border-t border-slate-200 flex flex-wrap gap-2">
           <button type="button" onclick="exportPlatformCSV('shopify')" class="flex-1 dash-btn-soft font-bold py-2 px-3 rounded-xl text-xs">⬇️ Download Shopify CSV</button>
@@ -3984,8 +3984,11 @@
       $("syncTabWoo").className = (!isShop ? "dash-btn-primary" : "dash-btn-soft") + " py-2.5 rounded-xl";
       $("syncUrlLabel").textContent = isShop ? "Shopify Store Domain" : "WooCommerce Site URL";
       $("syncStoreUrl").placeholder = isShop ? "https://yourstore.myshopify.com" : "https://yourwordpresssite.com";
+      $("syncUrlWrap").classList.toggle("hidden", isShop);
       $("syncShopifyWrap").classList.toggle("hidden", !isShop);
       $("syncWooWrap").classList.toggle("hidden", isShop);
+      const syncBtn = document.getElementById("syncSubmitBtn");
+      if (syncBtn) syncBtn.textContent = isShop ? "⬇️ Download Shopify CSV & Import" : "🚀 Push Products via API";
     }
 
     if ($('shopSyncForm')) $("shopSyncForm").onsubmit = async e => {
@@ -3999,13 +4002,19 @@
       if (syncPlatform === "woo") {
         const ck = $("syncWooCk").value.trim(),
           cs = $("syncWooCs").value.trim();
+        if (!url) {
+          toast("Enter your WooCommerce site URL first.");
+          return;
+        }
         if (!ck || !cs) {
           toast("Enter WooCommerce Consumer Key & Secret or use CSV export below.");
           return;
         }
-        try {
-          for (const it of items.slice(0, 5)) {
-            await fetch(`${url}/wp-json/wc/v3/products?consumer_key=${encodeURIComponent(ck)}&consumer_secret=${encodeURIComponent(cs)}`, {
+        const batch = items.slice(0, 5);
+        let ok = 0;
+        for (const it of batch) {
+          try {
+            const res = await fetch(`${url}/wp-json/wc/v3/products?consumer_key=${encodeURIComponent(ck)}&consumer_secret=${encodeURIComponent(cs)}`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -4014,24 +4023,24 @@
                 name: it.title,
                 type: "simple",
                 regular_price: String(it.price),
+                description: it.description || "Fulfilled by Dokkanio Bangladesh",
                 images: it.image_url ? [{
                   src: it.image_url
                 }] : []
               })
             });
-          }
-          toast(`Pushed ${items.length} product(s) to WooCommerce!`);
+            if (res.ok) ok++;
+          } catch (_) {}
+        }
+        if (ok > 0) {
+          toast(`Pushed ${ok} of ${batch.length} product(s) to WooCommerce!${ok < batch.length ? " For the rest, use the CSV below." : ""}`);
           closeShopSyncModal();
-        } catch (_) {
-          toast("WooCommerce CORS blocked by browser—download WooCommerce CSV below for 1-click import!");
+        } else {
+          toast("WooCommerce blocked the browser push (CORS or wrong keys)—download WooCommerce CSV below for 1-click import!");
         }
       } else {
-        const tok = $("syncShopifyToken").value.trim();
-        if (!tok) {
-          toast("Enter Shopify Admin API Token or download Shopify CSV below.");
-          return;
-        }
-        toast(`Shopify payload prepared for ${items.length} product(s) on ${url}. Use Shopify CSV below for instant import!`);
+        exportPlatformCSV("shopify");
+        toast(`Shopify blocks direct browser pushes for security. Shopify CSV downloaded—in Shopify Admin go to Products → Import to add ${items.length} product(s) in one click!`);
       }
     };
 
@@ -4041,9 +4050,10 @@
         price: p.retail,
         image_url: ""
       })));
+      const escCsv = v => String(v || "").replace(/"/g, '""').replace(/\r?\n/g, " ");
       const csv = pf === "shopify" ?
-        "Handle,Title,Body (HTML),Vendor,Published,Variant Price,Image Src\n" + items.map(it => `"${it.title.toLowerCase().replace(/[^a-z0-9]+/g,"-")}","${it.title.replace(/"/g,'""')}","Fulfilled by Dokkanio Bangladesh","Dokkanio",TRUE,${it.price},"${it.image_url||""}"`).join("\n") :
-        "Type,Name,Published,Regular price,Description,Images\n" + items.map(it => `simple,"${it.title.replace(/"/g,'""')}",1,${it.price},"Fulfilled by Dokkanio Bangladesh","${it.image_url||""}"`).join("\n");
+        "Handle,Title,Body (HTML),Vendor,Published,Variant Price,Image Src\n" + items.map(it => `"${it.title.toLowerCase().replace(/[^a-z0-9]+/g,"-")}","${it.title.replace(/"/g,'""')}","${escCsv(it.description || "Fulfilled by Dokkanio Bangladesh")}","Dokkanio",TRUE,${it.price},"${it.image_url||""}"`).join("\n") :
+        "Type,Name,Published,Regular price,Description,Images\n" + items.map(it => `simple,"${it.title.replace(/"/g,'""')}",1,${it.price},"${escCsv(it.description || "Fulfilled by Dokkanio Bangladesh")}","${it.image_url||""}"`).join("\n");
       const a = document.createElement("a");
       a.href = URL.createObjectURL(new Blob([csv], {
         type: "text/csv;charset=utf-8;"
@@ -7616,7 +7626,7 @@
     (function dkFreshBuildCheck() {
       try {
         if (!/^https?:$/.test(location.protocol)) return;
-        var V = 'r47-checkout-btn';
+        var V = 'r48-sync-honest';
         var KEY = 'dk_deployed_build';
         var sput = (k, v) => { try { sessionStorage.setItem(k, v); } catch (_e) {} };
         var sget = k => { try { return sessionStorage.getItem(k); } catch (_e) { return null; } };
