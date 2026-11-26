@@ -1653,6 +1653,110 @@
       }
       ::selection { background: rgba(77, 139, 255, 0.25); }
     </style>
+    <style id="dkEditorialSections">
+      /* --- ADDITIVE: EDITORIAL RESTYLE — "Build & scale" section + footer keep the exact same text/links; only the style changes to a minimal editorial look (white, serif headings, thin outlines, letterspaced captions) --- */
+      #how {
+        background: #ffffff !important;
+        background-image: none !important;
+        border-color: #e9e9e7 !important;
+      }
+      #how h2 {
+        font-family: 'Playfair Display', 'Hind Siliguri', Georgia, serif !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #111114;
+      }
+      #how .grad-text {
+        background: none !important;
+        -webkit-background-clip: initial !important;
+        background-clip: initial !important;
+        -webkit-text-fill-color: #111114 !important;
+        color: #111114 !important;
+        font-style: italic;
+      }
+      #how h3 {
+        font-family: 'Playfair Display', 'Hind Siliguri', Georgia, serif !important;
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        font-size: 1rem !important;
+        color: #111114;
+      }
+      #how p[data-i18n^="step"] { color: #6b6b68; }
+      #how .bg-white {
+        background: #ffffff !important;
+        border: 1px solid #e7e7e4 !important;
+        border-bottom: 1px solid #e7e7e4 !important;
+        border-radius: 4px !important;
+        box-shadow: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+      }
+      #how span.rounded-full {
+        background: #ffffff !important;
+        border: 1px solid #e2e2df !important;
+        box-shadow: none !important;
+      }
+      #how .grad {
+        background: #111114 !important;
+        box-shadow: none !important;
+        border-radius: 2px !important;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      #contact {
+        background: #ffffff !important;
+        border-top: 1px solid #e9e9e7 !important;
+      }
+      #contact .font-extrabold {
+        font-family: 'Playfair Display', 'Hind Siliguri', Georgia, serif !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      #contact .grad-text {
+        background: none !important;
+        -webkit-background-clip: initial !important;
+        background-clip: initial !important;
+        -webkit-text-fill-color: #111114 !important;
+        color: #111114 !important;
+      }
+      #contact h3 {
+        font-family: 'Playfair Display', 'Hind Siliguri', Georgia, serif !important;
+        font-size: 0.7rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: #9a9a96;
+      }
+      #contact li a {
+        color: #5c5c58;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s ease, color 0.2s ease;
+      }
+      #contact li a:hover {
+        color: #111114;
+        border-bottom-color: #111114;
+      }
+      #contact form {
+        background: #ffffff !important;
+        border: 1px solid #dcdcda !important;
+        border-radius: 2px !important;
+        box-shadow: none !important;
+      }
+      #contact form button {
+        background: #111114 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+      #contact > div > div:last-child {
+        font-size: 0.72rem !important;
+        letter-spacing: 0.14em;
+        color: #a3a39f;
+      }
+    </style>
     <style id="dkHeroPhone">
       /* --- ADDITIVE: HERO PHONE MOCKUP (phone storefront preview instead of the orbit illustration) --- */
       .dk-hero-phone-tilt { height: 100%; display: flex; align-items: center; justify-content: center; transform: rotate(-1.5deg); }
