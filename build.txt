@@ -1,1 +1,1 @@
-r61-featured-only
+r62-featured-mirror
